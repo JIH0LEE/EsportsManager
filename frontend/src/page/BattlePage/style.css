@@ -1,0 +1,123 @@
+.battle-container {
+  position: relative;
+  background-color: rgb(238, 238, 238, 0.5);
+  border: solid 5px rgb(15, 4, 76);
+  border-radius: 20px;
+  background: url("./image/map.jpg") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 1000px;
+  width: 1200px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.tower-container {
+  height: 120px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.tower-container .tower {
+  height: 90px;
+  width: 50px;
+  display: flex;
+}
+.tower-container .hp-bar {
+  height: 25px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  background-color: white;
+  border: solid 1px black;
+}
+.tower-container .hp-bar .hp-blue {
+  height: 20px;
+  width: 8px;
+  border-radius: 5px;
+  margin: 1px;
+  background-color: blue;
+}
+.tower-container .hp-bar .hp-red {
+  height: 20px;
+  width: 8px;
+  border-radius: 5px;
+  margin: 1px;
+  background-color: red;
+}
+.blue {
+  background: url("./image/turret_blue.png") center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.red {
+  background: url("./image/turret_red.png") center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#tower1 {
+  position: absolute;
+  top: 210px;
+  left: 60px;
+}
+#tower2 {
+  position: absolute;
+  top: 590px;
+  left: 60px;
+}
+#tower3 {
+  position: absolute;
+  top: 470px;
+  left: 420px;
+}
+#tower4 {
+  position: absolute;
+  top: 620px;
+  left: 260px;
+}
+#tower5 {
+  position: absolute;
+  top: 810px;
+  left: 790px;
+}
+#tower6 {
+  position: absolute;
+  top: 790px;
+  left: 300px;
+}
+#tower7 {
+  position: absolute;
+  top: 20px;
+  left: 300px;
+}
+#tower8 {
+  position: absolute;
+  top: 40px;
+  left: 750px;
+}
+#tower9 {
+  position: absolute;
+  top: 330px;
+  left: 650px;
+}
+#tower10 {
+  position: absolute;
+  top: 170px;
+  left: 810px;
+}
+#tower11 {
+  position: absolute;
+  top: 210px;
+  left: 990px;
+}
+#tower12 {
+  position: absolute;
+  top: 600px;
+  left: 1030px;
+}
