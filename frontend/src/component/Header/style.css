@@ -1,0 +1,57 @@
+.header {
+  min-width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(15, 4, 76);
+}
+
+.header .inner {
+  width: 1200px;
+  min-width: 1200px;
+  height: 100px;
+  color: rgb(238, 238, 238);
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(15, 4, 76);
+}
+
+.header .inner .logo {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.header .inner .logo .image {
+  width: 100px;
+  height: 100px;
+
+  object-fit: cover;
+}
+.header .inner .nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  height: 100%;
+}
+.header .inner .nav-bar .nav-elem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 100px;
+}
+.header .inner .icon {
+  width: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
