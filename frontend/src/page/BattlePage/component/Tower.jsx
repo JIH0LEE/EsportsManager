@@ -9,7 +9,6 @@ const Tower = ({ color, id }) => {
         <div className={`hp-${color}`}></div>
         <div className={`hp-${color}`}></div>
         <div className={`hp-${color}`}></div>
-        <div className={`hp-${color}`}></div>
       </div>
       <div className={`tower ${color}`}></div>
     </div>

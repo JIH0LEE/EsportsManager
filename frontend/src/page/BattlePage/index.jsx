@@ -13,6 +13,10 @@ function BattlePage() {
       {arr2.map((elem) => (
         <Tower key={elem} id={elem} color={"red"}></Tower>
       ))}
+      <div className="board"></div>
+      <div className="select"></div>
+      <div className="blue-bar"></div>
+      <div className="red-bar"></div>
     </div>
   );
 }
