@@ -127,13 +127,87 @@
   top: 0px;
   position: absolute;
   width: 100%;
-  height: 20px;
+  height: 40px;
   background-color: rgb(0, 0, 0, 0.6);
   border: 2px solid black;
   overflow: hidden;
 }
 .battle-container .board:hover {
-  height: 100px;
+  height: 120px;
+}
+.battle-container .board .team {
+  color: white;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.battle-container .board .team .team-name {
+  color: white;
+  height: 100%;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.battle-container .board .team .time {
+  color: white;
+  height: 100%;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.battle-container .board .score {
+  color: white;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.battle-container .board .score .blue-score {
+  height: 100%;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.battle-container .board .score .score-board {
+  height: 100%;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.battle-container .board .score .score-board .score-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.battle-container .board .score .score-board .score-item .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 60px;
+  font-size: 24px;
+}
+.battle-container .board .score .logo {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  object-fit: contain;
 }
 .battle-container .select {
   bottom: 0px;
@@ -148,6 +222,9 @@
   height: 120px;
 }
 .battle-container .blue-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   position: absolute;
   left: 0px;
   width: 10px;
@@ -155,6 +232,7 @@
   background-color: rgb(0, 43, 91, 0.9);
   border: 2px solid black;
   border-radius: 0px 10px 10px 0px;
+  padding: 8px;
   overflow: hidden;
 }
 .battle-container .blue-bar:hover {
@@ -162,14 +240,46 @@
 }
 .battle-container .red-bar {
   position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   right: 0px;
   width: 10px;
   height: 700px;
   background-color: rgb(130, 0, 0, 0.9);
   border: 2px solid black;
   border-radius: 10px 0px 0px 10px;
+  padding: 8px;
   overflow: hidden;
 }
 .battle-container .red-bar:hover {
   width: 100px;
+}
+.champion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 120px;
+  width: 80px;
+}
+.champion .name {
+  color: rgb(238, 238, 238);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 20px;
+  width: 80px;
+}
+.champion .image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px black solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 80px;
+  width: 80px;
 }

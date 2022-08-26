@@ -42,6 +42,7 @@ button {
   min-width: 1200px;
   min-height: 100vh;
   background: url("./background.jpg");
+
   background-position: top 0px center;
   display: flex;
   align-items: center;
