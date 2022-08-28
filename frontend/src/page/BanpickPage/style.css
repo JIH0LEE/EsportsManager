@@ -1,42 +1,129 @@
 .banpick-container {
   width: 1200px;
-  height: 1200px;
+  height: 1000px;
   display: flex;
   align-items: center;
 
   /* justify-content: center; */
   flex-direction: column;
-
-  background-color: white;
 }
 .command-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 90px;
   margin: 5px 0px;
-
-  background-color: blue;
+}
+.command-container .command {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  width: 600px;
+  height: 80px;
+  background-color: rgb(15, 4, 76);
+  border: solid 3px white;
+  border-radius: 10px;
+  color: rgb(238, 238, 238);
+}
+.command-container .submit-button {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid rgb(238, 238, 238);
+  font-size: 20px;
+  right: 0px;
+  width: 120px;
+  height: 80px;
+}
+.command-container .submit-button:hover {
+  font-size: 30px;
 }
 .score-board {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 90px;
   margin: 5px 0px;
-  background-color: red;
+}
+
+.score-board .blue-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgb(0, 43, 91, 0.8);
+  box-shadow: inset 0 0 35px rgb(0, 0, 255);
+  width: 400px;
+  height: 90px;
+  font-size: 30px;
+  color: rgb(238, 238, 238);
+}
+
+.score-board .red-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgb(130, 0, 0, 0.8);
+  box-shadow: inset 0 0 35px rgb(255, 0, 0);
+  color: rgb(238, 238, 238);
+  font-size: 30px;
+  width: 400px;
+  height: 90px;
+}
+.score-board .score {
+  display: flex;
+  align-items: center;
+  color: rgb(238, 238, 238);
+  font-size: 60px;
 }
 .banpick-board {
   width: 100%;
   height: 990px;
   margin: 5px 0px;
-  background-color: green;
 }
 .ban-list {
   width: 100%;
-  height: 90px;
-  margin: 5px 0px;
-  background-color: yellow;
+  height: 120px;
+  background-color: rgb(0, 0, 0, 0.8);
+  border-radius: 10px;
 }
 .pick-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  height: 870px;
+  height: 650px;
   margin: 5px 0px;
-  background-color: purple;
+}
+.pick-list .blue-list {
+  height: 100%;
+  width: 120px;
+  background-color: rgb(0, 43, 91, 0.8);
+  border-radius: 10px;
+}
+.pick-list .champion-list {
+  height: 100%;
+  width: 920px;
+  background-color: rgb(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+.pick-list .red-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 120px;
+  background-color: rgb(130, 0, 0, 0.8);
+  border-radius: 10px;
 }

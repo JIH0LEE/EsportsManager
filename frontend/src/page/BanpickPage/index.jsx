@@ -4,15 +4,24 @@ import "./style.css";
 function BanpickPage() {
   return (
     <div className="banpick-container">
-      <div className="command-container"></div>
-      <div className="score-board"></div>
+      <div className="command-container">
+        <div className="command">Ban</div>
+        <div className="submit-button button">확인</div>
+      </div>
+      <div className="score-board">
+        <div className="blue-board">{"내 팀"}</div>
+        <div className="score">
+          {1}:{0}
+        </div>
+        <div className="red-board">{"너 팀"}</div>
+      </div>
       <div className="banpick-board">
-        <div className="ban-list"></div>
         <div className="pick-list">
           <div className="blue-list"></div>
           <div className="champion-list"></div>
           <div className="red-list"></div>
         </div>
+        <div className="ban-list"></div>
       </div>
     </div>
   );
