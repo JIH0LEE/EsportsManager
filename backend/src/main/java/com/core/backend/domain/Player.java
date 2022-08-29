@@ -2,10 +2,17 @@ package com.core.backend.domain;
 
 import com.core.backend.domain.enums.Grade;
 import com.core.backend.domain.enums.Position;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@AllArgsConstructor
+@Builder
 public class Player {
 
     @Id
@@ -33,4 +40,7 @@ public class Player {
 
     private String hiddenStatus;
 
+    public Player() {
+
+    }
 }

@@ -2,6 +2,10 @@ package com.core.backend.domain;
 
 import com.core.backend.domain.enums.Feature;
 import com.core.backend.domain.enums.Position;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@AllArgsConstructor
+@Getter
+@Builder
 public class Champion {
 
     @Id
@@ -29,4 +36,7 @@ public class Champion {
 
     private Integer tier;
 
+    public Champion() {
+
+    }
 }
