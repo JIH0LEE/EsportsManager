@@ -1,4 +1,4 @@
 package com.core.backend.controller;
 
-public class test {
+public class HeadCoachController {
 }
