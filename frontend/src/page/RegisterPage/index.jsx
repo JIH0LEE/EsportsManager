@@ -55,7 +55,7 @@ function RegisterPage() {
       </div>
       <div className="password-container">
         <div className="left">비밀번호</div>
-        <div classNAme="right">
+        <div className="right">
           <input
             className="input"
             placeholder="비밀번호를 입력해주세요"
@@ -67,7 +67,7 @@ function RegisterPage() {
       </div>
       <div className="password-container">
         <div className="left">비밀번호 확인</div>
-        <div classNAme="right">
+        <div className="right">
           <input
             className="input"
             placeholder="다시 비밀번호를 입력해주세요"

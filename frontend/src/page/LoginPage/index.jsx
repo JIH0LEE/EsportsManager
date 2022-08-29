@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/action";
 import axios from "axios";
 import { API_SERVER } from "../../common";
 import "./style.css";
@@ -8,6 +10,9 @@ function LoginPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const deleteSpace = (elem) => {
     return elem.replace(" ", "");
   };
@@ -26,6 +31,11 @@ function LoginPage() {
     axios
       .post(API_SERVER + "/api/head-coach/login", body)
       .then((res) => {
+        const userData = {
+          isLogin: true,
+          id: res.data.id,
+        };
+        dispatch(login(userData));
         navigate("/");
       })
       .catch((err) => {
@@ -37,7 +47,7 @@ function LoginPage() {
       <div className="title">로그인</div>
       <div className="name-container">
         <div className="left">닉네임</div>
-        <div classNAme="right">
+        <div className="right">
           <input
             className="input"
             placeholder="닉네임을 입력해주세요"
@@ -49,7 +59,7 @@ function LoginPage() {
       </div>
       <div className="password-container">
         <div className="left">비밀번호</div>
-        <div classNAme="right">
+        <div className="right">
           <input
             className="input"
             placeholder="비밀번호를 입력해주세요"

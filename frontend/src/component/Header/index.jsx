@@ -1,9 +1,15 @@
 import React from "react";
 import "./style.css";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/action";
 
 function Header() {
+  const { userData } = useSelector((state) => state);
   const navbar = ["스케줄 진행하기", "팀 관리", "선수 관리", "도감"];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className="header">
       <div className="inner">
@@ -16,11 +22,29 @@ function Header() {
           ))}
         </div>
         <div className="icon">
-          <AiOutlineLogin
-            size="30"
-            className="button"
-            color="rgb(238,238,238)"
-          ></AiOutlineLogin>
+          {userData.isLogin ? (
+            <AiOutlineLogout
+              size="30"
+              className="button"
+              color="rgb(238,238,238)"
+              onClick={() => {
+                const userData = {
+                  isLogin: false,
+                  id: null,
+                };
+                dispatch(logout(userData));
+              }}
+            ></AiOutlineLogout>
+          ) : (
+            <AiOutlineLogin
+              size="30"
+              className="button"
+              color="rgb(238,238,238)"
+              onClick={() => {
+                navigate("/login");
+              }}
+            ></AiOutlineLogin>
+          )}
         </div>
       </div>
     </div>
