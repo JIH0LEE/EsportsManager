@@ -6,6 +6,7 @@ import BattlePage from "./page/BattlePage";
 import RegisterPage from "./page/RegisterPage";
 import LoginPage from "./page/LoginPage";
 import Header from "./component/Header";
+import Auth from "./auth";
 
 function App() {
   return (
