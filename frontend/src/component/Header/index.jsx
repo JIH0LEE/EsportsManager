@@ -33,6 +33,7 @@ function Header() {
                   id: null,
                 };
                 dispatch(logout(userData));
+                navigate("/");
               }}
             ></AiOutlineLogout>
           ) : (

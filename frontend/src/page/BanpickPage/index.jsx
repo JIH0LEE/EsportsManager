@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import Auth from "../../hoc/Auth";
 
 function BanpickPage() {
   return (
@@ -26,4 +27,4 @@ function BanpickPage() {
     </div>
   );
 }
-export default BanpickPage;
+export default Auth(BanpickPage, true);

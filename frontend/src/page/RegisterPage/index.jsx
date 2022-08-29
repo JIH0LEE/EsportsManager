@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_SERVER } from "../../common";
+import Auth from "../../hoc/Auth";
 import "./style.css";
 
 function RegisterPage() {
@@ -88,4 +89,4 @@ function RegisterPage() {
     </div>
   );
 }
-export default RegisterPage;
+export default Auth(RegisterPage, false);

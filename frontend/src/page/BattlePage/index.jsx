@@ -2,6 +2,7 @@ import React from "react";
 import Tower from "./component/Tower";
 import Board from "./component/Board";
 import ChampionBar from "./component/ChampionBar";
+import Auth from "../../hoc/Auth";
 
 import "./style.css";
 
@@ -28,4 +29,4 @@ function BattlePage() {
     </>
   );
 }
-export default BattlePage;
+export default Auth(BattlePage, true);

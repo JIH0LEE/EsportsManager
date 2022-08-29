@@ -4,15 +4,14 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/action";
 import axios from "axios";
 import { API_SERVER } from "../../common";
+import Auth from "../../hoc/Auth.js";
 import "./style.css";
 
 function LoginPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
-
   const deleteSpace = (elem) => {
     return elem.replace(" ", "");
   };
@@ -81,4 +80,4 @@ function LoginPage() {
     </div>
   );
 }
-export default LoginPage;
+export default Auth(LoginPage, false);
