@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import MainPage from "./page/MainPage";
 import BanpickPage from "./page/BanpickPage";
 import BattlePage from "./page/BattlePage";
+import RegisterPage from "./page/RegisterPage";
+import LoginPage from "./page/LoginPage";
 import Header from "./component/Header";
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/battle" element={<BattlePage />} />
           <Route path="/banpick" element={<BanpickPage></BanpickPage>} />
+          <Route path="/register" element={<RegisterPage></RegisterPage>} />
+          <Route path="/login" element={<LoginPage></LoginPage>} />
         </Routes>
       </div>
     </div>
