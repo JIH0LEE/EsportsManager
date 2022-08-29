@@ -21,4 +21,18 @@ public class ExceptionController {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse("입력한 패스워드와 패스워드 확인이 다릅니다."));
     }
+
+    @ExceptionHandler(NoValidHeadCoach.class)
+    public ResponseEntity<ExceptionResponse> handleNoValidHeadCoach(Exception ex){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse("해당 정보의 유저가 없습니다."));
+    }
+
+    @ExceptionHandler(PasswordNotMatch.class)
+    public ResponseEntity<ExceptionResponse> handlePasswordNotMatch(Exception ex){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse("비밀번호가 일치하지 않습니다."));
+    }
 }

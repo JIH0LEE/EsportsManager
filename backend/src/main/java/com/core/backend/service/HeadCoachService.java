@@ -6,6 +6,8 @@ import com.core.backend.domain.HeadCoach;
 import com.core.backend.domain.repository.HeadCoachRepository;
 import com.core.backend.exception.IsNotSamePassword;
 import com.core.backend.exception.IsNotValidHeadCoachName;
+import com.core.backend.exception.NoValidHeadCoach;
+import com.core.backend.exception.PasswordNotMatch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,15 @@ public class HeadCoachService {
                 .password(passwordEncoder.encode(headCoachRequest.getPassword()))
                 .build();
         headCoachRepository.save(headCoach);
+        return HeadCoachResponse.of(headCoach);
+    }
+
+    public HeadCoachResponse login(HeadCoachRequest headCoachRequest){
+        HeadCoach headCoach = headCoachRepository.findByName(headCoachRequest.getName())
+                .orElseThrow(NoValidHeadCoach::new);
+        if(!passwordEncoder.matches(headCoachRequest.getPassword(),headCoach.getPassword())){
+            throw new PasswordNotMatch();
+        }
         return HeadCoachResponse.of(headCoach);
     }
 }

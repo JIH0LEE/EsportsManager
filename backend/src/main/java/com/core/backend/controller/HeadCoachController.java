@@ -24,4 +24,11 @@ public class HeadCoachController {
                 .status(HttpStatus.OK)
                 .body(headCoachService.createHeadCoach(headCoachRequest));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<HeadCoachResponse> login(@RequestBody HeadCoachRequest headCoachRequest){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(headCoachService.login(headCoachRequest));
+    }
 }
