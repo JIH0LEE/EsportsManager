@@ -22,17 +22,15 @@ public class Champion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String koreanName;
+
+    private String englishName;
 
     private String image;
 
     private Feature feature;
 
-    private Position position1;
-
-    private Position position2;
-
-    private Position position3;
+    private Position position;
 
     private Integer tier;
 
