@@ -5,7 +5,6 @@ import com.core.backend.domain.enums.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -32,13 +31,17 @@ public class Player {
 
     private Integer operationStatus;
 
-    private Integer popularityStatus;
-
     private Grade grade;
 
     private Integer price;
 
     private String hiddenStatus;
+
+    private String image;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "base_team_id")
+    private BaseTeam baseTeam;
 
     public Player() {
 

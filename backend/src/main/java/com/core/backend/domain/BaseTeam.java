@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @Getter
 @Builder
-public class HeadCoach {
+public class BaseTeam {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +20,12 @@ public class HeadCoach {
 
     private String name;
 
-    private String password;
+    private String logo;
 
-    public HeadCoach() {
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "baseTeam", orphanRemoval = true)
+    private List<Player> players = new ArrayList<>();
+
+    public BaseTeam() {
 
     }
 }
