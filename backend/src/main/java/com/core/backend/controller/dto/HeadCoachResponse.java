@@ -2,7 +2,6 @@ package com.core.backend.controller.dto;
 
 import com.core.backend.domain.HeadCoach;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

@@ -35,8 +35,6 @@ public class Player {
 
     private Integer price;
 
-    private String hiddenStatus;
-
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
