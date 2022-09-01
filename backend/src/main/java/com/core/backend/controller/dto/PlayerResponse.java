@@ -4,6 +4,7 @@ import com.core.backend.domain.BaseTeam;
 import com.core.backend.domain.Player;
 import com.core.backend.domain.enums.Grade;
 import com.core.backend.domain.enums.Position;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -34,6 +35,9 @@ public class PlayerResponse {
 
     private String image;
 
+    @JsonProperty("baseTeam")
+    private BaseTeamResponse baseTeamResponse;
+
     public static PlayerResponse of(Player player){
         return new PlayerResponse(
                 player.getId(),
@@ -45,6 +49,8 @@ public class PlayerResponse {
                 player.getOperationStatus(),
                 player.getGrade(),
                 player.getPrice(),
-                player.getImage());
+                player.getImage(),
+                BaseTeamResponse.of(player.getBaseTeam()));
+
     }
 }

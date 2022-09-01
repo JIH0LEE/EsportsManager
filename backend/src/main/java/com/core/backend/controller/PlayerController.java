@@ -23,4 +23,10 @@ public class PlayerController {
         List<PlayerResponse> body = playerService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
+
+    @GetMapping("/faker")
+    public ResponseEntity<PlayerResponse> getFaker(){
+        PlayerResponse body = playerService.getFaker();
+        return ResponseEntity.status(HttpStatus.OK).body(body);
+    }
 }

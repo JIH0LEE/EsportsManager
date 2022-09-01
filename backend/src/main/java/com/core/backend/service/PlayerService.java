@@ -23,4 +23,9 @@ public class PlayerService {
                 .map(PlayerResponse::of)
                 .collect(Collectors.toList());
     }
+
+    public PlayerResponse getFaker(){
+        Player faker = playerRepository.findPlayerByNickName("Faker");
+        return PlayerResponse.of(faker);
+    }
 }
