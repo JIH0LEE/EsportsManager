@@ -31,6 +31,7 @@ public class Player {
 
     private Integer operationStatus;
 
+    @Enumerated(EnumType.STRING)
     private Grade grade;
 
     private Integer price;

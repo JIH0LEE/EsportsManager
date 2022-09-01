@@ -1,5 +1,6 @@
 package com.core.backend.service;
 
+import com.core.backend.controller.dto.ChampionResponse;
 import com.core.backend.domain.Champion;
 import com.core.backend.domain.enums.Feature;
 import com.core.backend.domain.enums.Position;
@@ -8,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -15,15 +19,10 @@ public class ChampionService {
 
     private final ChampionRepository championRepository;
 
-    public void create(){
-        Champion champion = Champion.builder()
-                .englishName("test")
-                .koreanName("테스트")
-                .feature(Feature.LANE)
-                .image("test.jpg")
-                .position(Position.TOP)
-                .tier(1)
-                .build();
-        championRepository.save(champion);
+    public List<ChampionResponse> getAll(){
+        List<Champion> championList = championRepository.findAll();
+        return  championList.stream()
+                .map(ChampionResponse::of)
+                .collect(Collectors.toList());
     }
 }
