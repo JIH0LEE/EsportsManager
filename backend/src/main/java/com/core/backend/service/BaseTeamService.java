@@ -1,10 +1,8 @@
 package com.core.backend.service;
 
-import com.core.backend.controller.dto.ChampionResponse;
-import com.core.backend.domain.Champion;
-import com.core.backend.domain.enums.Feature;
-import com.core.backend.domain.enums.Position;
-import com.core.backend.domain.repository.ChampionRepository;
+import com.core.backend.controller.dto.BaseTeamResponse;
+import com.core.backend.domain.BaseTeam;
+import com.core.backend.domain.repository.BaseTeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +13,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ChampionService {
+public class BaseTeamService {
 
-    private final ChampionRepository championRepository;
+    private final BaseTeamRepository baseTeamRepository;
 
-    public List<ChampionResponse> getAll(){
-        List<Champion> championList = championRepository.findAll();
+    public List<BaseTeamResponse> getAll(){
+        List<BaseTeam> championList = baseTeamRepository.findAll();
         return  championList.stream()
-                .map(ChampionResponse::of)
+                .map(BaseTeamResponse::of)
                 .collect(Collectors.toList());
     }
 }
