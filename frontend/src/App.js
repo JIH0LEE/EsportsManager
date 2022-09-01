@@ -5,6 +5,7 @@ import BanpickPage from "./page/BanpickPage";
 import BattlePage from "./page/BattlePage";
 import RegisterPage from "./page/RegisterPage";
 import LoginPage from "./page/LoginPage";
+import CardShowPage from "./page/CardShowPage";
 import Header from "./component/Header";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/banpick" element={<BanpickPage></BanpickPage>} />
           <Route path="/register" element={<RegisterPage></RegisterPage>} />
           <Route path="/login" element={<LoginPage></LoginPage>} />
+          <Route path="/card-show" element={<CardShowPage></CardShowPage>} />
         </Routes>
       </div>
     </div>

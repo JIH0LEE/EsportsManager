@@ -1,0 +1,8 @@
+.card-show-page-container {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: rgb(15, 4, 76);
+}

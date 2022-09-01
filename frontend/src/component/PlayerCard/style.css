@@ -1,0 +1,130 @@
+.card-container {
+  position: relative;
+  width: 186px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.card-container .image {
+  width: 186px;
+  height: 300px;
+}
+
+.card-container .player-image-container {
+  position: absolute;
+  top: 38px;
+  left: 30px;
+  width: 152px;
+  height: 120px;
+}
+.card-container .player-image-container .image {
+  width: 152px;
+  height: 120px;
+}
+.card-container .player-info-container {
+  position: absolute;
+  display: flex;
+  top: 48px;
+  left: 10px;
+  justify-content: sp;
+  flex-direction: column;
+  align-items: center;
+  width: 30px;
+  height: 110px;
+  font-weight: bold;
+}
+.card-container .player-info-container .grade {
+  font-size: 25px;
+  height: 30px;
+}
+.card-container .player-info-container .position {
+  height: 30px;
+  font-size: 15px;
+}
+.card-container .player-info-container .logo {
+  width: 30px;
+  height: 30px;
+
+  overflow: hidden;
+  object-fit: contain;
+}
+.card-container .player-info-container .logo .image {
+  width: 30px;
+  height: 30px;
+}
+
+.card-container .player-info-container2 {
+  position: absolute;
+  top: 150px;
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  height: 100px;
+}
+.card-container .player-info-container2 .name-container {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+}
+.card-container .player-info-container2 .status-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 60px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.card-container .player-info-container2 .status-container .status-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+.card-container .player-info-container2 .status-container .status-name .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 60px;
+  height: 20px;
+}
+.card-container .player-info-container2 .status-container .status-value {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+.card-container .player-info-container2 .status-container .status-value .item {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: 60px;
+  height: 20px;
+}
+.N {
+  color: rgb(96, 126, 170);
+}
+.C {
+  color: rgb(66, 3, 44);
+}
+.R {
+  color: rgb(211, 107, 0);
+}
+.SR {
+  color: rgb(232, 249, 253);
+}
+.UR {
+}
