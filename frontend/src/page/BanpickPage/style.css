@@ -3,7 +3,7 @@
   height: 1000px;
   display: flex;
   align-items: center;
-
+  margin-top: 50px;
   /* justify-content: center; */
   flex-direction: column;
 }
@@ -112,10 +112,49 @@
   border-radius: 10px;
 }
 .pick-list .champion-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100%;
   width: 920px;
   background-color: rgb(0, 0, 0, 0.8);
   border-radius: 10px;
+}
+.pick-list .champion-list .button-container {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.pick-list .champion-list .button-container .position-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 120px;
+
+  font-weight: bold;
+  font-size: 20px;
+
+  border-radius: 10px;
+}
+
+.pick-list .champion-list .button-container .position-button:hover {
+  background-color: rgb(238, 238, 238);
+  color: rgb(15, 4, 76);
+  border: solid 2px rgb(15, 4, 76);
+}
+
+.pick-list .champion-list .button-container .active {
+  background-color: rgb(238, 238, 238);
+  color: rgb(15, 4, 76);
+  border: solid 2px rgb(15, 4, 76);
+}
+.pick-list .champion-list .button-container .no-active {
+  background-color: rgb(15, 4, 76);
+  color: rgb(238, 238, 238);
+  border: solid 2px rgb(238, 238, 238);
 }
 .pick-list .red-list {
   display: flex;
@@ -126,4 +165,24 @@
   width: 120px;
   background-color: rgb(130, 0, 0, 0.8);
   border-radius: 10px;
+}
+.pick-list .champion-list .champion-icon-container {
+  max-height: 590px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow: auto;
+  padding-left: 12px;
+  border-radius: 10px;
+}
+
+.champion-item {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  object-fit: contain;
+}
+.champion-item .img {
+  width: 80px;
+  height: 80px;
 }

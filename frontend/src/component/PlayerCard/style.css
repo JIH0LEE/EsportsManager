@@ -116,7 +116,7 @@
 .card-container .player-info-container2 .status-container .status-name .item {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 60px;
   height: 20px;
@@ -132,7 +132,7 @@
 .card-container .player-info-container2 .status-container .status-value .item {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   width: 60px;
   height: 20px;
