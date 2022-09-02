@@ -35,9 +35,6 @@ public class PlayerResponse {
 
     private String image;
 
-    @JsonProperty("baseTeam")
-    private BaseTeamResponse baseTeamResponse;
-
     public static PlayerResponse of(Player player){
         return new PlayerResponse(
                 player.getId(),
@@ -49,8 +46,7 @@ public class PlayerResponse {
                 player.getOperationStatus(),
                 player.getGrade(),
                 player.getPrice(),
-                player.getImage(),
-                BaseTeamResponse.of(player.getBaseTeam()));
+                player.getImage());
 
     }
 }
