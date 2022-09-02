@@ -17,7 +17,9 @@ function Auth(Componet, option) {
         }
       } else {
         if (!option) {
-          navigate("/");
+          if (option === false) {
+            navigate("/");
+          }
         }
       }
       // eslint-disable-next-line

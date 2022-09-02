@@ -6,6 +6,7 @@ import BattlePage from "./page/BattlePage";
 import RegisterPage from "./page/RegisterPage";
 import LoginPage from "./page/LoginPage";
 import CardShowPage from "./page/CardShowPage";
+import BookPage from "./page/BookPage";
 import Header from "./component/Header";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<RegisterPage></RegisterPage>} />
           <Route path="/login" element={<LoginPage></LoginPage>} />
           <Route path="/card-show" element={<CardShowPage></CardShowPage>} />
+          <Route path="/book" element={<BookPage></BookPage>} />
         </Routes>
       </div>
     </div>

@@ -7,19 +7,31 @@ import { logout } from "../../redux/action";
 
 function Header() {
   const { userData } = useSelector((state) => state);
-  const navbar = ["스케줄 진행하기", "팀 관리", "선수 관리", "도감"];
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div className="header">
       <div className="inner">
-        <div className="logo">
+        <div
+          className="logo button"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <img src="./image/logo.png" alt="log" className="image" />
         </div>
         <div className="nav-bar">
-          {navbar.map((elem) => (
-            <div className="nav-elem">{elem}</div>
-          ))}
+          <div className="nav-elem button">{"스케줄 진행하기"}</div>
+          <div className="nav-elem button">{"팀 관리"}</div>
+          <div
+            className="nav-elem button"
+            onClick={() => {
+              navigate("/book");
+            }}
+          >
+            {"도감"}
+          </div>
+          <div className="nav-elem button">{"기록실"}</div>
         </div>
         <div className="icon">
           {userData.isLogin ? (

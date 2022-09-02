@@ -2,7 +2,7 @@ import React from "react";
 
 import "./style.css";
 
-function PlayerCard({ player }) {
+function PlayerCard({ player, logo }) {
   const changePositionFormat = (value) => {
     if (value === "JUNGLE") {
       return "JNG";
@@ -32,17 +32,17 @@ function PlayerCard({ player }) {
           <div className="position">
             {changePositionFormat(player.position)}
           </div>
-          <div className="logo">
-            <img alt="logo" src={player.baseTeam.logo} className="image"></img>
+          <div className={`logo ${player.grade}`}>
+            <img alt="logo" src={logo} className={`logo-image`}></img>
           </div>
         </div>
         <div className="player-info-container2">
           <div className="name-container">{player.nickName}</div>
           <div className="status-container">
             <div className="status-name">
-              <div className="item">Ab.L</div>
-              <div className="item">Ab.F</div>
-              <div className="item">Ab.O</div>
+              <div className="item">라인</div>
+              <div className="item">교전</div>
+              <div className="item">운영</div>
             </div>
             <div className="status-value">
               <div className="item">{player.laneStatus}</div>

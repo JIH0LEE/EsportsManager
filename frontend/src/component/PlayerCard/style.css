@@ -44,13 +44,36 @@
 .card-container .player-info-container .logo {
   width: 30px;
   height: 30px;
-
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
   overflow: hidden;
-  object-fit: contain;
+  object-fit: cover;
 }
-.card-container .player-info-container .logo .image {
-  width: 30px;
-  height: 30px;
+.card-container .player-info-container .N {
+  border: 2px solid;
+  border-color: rgb(96, 126, 170);
+}
+.card-container .player-info-container .C {
+  border: 2px solid;
+  border-color: rgb(66, 3, 44);
+}
+.card-container .player-info-container .R {
+  border: 2px solid;
+  border-color: rgb(211, 107, 0);
+}
+.card-container .player-info-container .SR {
+  border: 2px solid;
+  border-color: rgb(162, 181, 187);
+}
+.card-container .player-info-container .UR {
+  border: 2px solid;
+  border-color: rgb(247, 208, 138);
+}
+.card-container .player-info-container .logo .logo-image {
+  width: 20px;
 }
 
 .card-container .player-info-container2 {
@@ -124,7 +147,10 @@
   color: rgb(211, 107, 0);
 }
 .SR {
-  color: rgb(232, 249, 253);
+  color: rgb(162, 181, 187);
+  text-shadow: 1px 1px gray;
 }
 .UR {
+  color: rgb(247, 208, 138);
+  text-shadow: 1px 1px black;
 }
