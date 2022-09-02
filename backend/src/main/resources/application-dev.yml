@@ -1,0 +1,16 @@
+cors:
+  allowed-origins: http://127.0.0.1:3000, http://localhost:3000
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://esportsmanager.cx6nzwirrgvm.ap-northeast-2.rds.amazonaws.com:3306/EsportsManager?userSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: soongle
+    password: wlghwlgn12
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
