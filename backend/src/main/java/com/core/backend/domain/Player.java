@@ -29,7 +29,13 @@ public class Player {
 
     private Integer fightStatus;
 
-    private Integer operationStatus;
+    private Integer operationStatus;;
+
+    private String roamingStatus;
+
+    private String gankingStatus;
+
+    private String junglingStatus;
 
     @Enumerated(EnumType.STRING)
     private Grade grade;

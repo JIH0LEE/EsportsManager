@@ -21,9 +21,6 @@ public class ChampionResponse {
     private String image;
 
     @Enumerated(EnumType.STRING)
-    private Feature feature;
-
-    @Enumerated(EnumType.STRING)
     private Position position;
 
     private Integer tier;
@@ -34,7 +31,6 @@ public class ChampionResponse {
                 champion.getKoreanName(),
                 champion.getEnglishName(),
                 champion.getImage(),
-                champion.getFeature(),
                 champion.getPosition(),
                 champion.getTier());
     }
