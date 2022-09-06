@@ -1,12 +1,12 @@
 package com.core.backend.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +18,21 @@ public class MyTeam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ColumnDefault("0")
+    private Integer winPoint;
+
+    @ColumnDefault("0")
+    private Integer matchWin;
+
+    @ColumnDefault("0")
+    private Integer matchLose;
+
+    @ColumnDefault("0")
+    private Integer setWin;
+
+    @ColumnDefault("0")
+    private Integer setLose;
+
     @OneToOne
     @JoinColumn(name = "head_coach_id")
     private HeadCoach headCoach;
@@ -26,22 +41,7 @@ public class MyTeam {
     @JoinColumn(name = "base_team_id")
     private BaseTeam baseTeam;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer top;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer jng;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer mid;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer adc;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer sup;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private MyPlayer sub;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MyPlayer> myPlayerList =new ArrayList<>();
 
 }

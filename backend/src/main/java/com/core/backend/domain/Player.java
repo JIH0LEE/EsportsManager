@@ -32,7 +32,6 @@ public class Player {
     private Integer fightStatus;
 
     private Integer operationStatus;
-    ;
 
     private String roamingStatus;
 
