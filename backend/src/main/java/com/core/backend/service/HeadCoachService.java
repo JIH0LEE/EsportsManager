@@ -22,26 +22,26 @@ public class HeadCoachService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private boolean isValidName(String name){
-        HeadCoach headCoach =  headCoachRepository.findByName(name).orElse(null);
-        if(headCoach == null){
+    private boolean isValidName(String name) {
+        HeadCoach headCoach = headCoachRepository.findByName(name).orElse(null);
+        if (headCoach == null) {
             return true;
         }
         return false;
     }
 
-    private boolean isSamePassword(String password,String passwordCheck){
-        if(password.equals(passwordCheck)){
+    private boolean isSamePassword(String password, String passwordCheck) {
+        if (password.equals(passwordCheck)) {
             return true;
         }
         return false;
     }
 
-    public HeadCoachResponse createHeadCoach(HeadCoachRequest headCoachRequest){
-        if(!isValidName(headCoachRequest.getName())){
+    public HeadCoachResponse createHeadCoach(HeadCoachRequest headCoachRequest) {
+        if (!isValidName(headCoachRequest.getName())) {
             throw new IsNotValidHeadCoachName();
         }
-        if(!isSamePassword(headCoachRequest.getPassword(),headCoachRequest.getPasswordCheck())){
+        if (!isSamePassword(headCoachRequest.getPassword(), headCoachRequest.getPasswordCheck())) {
             throw new IsNotSamePassword();
         }
         HeadCoach headCoach = HeadCoach.builder()
@@ -52,10 +52,10 @@ public class HeadCoachService {
         return HeadCoachResponse.of(headCoach);
     }
 
-    public HeadCoachResponse login(HeadCoachRequest headCoachRequest){
+    public HeadCoachResponse login(HeadCoachRequest headCoachRequest) {
         HeadCoach headCoach = headCoachRepository.findByName(headCoachRequest.getName())
                 .orElseThrow(NoValidHeadCoach::new);
-        if(!passwordEncoder.matches(headCoachRequest.getPassword(),headCoach.getPassword())){
+        if (!passwordEncoder.matches(headCoachRequest.getPassword(), headCoach.getPassword())) {
             throw new PasswordNotMatch();
         }
         return HeadCoachResponse.of(headCoach);

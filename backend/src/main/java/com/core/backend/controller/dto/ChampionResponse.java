@@ -1,7 +1,6 @@
 package com.core.backend.controller.dto;
 
 import com.core.backend.domain.Champion;
-import com.core.backend.domain.enums.Feature;
 import com.core.backend.domain.enums.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class ChampionResponse {
 
     private Integer tier;
 
-    public static ChampionResponse of(Champion champion){
+    public static ChampionResponse of(Champion champion) {
         return new ChampionResponse(
                 champion.getId(),
                 champion.getKoreanName(),

@@ -4,11 +4,12 @@ import com.core.backend.domain.enums.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
@@ -28,8 +29,8 @@ public class Champion {
 
     private Integer fightStatus;
 
-    private Integer operationStatus;;
-
+    private Integer operationStatus;
+    ;
     private String roamingStatus;
 
     private String gankingStatus;
@@ -47,7 +48,4 @@ public class Champion {
 
     private Integer tier;
 
-    public Champion() {
-
-    }
 }

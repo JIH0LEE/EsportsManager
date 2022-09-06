@@ -19,7 +19,7 @@ public class BaseTeamController {
     private final BaseTeamService baseTeamService;
 
     @GetMapping("")
-    public ResponseEntity<List<BaseTeamResponse>> getAll(){
+    public ResponseEntity<List<BaseTeamResponse>> getAll() {
         List<BaseTeamResponse> body = baseTeamService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }

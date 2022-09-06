@@ -17,9 +17,9 @@ public class BaseTeamService {
 
     private final BaseTeamRepository baseTeamRepository;
 
-    public List<BaseTeamResponse> getAll(){
+    public List<BaseTeamResponse> getAll() {
         List<BaseTeam> championList = baseTeamRepository.findAll();
-        return  championList.stream()
+        return championList.stream()
                 .map(BaseTeamResponse::of)
                 .collect(Collectors.toList());
     }

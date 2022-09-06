@@ -12,7 +12,7 @@ public class HeadCoachResponse {
 
     private String name;
 
-    public static HeadCoachResponse of(HeadCoach headCoach){
+    public static HeadCoachResponse of(HeadCoach headCoach) {
         return new HeadCoachResponse(headCoach.getId(), headCoach.getName());
     }
 

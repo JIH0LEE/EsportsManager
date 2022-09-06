@@ -5,11 +5,13 @@ import com.core.backend.domain.enums.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Player {
@@ -29,7 +31,8 @@ public class Player {
 
     private Integer fightStatus;
 
-    private Integer operationStatus;;
+    private Integer operationStatus;
+    ;
 
     private String roamingStatus;
 
@@ -48,7 +51,5 @@ public class Player {
     @JoinColumn(name = "base_team_id")
     private BaseTeam baseTeam;
 
-    public Player() {
 
-    }
 }

@@ -3,13 +3,14 @@ package com.core.backend.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
@@ -23,7 +24,11 @@ public class HeadCoach {
 
     private String password;
 
-    public HeadCoach() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "headCoach", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<League> leagueList = new ArrayList<>();
 
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "headCoach", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private MyTeam myTeam;
+
+
 }

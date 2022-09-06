@@ -1,10 +1,8 @@
 package com.core.backend.controller.dto;
 
-import com.core.backend.domain.BaseTeam;
 import com.core.backend.domain.Player;
 import com.core.backend.domain.enums.Grade;
 import com.core.backend.domain.enums.Position;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -35,7 +33,7 @@ public class PlayerResponse {
 
     private String image;
 
-    public static PlayerResponse of(Player player){
+    public static PlayerResponse of(Player player) {
         return new PlayerResponse(
                 player.getId(),
                 player.getNickName(),
