@@ -1,6 +1,7 @@
 package com.core.backend.service;
 
 import com.core.backend.controller.dto.MyTeamRequest;
+import com.core.backend.controller.dto.MyTeamResponse;
 import com.core.backend.domain.*;
 import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.*;
@@ -25,13 +26,13 @@ public class LeagueService {
     private final LeagueRepository leagueRepository;
     private final LeagueTeamRepository leagueTeamRepository;
 
-    private void makeMyPlayer(MyTeam myTeam, List<Player> playerList, String position){
+    private void makeMyPlayer(MyTeam myTeam, List<Player> playerList, String position) {
         List<Player> players =
                 playerList.stream()
                         .filter(player -> player.getPosition() == Position.valueOf(position))
                         .collect(Collectors.toList());
         Player main = players.get(0);
-        myPlayerRepository.save (
+        myPlayerRepository.save(
                 MyPlayer.builder()
                         .player(main)
                         .level(1)
@@ -41,7 +42,7 @@ public class LeagueService {
         );
         players.remove(0);
         players.stream()
-                .forEach(player->myPlayerRepository.save(
+                .forEach(player -> myPlayerRepository.save(
                         MyPlayer.builder()
                                 .player(player)
                                 .level(1)
@@ -51,7 +52,7 @@ public class LeagueService {
                 );
     }
 
-    private League makeLeague(MyTeam myTeam, HeadCoach headCoach){
+    private League makeLeague(MyTeam myTeam, HeadCoach headCoach) {
         return leagueRepository.save(
                 League.builder()
                         .headCoach(headCoach)
@@ -61,16 +62,17 @@ public class LeagueService {
         );
     }
 
-    private void makeLeagueTeams(League league,Long exceptId){
+    private void makeLeagueTeams(League league, Long exceptId) {
         List<Long> baseTeamIds = new ArrayList(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L));
         baseTeamIds.remove(exceptId);
-        baseTeamIds.stream().forEach(baseTeamId->leagueTeamRepository.save(
+        baseTeamIds.stream().forEach(baseTeamId -> leagueTeamRepository.save(
                 LeagueTeam.builder()
                         .baseTeam(baseTeamRepository.findById(baseTeamId).orElseThrow())
                         .league(league)
                         .build()));
     }
-    public void makeMyLeague(MyTeamRequest myTeamRequest){
+
+    public void makeMyLeague(MyTeamRequest myTeamRequest) {
         BaseTeam baseTeam = baseTeamRepository.findById(myTeamRequest.getBaseTeamId())
                 .orElseThrow();
         HeadCoach headCoach = headCoachRepository.findById(myTeamRequest.getHeadCoachId()).orElseThrow();
@@ -81,12 +83,12 @@ public class LeagueService {
                 .headCoach(headCoach)
                 .build();
         myTeamRepository.save(myTeam);
-        String [] positionArray = {"TOP","JUNGLE","MIDDLE","ADC","SUPPORT"};
-        for(String position : positionArray){
-            makeMyPlayer(myTeam,playerList,position);
+        String[] positionArray = {"TOP", "JUNGLE", "MIDDLE", "ADC", "SUPPORT"};
+        for (String position : positionArray) {
+            makeMyPlayer(myTeam, playerList, position);
         }
-        League league = makeLeague(myTeam,headCoach);
-        makeLeagueTeams(league,myTeamRequest.getBaseTeamId());
+        League league = makeLeague(myTeam, headCoach);
+        makeLeagueTeams(league, myTeamRequest.getBaseTeamId());
     }
 
 }

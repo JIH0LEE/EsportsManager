@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -28,7 +27,7 @@ public class MyPlayer {
     private Player player;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="my_team_id")
+    @JoinColumn(name = "my_team_id")
     private MyTeam myTeam;
 
 }

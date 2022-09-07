@@ -1,8 +1,10 @@
 package com.core.backend.domain;
 
 
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -22,19 +24,19 @@ public class MyTeam {
 
     private String name;
 
-    @Column(columnDefinition = "default '0'")
+    @Column(columnDefinition = "varchar(20) default '0'")
     private Integer winPoint;
 
-    @Column(columnDefinition = "default '0'")
+    @Column(columnDefinition = "varchar(20) default '0'")
     private Integer matchWin;
 
-    @Column(columnDefinition = "default '0'")
+    @Column(columnDefinition = "varchar(20) default '0'")
     private Integer matchLose;
 
-    @Column(columnDefinition = "default '0'")
+    @Column(columnDefinition = "varchar(20) default '0'")
     private Integer setWin;
 
-    @Column(columnDefinition = "default '0'")
+    @Column(columnDefinition = "varchar(20) default '0'")
     private Integer setLose;
 
     @OneToOne
@@ -46,6 +48,6 @@ public class MyTeam {
     private BaseTeam baseTeam;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MyPlayer> myPlayerList =new ArrayList<>();
+    private List<MyPlayer> myPlayerList = new ArrayList<>();
 
 }
