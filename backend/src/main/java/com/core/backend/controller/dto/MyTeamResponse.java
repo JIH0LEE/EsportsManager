@@ -30,6 +30,8 @@ public class MyTeamResponse {
 
     private List<MyPlayerResponse> sub;
 
+    private BaseTeamResponse baseTeam;
+
     public static MyTeamResponse of(MyTeam myTeam) {
         List<MyPlayerResponse> myPlayerResponseList = myTeam.getMyPlayerList()
                 .stream()
@@ -68,7 +70,8 @@ public class MyTeamResponse {
                 myTeam.getId(),
                 myTeam.getName(),
                 HeadCoachResponse.of(myTeam.getHeadCoach()),
-                top, jng, mid, adc, sup, sub
+                top, jng, mid, adc, sup, sub,
+                BaseTeamResponse.of(myTeam.getBaseTeam())
         );
     }
 }
