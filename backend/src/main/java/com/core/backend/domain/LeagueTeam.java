@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@DynamicInsert
 public class LeagueTeam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,19 +28,19 @@ public class LeagueTeam {
     @JoinColumn(name = "league_id")
     private League league;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer winPoint;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer matchWin;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer matchLose;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer setWin;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer setLose;
 
 }

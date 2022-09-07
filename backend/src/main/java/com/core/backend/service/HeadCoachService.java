@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class HeadCoachService {
 
     private final HeadCoachRepository headCoachRepository;
-
     private final PasswordEncoder passwordEncoder;
 
+    //private : used for own service
     private boolean isValidName(String name) {
         HeadCoach headCoach = headCoachRepository.findByName(name).orElse(null);
         if (headCoach == null) {
@@ -37,6 +37,7 @@ public class HeadCoachService {
         return false;
     }
 
+    //public : used for controller
     public HeadCoachResponse createHeadCoach(HeadCoachRequest headCoachRequest) {
         if (!isValidName(headCoachRequest.getName())) {
             throw new IsNotValidHeadCoachName();

@@ -7,6 +7,8 @@ public class MyTeamRequest {
 
     private String name;
 
+    private Long headCoachId;
+
     private Long baseTeamId;
 
 }

@@ -3,6 +3,7 @@ package com.core.backend.domain;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,24 +14,27 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@DynamicInsert
 public class MyTeam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ColumnDefault("0")
+    private String name;
+
+    @Column(columnDefinition = "default '0'")
     private Integer winPoint;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer matchWin;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer matchLose;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer setWin;
 
-    @ColumnDefault("0")
+    @Column(columnDefinition = "default '0'")
     private Integer setLose;
 
     @OneToOne
