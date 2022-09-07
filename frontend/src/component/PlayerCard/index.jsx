@@ -38,16 +38,30 @@ function PlayerCard({ player, logo }) {
         </div>
         <div className="player-info-container2">
           <div className="name-container">{player.nickName}</div>
-          <div className="status-container">
-            <div className="status-name">
-              <div className="item">라인</div>
-              <div className="item">교전</div>
-              <div className="item">운영</div>
+          <div className="big-container">
+            <div className="status-container">
+              <div className="status-name">
+                <div className="item">라인전</div>
+                <div className="item">전투</div>
+                <div className="item">운영</div>
+              </div>
+              <div className="status-value">
+                <div className="item">{player.laneStatus}</div>
+                <div className="item">{player.fightStatus}</div>
+                <div className="item">{player.operationStatus}</div>
+              </div>
             </div>
-            <div className="status-value">
-              <div className="item">{player.laneStatus}</div>
-              <div className="item">{player.fightStatus}</div>
-              <div className="item">{player.operationStatus}</div>
+            <div className="status-container">
+              <div className="status-name">
+                <div className="item">로밍</div>
+                <div className="item">갱킹</div>
+                <div className="item">정글링</div>
+              </div>
+              <div className="status-value">
+                <div className="item">{player.roamingStatus}</div>
+                <div className="item">{player.gankingStatus}</div>
+                <div className="item">{player.junglingStatus}</div>
+              </div>
             </div>
           </div>
         </div>

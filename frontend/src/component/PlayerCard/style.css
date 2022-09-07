@@ -12,7 +12,7 @@
 
 .card-container .player-image-container {
   position: absolute;
-  top: 38px;
+  top: 39px;
   left: 30px;
   width: 152px;
   height: 120px;
@@ -79,10 +79,10 @@
 .card-container .player-info-container2 {
   position: absolute;
   top: 150px;
-  left: 32px;
+  left: 12px;
   display: flex;
   flex-direction: column;
-  width: 120px;
+  width: 160px;
   height: 100px;
 }
 .card-container .player-info-container2 .name-container {
@@ -91,7 +91,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 120px;
+  width: 160px;
   height: 40px;
   font-size: 20px;
 }
@@ -99,10 +99,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+
   align-items: center;
-  width: 120px;
+  width: 160px;
   height: 60px;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: bold;
 }
 .card-container .player-info-container2 .status-container .status-name {
@@ -110,7 +111,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60px;
+  width: 30px;
   height: 60px;
 }
 .card-container .player-info-container2 .status-container .status-name .item {
@@ -118,7 +119,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 60px;
+  width: 30px;
   height: 20px;
 }
 .card-container .player-info-container2 .status-container .status-value {
@@ -126,7 +127,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60px;
+  width: 30px;
   height: 60px;
 }
 .card-container .player-info-container2 .status-container .status-value .item {
@@ -134,7 +135,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  width: 60px;
+  width: 30px;
   height: 20px;
 }
 .N {
@@ -153,4 +154,10 @@
 .UR {
   color: rgb(247, 208, 138);
   text-shadow: 1px 1px black;
+}
+.big-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }
