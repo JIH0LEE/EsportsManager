@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -36,32 +37,32 @@ public class MyTeamResponse {
                 .collect(Collectors.toList());
         MyPlayerResponse top = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "TOP")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "TOP"))
                 .findFirst()
                 .orElseThrow();
         MyPlayerResponse jng = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "JUNGLE")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "JUNGLE"))
                 .findFirst()
                 .orElseThrow();
         MyPlayerResponse mid = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "MIDDLE")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "MIDDLE"))
                 .findFirst()
                 .orElseThrow();
         MyPlayerResponse adc = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "ADC")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "ADC"))
                 .findFirst()
                 .orElseThrow();
         MyPlayerResponse sup = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "SUPPORT")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "SUPPORT"))
                 .findFirst()
                 .orElseThrow();
         List<MyPlayerResponse> sub = myPlayerResponseList
                 .stream()
-                .filter(myPlayerResponse -> myPlayerResponse.getPosition() == "SUB")
+                .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "SUB"))
                 .collect(Collectors.toList());
         return new MyTeamResponse(
                 myTeam.getId(),

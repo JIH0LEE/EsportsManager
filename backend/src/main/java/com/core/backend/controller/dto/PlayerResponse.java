@@ -27,6 +27,12 @@ public class PlayerResponse {
 
     private Integer operationStatus;
 
+    private String roamingStatus;
+
+    private String gankingStatus;
+
+    private String junglingStatus;
+
     private Grade grade;
 
     private Integer price;
@@ -42,6 +48,9 @@ public class PlayerResponse {
                 player.getLaneStatus(),
                 player.getFightStatus(),
                 player.getOperationStatus(),
+                player.getRoamingStatus(),
+                player.getGankingStatus(),
+                player.getJunglingStatus(),
                 player.getGrade(),
                 player.getPrice(),
                 player.getImage());

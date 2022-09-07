@@ -1,5 +1,6 @@
 package com.core.backend.service;
 
+import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.MyTeamResponse;
 import com.core.backend.domain.*;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +60,7 @@ public class LeagueService {
                         .headCoach(headCoach)
                         .myTeam(myTeam)
                         .day(0)
+                        .finish(false)
                         .build()
         );
     }
@@ -89,6 +92,10 @@ public class LeagueService {
         }
         League league = makeLeague(myTeam, headCoach);
         makeLeagueTeams(league, myTeamRequest.getBaseTeamId());
+    }
+
+    public Optional<League> getLeagueInfo(Long id){
+            return leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoachRepository.findById(id).orElseThrow());
     }
 
 }

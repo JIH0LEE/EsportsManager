@@ -34,5 +34,5 @@ public class League {
 
     private Integer day;
 
-    private boolean isFinish;
+    private boolean finish;
 }
