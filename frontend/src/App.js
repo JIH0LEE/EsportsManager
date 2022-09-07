@@ -7,6 +7,7 @@ import RegisterPage from "./page/RegisterPage";
 import LoginPage from "./page/LoginPage";
 import CardShowPage from "./page/CardShowPage";
 import BookPage from "./page/BookPage";
+import MyTeamPage from "./page/MyTeamPage";
 import Header from "./component/Header";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<LoginPage></LoginPage>} />
           <Route path="/card-show" element={<CardShowPage></CardShowPage>} />
           <Route path="/book" element={<BookPage></BookPage>} />
+          <Route path="/my-team" element={<MyTeamPage></MyTeamPage>} />
         </Routes>
       </div>
     </div>
