@@ -9,6 +9,7 @@ import { API_SERVER } from "../../config";
 function MainPage() {
   const { userData } = useSelector((state) => state);
   const [isMyTeam, setIsMyTeam] = useState(false);
+  const [leagueRank, setLeagueRank] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     if (userData.isLogin) {
@@ -16,8 +17,19 @@ function MainPage() {
         .get(API_SERVER + `/api/league/league-info/${userData.id}`)
         .then((res) => {
           setIsMyTeam(res.data.success);
+        })
+        .catch((err) => {
+          alert(err);
         });
     }
+    axios
+      .get(API_SERVER + `/api/league/league-rank/${userData.id}`)
+      .then((res) => {
+        setLeagueRank(res.data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }, []);
 
   return (
@@ -42,9 +54,24 @@ function MainPage() {
         </div>
         <div className="ranking-container background2 ">
           <div className="label-container label">순위</div>
-          <div className="content-container">
+          <div className="content-container basic">
             {userData.isLogin ? (
-              <></>
+              <>
+                <div className="table-head basic-1">
+                  <div className="team-name">팀</div>
+                  <div className="win">승</div>
+                  <div className="lose">패</div>
+                  <div className="win-point">승점</div>
+                </div>
+                {leagueRank.map((team, idx) => (
+                  <div className="table-body ">
+                    <div className="team-name">{team.teamName}</div>
+                    <div className="win">{team.matchWin}</div>
+                    <div className="lose">{team.matchLose}</div>
+                    <div className="win-point">{team.winPoint}</div>
+                  </div>
+                ))}
+              </>
             ) : (
               <div
                 className="direct-button button2"

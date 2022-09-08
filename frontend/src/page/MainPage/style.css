@@ -67,8 +67,11 @@
 .main-2 .ranking-container .content-container {
   display: flex;
   align-items: center;
+  width: 100%;
   height: 400px;
-  justify-content: center;
+  padding: 0px 20px;
+  justify-content: flex-start;
+  flex-direction: column;
   text-align: justify;
   font-size: 20px;
 }
@@ -82,4 +85,84 @@
   border-radius: 10px;
   font-size: 30px;
   font-weight: bold;
+}
+.table-head {
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-body {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-head .team-name {
+  width: 270px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-head .win-point {
+  width: 80px;
+  height: 30px;
+  border-left: 2px black solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-head .win {
+  width: 80px;
+  height: 30px;
+  border-left: 2px black solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-head .lose {
+  width: 80px;
+  height: 30px;
+  border-left: 2px rgb(238, 238, 238) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-body .team-name {
+  width: 270px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.table-body .win-point {
+  width: 80px;
+  height: 30px;
+
+  border-left: 2px rgb(238, 238, 238) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-body .win {
+  width: 80px;
+  height: 30px;
+
+  border-left: 2px rgb(238, 238, 238) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-body .lose {
+  width: 80px;
+  height: 30px;
+  border-left: 2px rgb(238, 238, 238) solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
