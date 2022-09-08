@@ -22,6 +22,7 @@ public class LeagueController {
 
     @PostMapping("")
     public ResponseEntity<MessageResponse> makeMyLeague(@RequestBody MyTeamRequest myTeamRequest) {
+        System.out.println(myTeamRequest.getBaseTeamId());
         leagueService.makeMyLeague(myTeamRequest);
         return ResponseEntity
             .status(HttpStatus.OK)
