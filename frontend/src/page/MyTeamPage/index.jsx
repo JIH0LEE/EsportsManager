@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 import Auth from "../../hoc/Auth";
 import axios from "axios";
@@ -17,7 +18,17 @@ function MyTeamPage() {
 
   const { userData } = useSelector((state) => state);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    axios
+      .get(API_SERVER + `/api/league/league-info/${userData.id}`)
+      .then((res) => {
+        if (!res.data.success) {
+          navigate("/make-team");
+        }
+      });
+
     axios.get(API_SERVER + `/api/my-team/${userData.id}`).then((res) => {
       setTeamName(res.data.name);
       setLogo(res.data.baseTeam.logo);

@@ -13,6 +13,10 @@
   background-color: rgb(15, 4, 76);
   color: rgb(238, 238, 238);
 }
+.button2 {
+  cursor: pointer;
+  color: rgb(238, 238, 238);
+}
 button {
   cursor: pointer;
 }
@@ -34,7 +38,9 @@ button {
 .background {
   background-color: rgb(15, 4, 76);
 }
-
+.background2 {
+  background-color: rgb(15, 4, 76, 0.8);
+}
 .basic {
   color: rgb(238, 238, 238);
 }
