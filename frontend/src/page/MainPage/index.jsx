@@ -17,19 +17,21 @@ function MainPage() {
         .get(API_SERVER + `/api/league/league-info/${userData.id}`)
         .then((res) => {
           setIsMyTeam(res.data.success);
+          if (res.data.success) {
+            axios
+              .get(API_SERVER + `/api/league/league-rank/${userData.id}`)
+              .then((res) => {
+                setLeagueRank(res.data);
+              })
+              .catch((err) => {
+                alert(err);
+              });
+          }
         })
         .catch((err) => {
           alert(err);
         });
     }
-    axios
-      .get(API_SERVER + `/api/league/league-rank/${userData.id}`)
-      .then((res) => {
-        setLeagueRank(res.data);
-      })
-      .catch((err) => {
-        alert(err);
-      });
   }, []);
 
   return (
@@ -57,20 +59,35 @@ function MainPage() {
           <div className="content-container basic">
             {userData.isLogin ? (
               <>
-                <div className="table-head basic-1">
-                  <div className="team-name">팀</div>
-                  <div className="win">승</div>
-                  <div className="lose">패</div>
-                  <div className="win-point">승점</div>
-                </div>
-                {leagueRank.map((team, idx) => (
-                  <div className="table-body ">
-                    <div className="team-name">{team.teamName}</div>
-                    <div className="win">{team.matchWin}</div>
-                    <div className="lose">{team.matchLose}</div>
-                    <div className="win-point">{team.winPoint}</div>
-                  </div>
-                ))}
+                {isMyTeam ? (
+                  <>
+                    <div className="table-head basic-1">
+                      <div className="team-name">팀</div>
+                      <div className="win">승</div>
+                      <div className="lose">패</div>
+                      <div className="win-point">승점</div>
+                    </div>
+                    {leagueRank.map((team, idx) => (
+                      <div className="table-body ">
+                        <div className="team-name">{team.teamName}</div>
+                        <div className="win">{team.matchWin}</div>
+                        <div className="lose">{team.matchLose}</div>
+                        <div className="win-point">{team.winPoint}</div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="direct-button button2"
+                      onClick={() => {
+                        navigate("/make-team");
+                      }}
+                    >
+                      팀을 생성해주세요
+                    </div>
+                  </>
+                )}
               </>
             ) : (
               <div
@@ -81,18 +98,6 @@ function MainPage() {
               >
                 로그인이 필요합니다
               </div>
-            )}
-            {userData.isLogin && !isMyTeam ? (
-              <div
-                className="direct-button button2"
-                onClick={() => {
-                  navigate("/make-team");
-                }}
-              >
-                팀을 생성하세요
-              </div>
-            ) : (
-              <></>
             )}
           </div>
         </div>
