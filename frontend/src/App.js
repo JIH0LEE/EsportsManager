@@ -9,6 +9,7 @@ import CardShowPage from "./page/CardShowPage";
 import BookPage from "./page/BookPage";
 import MyTeamPage from "./page/MyTeamPage";
 import MakeTeamPage from "./page/MakeTeamPage";
+import EntryChangePage from "./page/EntryChangePage";
 import Header from "./component/Header";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/book" element={<BookPage></BookPage>} />
           <Route path="/my-team" element={<MyTeamPage></MyTeamPage>} />
           <Route path="/make-team" element={<MakeTeamPage></MakeTeamPage>} />
+          <Route path="/entry" element={<EntryChangePage></EntryChangePage>} />
         </Routes>
       </div>
     </div>

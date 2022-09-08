@@ -60,6 +60,18 @@ function MyTeamPage() {
         sub={sub}
         logo={logo}
       ></Player>
+      <button
+        onClick={() => {
+          navigate("/entry", {
+            state: {
+              player: [top, jng, mid, adc, sup].concat(sub),
+              logo: logo,
+            },
+          });
+        }}
+      >
+        엔트리 교체
+      </button>
     </div>
   );
 }
