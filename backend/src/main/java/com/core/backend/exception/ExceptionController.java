@@ -48,6 +48,14 @@ public class ExceptionController {
             .body(new ExceptionResponse("생성된 리그가 없습니다."));
     }
 
+    @ExceptionHandler(TeamNameExist.class)
+    public ResponseEntity<ExceptionResponse> teamNameExistHandler(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse("같은 이름의 팀이 있습니다."));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> allExceptionHandler(Exception ex) {
         ex.printStackTrace();

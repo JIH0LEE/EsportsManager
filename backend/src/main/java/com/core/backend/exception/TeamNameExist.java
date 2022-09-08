@@ -1,20 +1,20 @@
 package com.core.backend.exception;
 
-public class PasswordNotMatch extends RuntimeException {
+public class TeamNameExist extends RuntimeException {
 
-    public PasswordNotMatch() {
+    public TeamNameExist() {
         super();
     }
 
-    public PasswordNotMatch(String message) {
+    public TeamNameExist(String message) {
         super(message);
     }
 
-    public PasswordNotMatch(String message, Throwable cause) {
+    public TeamNameExist(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public PasswordNotMatch(Throwable cause) {
+    public TeamNameExist(Throwable cause) {
         super(cause);
     }
 }

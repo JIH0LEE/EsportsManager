@@ -18,6 +18,7 @@ import com.core.backend.domain.repository.MyPlayerRepository;
 import com.core.backend.domain.repository.MyTeamRepository;
 import com.core.backend.exception.NoLeague;
 import com.core.backend.exception.NoValidHeadCoach;
+import com.core.backend.exception.TeamNameExist;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -87,7 +88,14 @@ public class LeagueService {
                 .build()));
     }
 
+    private void findSameTeamName(String name){
+        Optional<MyTeam> myTeam =myTeamRepository.findByName(name);
+        if(myTeam.isPresent()){
+            throw new TeamNameExist();
+        }
+    }
     public void makeMyLeague(MyTeamRequest myTeamRequest) {
+        findSameTeamName(myTeamRequest.getName());
         BaseTeam baseTeam = baseTeamRepository.findById(myTeamRequest.getBaseTeamId())
             .orElseThrow();
         HeadCoach headCoach = headCoachRepository.findById(myTeamRequest.getHeadCoachId()).orElseThrow();
