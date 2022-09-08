@@ -22,6 +22,25 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.label {
+  font-weight: bold;
+  font-size: 30px;
+  color: rgb(224, 171, 28);
+}
+.label-background {
+  background-color: rgb(224, 171, 28);
+}
+.background {
+  background-color: rgb(15, 4, 76);
+}
+
+.basic {
+  color: rgb(238, 238, 238);
+}
+.basic-1 {
+  color: rgb(15, 4, 76);
+}
 .modal-background {
   position: fixed;
   top: 50%;

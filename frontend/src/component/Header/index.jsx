@@ -10,8 +10,8 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className="header">
-      <div className="inner">
+    <div className="header background">
+      <div className="inner basic">
         <div
           className="logo button"
           onClick={() => {
@@ -22,7 +22,14 @@ function Header() {
         </div>
         <div className="nav-bar">
           <div className="nav-elem button">{"스케줄 진행하기"}</div>
-          <div className="nav-elem button">{"팀 관리"}</div>
+          <div
+            className="nav-elem button"
+            onClick={() => {
+              navigate("/my-team");
+            }}
+          >
+            {"팀 관리"}
+          </div>
           <div
             className="nav-elem button"
             onClick={() => {

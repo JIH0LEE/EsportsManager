@@ -21,7 +21,7 @@ function BookPage() {
   }, []);
 
   return (
-    <div className="book-page-container">
+    <div className="book-page-container background basic">
       <div className="label-container">선수 도감</div>
       <div className="team-logo-container">
         {baseTeams.map((baseTeam, idx) => (

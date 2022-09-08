@@ -31,7 +31,7 @@ function BanpickPage() {
   return (
     <div className="banpick-container">
       <div className="command-container">
-        <div className="command">Ban</div>
+        <div className="command background basic">Ban</div>
         <div className="submit-button button">확인</div>
       </div>
       <div className="score-board">

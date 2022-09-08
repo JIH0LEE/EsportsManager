@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   margin-top: 50px;
-  /* justify-content: center; */
   flex-direction: column;
 }
 .command-container {
@@ -25,10 +24,9 @@
   font-size: 30px;
   width: 600px;
   height: 80px;
-  background-color: rgb(15, 4, 76);
+
   border: solid 3px white;
   border-radius: 10px;
-  color: rgb(238, 238, 238);
 }
 .command-container .submit-button {
   position: absolute;
@@ -36,7 +34,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 2px solid rgb(238, 238, 238);
   font-size: 20px;
   right: 0px;
   width: 120px;
