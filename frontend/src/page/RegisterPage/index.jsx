@@ -44,7 +44,7 @@ function RegisterPage() {
       <div className="title">회원가입</div>
       <div className="name-container">
         <div className="left">닉네임</div>
-        <div classNAme="right">
+        <div className="right">
           <input
             className="input"
             placeholder="닉네임을 입력해주세요"
