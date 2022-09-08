@@ -40,6 +40,13 @@ public class ExceptionController {
             .body(new ExceptionResponse("비밀번호가 일치하지 않습니다."));
     }
 
+    @ExceptionHandler(NoLeague.class)
+    public ResponseEntity<ExceptionResponse> noLeagueHandler(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse("생성된 리그가 없습니다."));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> allExceptionHandler(Exception ex) {

@@ -19,13 +19,9 @@ public class PlayerController {
 
     @GetMapping("")
     public ResponseEntity<List<PlayerResponse>> getAll() {
-        List<PlayerResponse> body = playerService.getAll();
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(playerService.getAll());
     }
 
-    @GetMapping("/faker")
-    public ResponseEntity<PlayerResponse> getFaker() {
-        PlayerResponse body = playerService.getFaker();
-        return ResponseEntity.status(HttpStatus.OK).body(body);
-    }
 }

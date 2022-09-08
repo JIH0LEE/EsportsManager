@@ -19,7 +19,9 @@ public class ChampionController {
 
     @GetMapping("")
     public ResponseEntity<List<ChampionResponse>> getAll() {
-        List<ChampionResponse> body = championService.getAll();
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(championService.getAll());
     }
 }

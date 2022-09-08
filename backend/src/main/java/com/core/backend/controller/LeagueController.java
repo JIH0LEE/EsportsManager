@@ -2,7 +2,9 @@ package com.core.backend.controller;
 
 import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
+import com.core.backend.controller.dto.TeamRankResponse;
 import com.core.backend.service.LeagueService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,6 @@ public class LeagueController {
 
     @PostMapping("")
     public ResponseEntity<MessageResponse> makeMyLeague(@RequestBody MyTeamRequest myTeamRequest) {
-        System.out.println(myTeamRequest.getBaseTeamId());
         leagueService.makeMyLeague(myTeamRequest);
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -40,6 +41,12 @@ public class LeagueController {
                 .status(HttpStatus.OK)
                 .body(new MessageResponse(false, "생성된 리그가 없습니다."));
         }
+    }
+    @GetMapping("/league-rank/{id}")
+    public ResponseEntity<List<TeamRankResponse>> getLeagueRankingInfoByUser(@PathVariable Long id) {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(leagueService.getRankingInfoByUser(id));
     }
 
 }

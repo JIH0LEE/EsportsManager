@@ -1,6 +1,7 @@
 package com.core.backend.service;
 
 import com.core.backend.controller.dto.MyTeamRequest;
+import com.core.backend.controller.dto.TeamRankResponse;
 import com.core.backend.domain.BaseTeam;
 import com.core.backend.domain.HeadCoach;
 import com.core.backend.domain.League;
@@ -15,8 +16,11 @@ import com.core.backend.domain.repository.LeagueRepository;
 import com.core.backend.domain.repository.LeagueTeamRepository;
 import com.core.backend.domain.repository.MyPlayerRepository;
 import com.core.backend.domain.repository.MyTeamRepository;
+import com.core.backend.exception.NoLeague;
+import com.core.backend.exception.NoValidHeadCoach;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -106,4 +110,20 @@ public class LeagueService {
         return leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoachRepository.findById(id).orElseThrow());
     }
 
+    public List<TeamRankResponse> getRankingInfoByUser(Long id){
+        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow(NoValidHeadCoach::new);
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow(NoLeague::new);
+        List<TeamRankResponse> teamRankResponseList = league.getLeagueTeamList().stream()
+            .map(TeamRankResponse::of)
+            .collect(Collectors.toList());
+        teamRankResponseList.add(TeamRankResponse.of(league.getMyTeam()));
+        Comparator<TeamRankResponse> compare = Comparator
+            .comparing(TeamRankResponse::getWinPoint)
+            .thenComparing(TeamRankResponse::getMatchWin).reversed();
+        List<TeamRankResponse> sortedTeamRankResponseList = teamRankResponseList.stream()
+            .sorted(compare)
+            .collect(Collectors.toList());
+        return sortedTeamRankResponseList;
+
+    }
 }

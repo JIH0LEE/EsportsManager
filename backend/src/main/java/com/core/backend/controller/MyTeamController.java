@@ -19,8 +19,9 @@ public class MyTeamController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MyTeamResponse> getLeagueInfo(@PathVariable Long id) {
-        MyTeamResponse body = myTeamService.findTeamByUser(id);
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(myTeamService.findTeamByUser(id));
     }
 
 }

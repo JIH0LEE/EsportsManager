@@ -37,9 +37,8 @@ public class HeadCoachController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<MessageResponse> deleteHeadCoachById(@PathVariable Long id){
-        MessageResponse body = headCoachService.deleteHeadCoachById(id);
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(body);
+            .body(headCoachService.deleteHeadCoachById(id));
     }
 }
