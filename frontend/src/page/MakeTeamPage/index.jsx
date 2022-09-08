@@ -21,8 +21,15 @@ function BookPage() {
   }, []);
 
   return (
-    <div className="book-page-container background basic">
-      <div className="label-container label">선수 도감</div>
+    <div className="make-team-container background basic">
+      <div className="label-container label">팀 생성</div>
+      <div className="sub-label">팀 이름</div>
+      <input
+        type="text"
+        className="team-name-container"
+        placeholder="팀 이름을 입력하세요"
+      ></input>
+      <div className="sub-label">팀 선택하기</div>
       <div className="team-logo-container">
         {baseTeams.map((baseTeam, idx) => (
           <div
