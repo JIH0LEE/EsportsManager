@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface MyTeamRepository extends JpaRepository<MyTeam, Long> {
+
     MyTeam findByHeadCoach(HeadCoach headCoach);
 }

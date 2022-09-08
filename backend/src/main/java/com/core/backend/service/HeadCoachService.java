@@ -2,6 +2,7 @@ package com.core.backend.service;
 
 import com.core.backend.controller.dto.HeadCoachRequest;
 import com.core.backend.controller.dto.HeadCoachResponse;
+import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.domain.HeadCoach;
 import com.core.backend.domain.repository.HeadCoachRepository;
 import com.core.backend.exception.IsNotSamePassword;
@@ -21,7 +22,6 @@ public class HeadCoachService {
     private final HeadCoachRepository headCoachRepository;
     private final PasswordEncoder passwordEncoder;
 
-    //private : used for own service
     private boolean isValidName(String name) {
         HeadCoach headCoach = headCoachRepository.findByName(name).orElse(null);
         if (headCoach == null) {
@@ -37,7 +37,6 @@ public class HeadCoachService {
         return false;
     }
 
-    //public : used for controller
     public HeadCoachResponse createHeadCoach(HeadCoachRequest headCoachRequest) {
         if (!isValidName(headCoachRequest.getName())) {
             throw new IsNotValidHeadCoachName();
@@ -46,19 +45,24 @@ public class HeadCoachService {
             throw new IsNotSamePassword();
         }
         HeadCoach headCoach = HeadCoach.builder()
-                .name(headCoachRequest.getName())
-                .password(passwordEncoder.encode(headCoachRequest.getPassword()))
-                .build();
+            .name(headCoachRequest.getName())
+            .password(passwordEncoder.encode(headCoachRequest.getPassword()))
+            .build();
         headCoachRepository.save(headCoach);
         return HeadCoachResponse.of(headCoach);
     }
 
     public HeadCoachResponse login(HeadCoachRequest headCoachRequest) {
         HeadCoach headCoach = headCoachRepository.findByName(headCoachRequest.getName())
-                .orElseThrow(NoValidHeadCoach::new);
+            .orElseThrow(NoValidHeadCoach::new);
         if (!passwordEncoder.matches(headCoachRequest.getPassword(), headCoach.getPassword())) {
             throw new PasswordNotMatch();
         }
         return HeadCoachResponse.of(headCoach);
+    }
+
+    public MessageResponse deleteHeadCoachById(Long id){
+        headCoachRepository.deleteById(id);
+        return new MessageResponse(true,"정상적으로 삭제되었습니다.");
     }
 }

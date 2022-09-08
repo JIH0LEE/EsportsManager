@@ -16,7 +16,7 @@ public class MyTeamService {
     private final MyTeamRepository myTeamRepository;
     private final HeadCoachRepository headCoachRepository;
 
-    public MyTeamResponse findTeamByUser(Long id){
+    public MyTeamResponse findTeamByUser(Long id) {
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
         return MyTeamResponse.of(myTeamRepository.findByHeadCoach(headCoach));
     }

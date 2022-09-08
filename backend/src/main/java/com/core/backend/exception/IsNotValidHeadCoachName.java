@@ -1,6 +1,7 @@
 package com.core.backend.exception;
 
 public class IsNotValidHeadCoachName extends RuntimeException {
+
     public IsNotValidHeadCoachName() {
         super();
     }

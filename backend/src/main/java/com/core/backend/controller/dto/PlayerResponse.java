@@ -3,15 +3,15 @@ package com.core.backend.controller.dto;
 import com.core.backend.domain.Player;
 import com.core.backend.domain.enums.Grade;
 import com.core.backend.domain.enums.Position;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class PlayerResponse {
+
     private Long id;
 
     private String nickName;
@@ -41,19 +41,19 @@ public class PlayerResponse {
 
     public static PlayerResponse of(Player player) {
         return new PlayerResponse(
-                player.getId(),
-                player.getNickName(),
-                player.getRealName(),
-                player.getPosition(),
-                player.getLaneStatus(),
-                player.getFightStatus(),
-                player.getOperationStatus(),
-                player.getRoamingStatus(),
-                player.getGankingStatus(),
-                player.getJunglingStatus(),
-                player.getGrade(),
-                player.getPrice(),
-                player.getImage());
+            player.getId(),
+            player.getNickName(),
+            player.getRealName(),
+            player.getPosition(),
+            player.getLaneStatus(),
+            player.getFightStatus(),
+            player.getOperationStatus(),
+            player.getRoamingStatus(),
+            player.getGankingStatus(),
+            player.getJunglingStatus(),
+            player.getGrade(),
+            player.getPrice(),
+            player.getImage());
 
     }
 }

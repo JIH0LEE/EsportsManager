@@ -1,6 +1,7 @@
 package com.core.backend.exception;
 
 public class IsNotSamePassword extends RuntimeException {
+
     public IsNotSamePassword() {
         super();
     }
