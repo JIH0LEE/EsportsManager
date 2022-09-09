@@ -62,9 +62,9 @@ function MyTeamPage() {
         ></Player>
       );
     } else if (selected === "SPONSOR") {
-      return <Sponsor></Sponsor>;
+      return <Sponsor id={userData.id}></Sponsor>;
     } else {
-      return <Enterprise></Enterprise>;
+      return <Enterprise id={userData.id}></Enterprise>;
     }
   };
   return (

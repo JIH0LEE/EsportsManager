@@ -51,7 +51,7 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
       <div className="regular-container">
         <div className="position-label  basic">SUB</div>
         {sub.length === 0 ? (
-          <div className="no-sub basic">서브 선수가 없습니다</div>
+          <div className="none-container">서브 선수가 없습니다</div>
         ) : (
           <div className="player-card-container">
             {sub.map((subPlayer, idx) => (
