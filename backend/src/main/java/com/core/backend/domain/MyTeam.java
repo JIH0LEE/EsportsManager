@@ -99,4 +99,18 @@ public class MyTeam {
         }
     }
 
+    public List<Long> getSponsors(){
+        List<Long> sponsors = new ArrayList<Long>();
+        if(sponsor1!=null){
+            sponsors.add(sponsor1);
+        }
+        if(sponsor2!=null){
+            sponsors.add(sponsor2);
+        }
+        if(sponsor3!=null){
+            sponsors.add(sponsor3);
+        }
+        return sponsors;
+    }
+
 }
