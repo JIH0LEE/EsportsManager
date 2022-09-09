@@ -1,0 +1,16 @@
+cors:
+allowed-origins: http://lckm.kro.kr, http://lckm.kro.kr:80, http://ec2-13-124-221-236.ap-northeast-2.compute.amazonaws.com, http://ec2-13-124-221-236.ap-northeast-2.compute.amazonaws.com:80, http://13.124.221.236, http://13.124.221.236:80
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://esportsmanager.cx6nzwirrgvm.ap-northeast-2.rds.amazonaws.com:3306/EsportsManager?userSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: soongle
+    password: wlghwlgn12
+
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      mode: always
