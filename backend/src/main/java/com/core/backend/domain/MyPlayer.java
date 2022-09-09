@@ -35,4 +35,8 @@ public class MyPlayer {
     @JoinColumn(name = "my_team_id")
     private MyTeam myTeam;
 
+    public void update(String position){
+        this.position = position;
+    }
+
 }
