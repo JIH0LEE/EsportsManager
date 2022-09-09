@@ -62,7 +62,6 @@
 }
 .myteam-page-container .player-container .regular-container {
   width: 100%;
-  height: 450px;
   flex-direction: column;
   display: flex;
   justify-content: center;
@@ -102,4 +101,51 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.menu-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.menu-container .menu {
+  width: 400px;
+  height: 130px;
+  font-size: 25px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.menu-container .clicked {
+  color: rgb(224, 171, 28);
+}
+.player-container .button-container {
+  width: 1200px;
+  height: 120px;
+  display: flex;
+  padding: 20px 30px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+}
+.player-container .button-container .submit {
+  height: 80px;
+  display: flex;
+  padding: 0px 30px;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 20px;
+  font-weight: bold;
+  flex-direction: row;
+  border: 2px white solid;
+  border-radius: 10px;
+}
+.player-container .button-container .submit:hover {
+  background-color: white;
+  border: 2px white solid;
+  color: rgb(15, 4, 76);
+  border-radius: 10px;
 }

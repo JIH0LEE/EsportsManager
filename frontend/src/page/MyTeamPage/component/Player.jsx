@@ -1,11 +1,12 @@
 import React from "react";
 import PlayerCard from "../../../component/PlayerCard";
+import { useNavigate } from "react-router-dom";
 import "../style.css";
 
-const Player = ({ top, jng, mid, adc, sup, sub, logo }) => {
+const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
+  const navigate = useNavigate();
   return (
     <div className="player-container">
-      <div className="label-container label">선수 목록</div>
       <div className="regular-container">
         <div className="position-label  basic">REGULAR</div>
         <div className="player-card-container">
@@ -49,16 +50,36 @@ const Player = ({ top, jng, mid, adc, sup, sub, logo }) => {
       </div>
       <div className="regular-container">
         <div className="position-label  basic">SUB</div>
-        <div className="player-card-container">
-          {sub.map((subPlayer, idx) => (
-            <div className="player">
-              <PlayerCard
-                key={idx}
-                player={subPlayer.player}
-                logo={logo}
-              ></PlayerCard>
-            </div>
-          ))}
+        {sub.length === 0 ? (
+          <div className="no-sub basic">서브 선수가 없습니다</div>
+        ) : (
+          <div className="player-card-container">
+            {sub.map((subPlayer, idx) => (
+              <div className="player">
+                <PlayerCard
+                  key={idx}
+                  player={subPlayer.player}
+                  logo={logo}
+                ></PlayerCard>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="button-container">
+        <div
+          className="submit button"
+          onClick={() => {
+            navigate("/entry", {
+              state: {
+                player: [top, jng, mid, adc, sup].concat(sub),
+                logo: logo,
+                id: id,
+              },
+            });
+          }}
+        >
+          엔트리 변경
         </div>
       </div>
     </div>
