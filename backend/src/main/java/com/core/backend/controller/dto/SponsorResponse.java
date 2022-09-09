@@ -20,13 +20,16 @@ public class SponsorResponse {
 
     private String image;
 
+    private Integer win;
+
     public static SponsorResponse of(Sponsor sponsor) {
         return new SponsorResponse(
                 sponsor.getId(),
                 sponsor.getName(),
                 sponsor.getDescription(),
                 sponsor.getMoney(),
-                sponsor.getImage()
+                sponsor.getImage(),
+                sponsor.getWin()
            );
     }
 }
