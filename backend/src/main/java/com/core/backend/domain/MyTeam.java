@@ -50,6 +50,18 @@ public class MyTeam {
     @Column(columnDefinition = "varchar(20) default '0'")
     private Integer setLose;
 
+    private Integer money;
+
+    private Long sponsor1;
+
+    private Long sponsor2;
+
+    private Long sponsor3;
+
+    private Long enterprise1;
+
+    private Long enterprise2;
+
     @OneToOne
     @JoinColumn(name = "head_coach_id")
     private HeadCoach headCoach;
@@ -57,6 +69,7 @@ public class MyTeam {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "base_team_id")
     private BaseTeam baseTeam;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MyPlayer> myPlayerList = new ArrayList<>();
