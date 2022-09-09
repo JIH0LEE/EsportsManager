@@ -1,5 +1,6 @@
 package com.core.backend.domain.repository;
 
+import com.core.backend.domain.Enterprise;
 import com.core.backend.domain.Sponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
 

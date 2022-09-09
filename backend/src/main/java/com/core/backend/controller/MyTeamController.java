@@ -1,9 +1,6 @@
 package com.core.backend.controller;
 
-import com.core.backend.controller.dto.ChangeEntryRequest;
-import com.core.backend.controller.dto.MessageResponse;
-import com.core.backend.controller.dto.MyTeamResponse;
-import com.core.backend.controller.dto.TeamSponsorResponse;
+import com.core.backend.controller.dto.*;
 import com.core.backend.service.MyTeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,10 +33,17 @@ public class MyTeamController {
             .body(myTeamService.changeEntry(changeEntryRequest));
     }
 
-    @GetMapping("/get-sponsor/{id}")
+    @GetMapping("/sponsor/{id}")
     public ResponseEntity<TeamSponsorResponse> getSponsors(@PathVariable Long id){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(myTeamService.getSponsors(id));
+    }
+
+    @GetMapping("/enterprise/{id}")
+    public ResponseEntity<TeamEnterpriseResponse> getEnterprises(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(myTeamService.getEnterprises(id));
     }
 }

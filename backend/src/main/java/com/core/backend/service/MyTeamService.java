@@ -1,20 +1,14 @@
 package com.core.backend.service;
 
 import com.core.backend.controller.dto.*;
-import com.core.backend.domain.HeadCoach;
-import com.core.backend.domain.MyPlayer;
-import com.core.backend.domain.MyTeam;
-import com.core.backend.domain.Sponsor;
-import com.core.backend.domain.repository.HeadCoachRepository;
-import com.core.backend.domain.repository.MyPlayerRepository;
-import com.core.backend.domain.repository.MyTeamRepository;
+import com.core.backend.domain.*;
+import com.core.backend.domain.repository.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.core.backend.domain.repository.SponsorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +22,7 @@ public class MyTeamService {
     private final SponsorRepository sponsorRepository;
     private final MyPlayerRepository myPlayerRepository;
     private final HeadCoachRepository headCoachRepository;
+    private final EnterpriseRepository enterpriseRepository;
 
     public MyTeamResponse findTeamByUser(Long id) {
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
@@ -68,11 +63,30 @@ public class MyTeamService {
             disableSponsor=sponsorRepository.findAllByIdNotInAndWinGreaterThan(ids,myTeam.getMatchWin());
             enableSponsor = sponsorRepository.findAllByIdNotInAndWinLessThanEqual(ids,myTeam.getMatchWin());
         }
-
         return new TeamSponsorResponse(
                 alreadySponsor.stream().map(SponsorResponse::of).collect(Collectors.toList()),
                 disableSponsor.stream().map(SponsorResponse::of).collect(Collectors.toList()),
                 enableSponsor.stream().map(SponsorResponse::of).collect(Collectors.toList())
+        );
+    }
+
+    public TeamEnterpriseResponse getEnterprises(Long id){
+        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
+        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+        List<Long> ids = myTeam.getEnterprises();
+        List<Enterprise> ing;
+        List<Enterprise> yet;
+        if(ids.size()==0){
+            ing=new ArrayList<>();
+            yet=enterpriseRepository.findAll();
+        }
+        else {
+            ing = enterpriseRepository.findAllById(ids);
+            yet=enterpriseRepository.findAllByIdNotIn(ids);
+        }
+        return new TeamEnterpriseResponse(
+                ing.stream().map(EnterpriseResponse::of).collect(Collectors.toList()),
+                yet.stream().map(EnterpriseResponse::of).collect(Collectors.toList())
         );
     }
 

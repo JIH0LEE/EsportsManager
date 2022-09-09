@@ -113,4 +113,15 @@ public class MyTeam {
         return sponsors;
     }
 
+    public List<Long> getEnterprises(){
+        List<Long> enterprises = new ArrayList<Long>();
+        if(enterprise1!=null){
+            enterprises.add(enterprise1);
+        }
+        if(enterprise2!=null){
+            enterprises.add(enterprise2);
+        }
+        return enterprises;
+    }
+
 }
