@@ -27,11 +27,11 @@ public class PlayerResponse {
 
     private Integer operationStatus;
 
-    private String roamingStatus;
+    private Integer roamingStatus;
 
-    private String gankingStatus;
+    private Integer gankingStatus;
 
-    private String junglingStatus;
+    private Integer junglingStatus;
 
     private Grade grade;
 

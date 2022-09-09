@@ -1,10 +1,12 @@
 package com.core.backend.service;
 
+import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.TeamRankResponse;
 import com.core.backend.domain.BaseTeam;
 import com.core.backend.domain.HeadCoach;
 import com.core.backend.domain.League;
+import com.core.backend.domain.LeagueSchedule;
 import com.core.backend.domain.LeagueTeam;
 import com.core.backend.domain.MyPlayer;
 import com.core.backend.domain.MyTeam;
@@ -13,6 +15,7 @@ import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.BaseTeamRepository;
 import com.core.backend.domain.repository.HeadCoachRepository;
 import com.core.backend.domain.repository.LeagueRepository;
+import com.core.backend.domain.repository.LeagueScheduleRepository;
 import com.core.backend.domain.repository.LeagueTeamRepository;
 import com.core.backend.domain.repository.MyPlayerRepository;
 import com.core.backend.domain.repository.MyTeamRepository;
@@ -40,6 +43,7 @@ public class LeagueService {
     private final HeadCoachRepository headCoachRepository;
     private final LeagueRepository leagueRepository;
     private final LeagueTeamRepository leagueTeamRepository;
+    private final LeagueScheduleRepository leagueScheduleRepository;
 
     private void makeMyPlayer(MyTeam myTeam, List<Player> playerList, String position) {
         List<Player> players =
@@ -72,7 +76,7 @@ public class LeagueService {
             League.builder()
                 .headCoach(headCoach)
                 .myTeam(myTeam)
-                .day(0)
+                .day(1)
                 .finish(false)
                 .build()
         );
@@ -126,12 +130,139 @@ public class LeagueService {
             .collect(Collectors.toList());
         teamRankResponseList.add(TeamRankResponse.of(league.getMyTeam()));
         Comparator<TeamRankResponse> compare = Comparator
-            .comparing(TeamRankResponse::getWinPoint)
-            .thenComparing(TeamRankResponse::getMatchWin).reversed();
+            .comparing(TeamRankResponse::getMatchWin)
+            .thenComparing(TeamRankResponse::getWinPoint).reversed();
         List<TeamRankResponse> sortedTeamRankResponseList = teamRankResponseList.stream()
             .sorted(compare)
             .collect(Collectors.toList());
         return sortedTeamRankResponseList;
 
+    }
+
+    private void addDay(League league){
+        league.addDay();
+    }
+
+
+    private int getTeamPower(LeagueTeam leagueTeam){
+        int power = 0;
+        BaseTeam baseTeam = baseTeamRepository.findById(leagueTeam.getBaseTeam().getId()).orElseThrow();
+        List<Player> playerList = baseTeam.getPlayers();
+        for (Player player : playerList){
+            power = power + player.getAllPower();
+        }
+        return power/playerList.size()-250;
+    }
+
+    private int getMyTeamPower(MyTeam myTeam){
+        int power = 0;
+        List<MyPlayer> myPlayerList = myTeam.getMyPlayerList();
+        for (MyPlayer player : myPlayerList){
+            power = power + player.getAllPower();
+        }
+        return power/myPlayerList.size()-250;
+    }
+
+    private void progressMyTeam(MyTeam myTeam,LeagueTeam leagueTeam,int teamNum){
+        Integer team1Power;
+        Integer team2Power;
+        int score = 0;
+        if (teamNum==1){
+            team1Power = getMyTeamPower(myTeam);
+            team2Power = getTeamPower(leagueTeam);
+        }
+        else{
+            team2Power = getMyTeamPower(myTeam);
+            team1Power = getTeamPower(leagueTeam);
+        }
+        float team1Rate = (float) (team1Power / (team1Power + team2Power));
+        for(int i =0;i<3;i++){
+            if(score==2 || score == -2){
+                break;
+            }
+            double rand = Math.random();
+            if(rand<=team1Rate){
+                score+=1;
+            }
+            else{
+                score-=1;
+            }
+        }
+        if(teamNum==1){
+            //1팀이 내 팀
+           myTeam.updateWinPoint(score);
+           leagueTeam.updateWinPoint(-score);
+        }
+        else{
+            //2팀이 내 팀
+            myTeam.updateWinPoint(-score);
+            leagueTeam.updateWinPoint(score);
+        }
+    }
+    private void progressOtherTeam(LeagueTeam leagueTeam1,LeagueTeam leagueTeam2){
+        int team1Power;
+        int team2Power;
+        int score = 0;
+        team1Power = getTeamPower(leagueTeam1);
+        team2Power = getTeamPower(leagueTeam2);
+        float team1Rate = ((float)team1Power / (team1Power + team2Power));
+        for(int i =0;i<3;i++){
+            if(score==2 || score == -2){
+                break;
+            }
+            double rand = Math.random();
+
+            if(rand<=team1Rate){
+                score+=1;
+            }
+            else{
+                score-=1;
+            }
+        }
+        leagueTeam1.updateWinPoint(score);
+        leagueTeam2.updateWinPoint(-score);
+    }
+    private void playGame(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam,League league){
+        for (LeagueSchedule leagueSchedule : leagueScheduleList ){
+            if(leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())){
+                //내 팀 대결
+                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
+                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam);
+                progressMyTeam(myTeam,oppositeTeam,1);
+            }
+            else if(leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())){
+
+                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
+                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam);
+                progressMyTeam(myTeam,oppositeTeam,2);
+            }
+            else{
+                BaseTeam baseTeam1 = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
+                BaseTeam baseTeam2 = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
+                LeagueTeam leagueTeam1 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam1);
+                LeagueTeam leagueTeam2 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam2);
+                progressOtherTeam(leagueTeam1,leagueTeam2);
+            }
+        }
+    }
+
+    public MessageResponse progressLeague(Long id){
+        for(int i =0; i<61;i++){
+            HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
+            League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
+            MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+            Long baseTeamId = league.getMyTeam().getBaseTeam().getId();
+            if(!leagueScheduleList.get(0).isGame()){
+                addDay(league);
+//            return new MessageResponse(true,"오늘 경기가 없습니다.");
+            }
+            else{
+                playGame(leagueScheduleList,myTeam,league);
+                addDay(league);
+//            return new MessageResponse(true,"오늘 경기가 있습니다.");
+            }
+        }
+        return new MessageResponse(true,"끝");
     }
 }

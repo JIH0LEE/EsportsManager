@@ -49,4 +49,11 @@ public class LeagueController {
             .body(leagueService.getRankingInfoByUser(id));
     }
 
+    @GetMapping("/league-process/{id}")
+    public ResponseEntity<MessageResponse> progressLeague(@PathVariable Long id) {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(leagueService.progressLeague(id));
+    }
+
 }
