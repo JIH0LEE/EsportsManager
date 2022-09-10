@@ -1,20 +1,20 @@
 package com.core.backend.exception;
 
-public class NoValidHeadCoach extends RuntimeException {
+public class NotEnoughMoney extends RuntimeException {
 
-    public NoValidHeadCoach() {
+    public NotEnoughMoney() {
         super();
     }
 
-    public NoValidHeadCoach(String message) {
+    public NotEnoughMoney(String message) {
         super(message);
     }
 
-    public NoValidHeadCoach(String message, Throwable cause) {
+    public NotEnoughMoney(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NoValidHeadCoach(Throwable cause) {
+    public NotEnoughMoney(Throwable cause) {
         super(cause);
     }
 }

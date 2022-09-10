@@ -11,6 +11,7 @@ import com.core.backend.domain.LeagueTeam;
 import com.core.backend.domain.MyPlayer;
 import com.core.backend.domain.MyTeam;
 import com.core.backend.domain.Player;
+import com.core.backend.domain.enums.Condition;
 import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.BaseTeamRepository;
 import com.core.backend.domain.repository.HeadCoachRepository;
@@ -53,21 +54,25 @@ public class LeagueService {
         Player main = players.get(0);
         myPlayerRepository.save(
             MyPlayer.builder()
-                .player(main)
-                .level(1)
-                .myTeam(myTeam)
-                .position(position)
-                .build()
+                    .player(main)
+                    .level(1)
+                    .myTeam(myTeam)
+                    .status(Condition.NORMAL)
+                    .exp(0)
+                    .position(position)
+                    .build()
         );
         players.remove(0);
         players.stream()
             .forEach(player -> myPlayerRepository.save(
                 MyPlayer.builder()
-                    .player(player)
-                    .level(1)
-                    .myTeam(myTeam)
-                    .position("SUB")
-                    .build())
+                        .player(player)
+                        .level(1)
+                        .myTeam(myTeam)
+                        .position("SUB")
+                        .status(Condition.NORMAL)
+                        .exp(0)
+                        .build())
             );
     }
 
@@ -105,10 +110,11 @@ public class LeagueService {
         HeadCoach headCoach = headCoachRepository.findById(myTeamRequest.getHeadCoachId()).orElseThrow();
         List<Player> playerList = baseTeam.getPlayers();
         MyTeam myTeam = MyTeam.builder()
-            .name(myTeamRequest.getName())
-            .baseTeam(baseTeam)
-            .headCoach(headCoach)
-            .build();
+                .name(myTeamRequest.getName())
+                .baseTeam(baseTeam)
+                .headCoach(headCoach)
+                .money(0)
+                .build();
         myTeamRepository.save(myTeam);
         String[] positionArray = {"TOP", "JUNGLE", "MIDDLE", "ADC", "SUPPORT"};
         for (String position : positionArray) {

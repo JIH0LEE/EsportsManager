@@ -56,6 +56,14 @@ public class ExceptionController {
             .body(new ExceptionResponse("같은 이름의 팀이 있습니다."));
     }
 
+    @ExceptionHandler(NotEnoughMoney.class)
+    public ResponseEntity<ExceptionResponse> notEnoughMoneyHandler(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse("자금이 부족합니다."));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> allExceptionHandler(Exception ex) {
         ex.printStackTrace();
@@ -63,4 +71,5 @@ public class ExceptionController {
             .status(HttpStatus.BAD_REQUEST)
             .body(new ExceptionResponse(ex.getMessage()));
     }
+
 }

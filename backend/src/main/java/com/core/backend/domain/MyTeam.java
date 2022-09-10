@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.core.backend.exception.NotEnoughMoney;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -124,4 +126,35 @@ public class MyTeam {
         return enterprises;
     }
 
+    public void contractSponsor(Long id){
+        if(sponsor1==null){
+            sponsor1 = id;
+        }
+        else if(sponsor2==null){
+            sponsor2 =id;
+        }
+        else{
+            sponsor3 = id;
+        }
+    }
+    public void startEnterprise(Long id){
+        if(enterprise1==null){
+            enterprise1 = id;
+        }
+        else{
+            enterprise2 = id;
+        }
+        if(id==1L){
+            if(money<20000000){
+                throw new NotEnoughMoney();
+            }
+            money = money - 20000000;
+        }
+        else{
+            if(money<100000000){
+                throw new NotEnoughMoney();
+            }
+            money = money - 100000000;
+        }
+    }
 }

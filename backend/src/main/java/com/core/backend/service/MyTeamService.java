@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.core.backend.exception.NotEnoughMoney;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,10 @@ public class MyTeamService {
     private final MyPlayerRepository myPlayerRepository;
     private final HeadCoachRepository headCoachRepository;
     private final EnterpriseRepository enterpriseRepository;
+
+    private MyTeam findMyTeamByHeadCoachId(Long id){
+        return myTeamRepository.findByHeadCoach(headCoachRepository.findById(id).orElseThrow());
+    }
 
     public MyTeamResponse findTeamByUser(Long id) {
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
@@ -47,8 +52,7 @@ public class MyTeamService {
     }
 
     public TeamSponsorResponse getSponsors(Long id){
-        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
-        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+        MyTeam myTeam = findMyTeamByHeadCoachId(id);
         List<Long> ids = myTeam.getSponsors();
         List<Sponsor> alreadySponsor;
         List<Sponsor> disableSponsor;
@@ -71,8 +75,7 @@ public class MyTeamService {
     }
 
     public TeamEnterpriseResponse getEnterprises(Long id){
-        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
-        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+        MyTeam myTeam = findMyTeamByHeadCoachId(id);
         List<Long> ids = myTeam.getEnterprises();
         List<Enterprise> ing;
         List<Enterprise> yet;
@@ -88,6 +91,18 @@ public class MyTeamService {
                 ing.stream().map(EnterpriseResponse::of).collect(Collectors.toList()),
                 yet.stream().map(EnterpriseResponse::of).collect(Collectors.toList())
         );
+    }
+
+    public MessageResponse contractSponsor(Long headCoachId,Long sponsorId){
+        MyTeam myTeam = findMyTeamByHeadCoachId(headCoachId);
+        myTeam.contractSponsor(sponsorId);
+        return new MessageResponse(true,"성공적으로 계약이 되었습니다!");
+    }
+
+    public MessageResponse startEnterprise(Long headCoachId,Long enterpriseId){
+        MyTeam myTeam = findMyTeamByHeadCoachId(headCoachId);
+        myTeam.startEnterprise(enterpriseId);
+        return new MessageResponse(true,"성공적으로 계약이 되었습니다!");
     }
 
 }

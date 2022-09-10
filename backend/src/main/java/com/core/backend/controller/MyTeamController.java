@@ -5,12 +5,7 @@ import com.core.backend.service.MyTeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/my-team")
@@ -45,5 +40,21 @@ public class MyTeamController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(myTeamService.getEnterprises(id));
+    }
+
+    @PostMapping("/sponsor")
+    public ResponseEntity<MessageResponse> contactSponsor(@RequestParam("user") Long id
+                                                                 ,@RequestParam("sponsor") Long sponsorId){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(myTeamService.contractSponsor(id,sponsorId));
+    }
+
+    @PostMapping("/enterprise")
+    public ResponseEntity<MessageResponse> startEnterprise(@RequestParam("user") Long id
+                                                                ,@RequestParam("enterprise") Long enterpriseId){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(myTeamService.startEnterprise(id,enterpriseId));
     }
 }
