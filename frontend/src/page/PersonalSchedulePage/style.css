@@ -1,0 +1,263 @@
+.schedule-page {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  flex-direction: column;
+  margin: 50px 0px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.schedule-page .button-container {
+  width: 1200px;
+  height: 120px;
+  display: flex;
+  padding: 20px 30px;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+}
+
+.schedule-page .button-container .submit {
+  height: 80px;
+  display: flex;
+  padding: 0px 30px;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 20px;
+  font-weight: bold;
+  flex-direction: row;
+  border: 2px white solid;
+  border-radius: 10px;
+}
+.personal-schedule-container {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.schedule-info {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-weight: bold;
+  padding: 20px;
+  font-size: 20px;
+  width: 1100px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: rgb(238, 238, 238, 0.7);
+}
+.personal-schedule-container .player-condition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  height: 400px;
+}
+.personal-schedule-container .player-condition .player-card {
+  width: 200px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(0, 0, 0, 0.8);
+  border-radius: 20px;
+}
+.personal-schedule-container .player-condition .player-card .image-container {
+  width: 160px;
+  height: 100px;
+  overflow: hidden;
+  object-fit: cover;
+  border: white 2px solid;
+  border-radius: 10px;
+}
+.personal-schedule-container .player-condition .player-card .name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 30px;
+}
+.personal-schedule-container .player-condition .player-card .level-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 160px;
+  height: 30px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .condition-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 160px;
+  height: 30px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .left-side {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 40px;
+  height: 30px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 120px;
+  border: 2px white solid;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 20px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .exp {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  height: 20px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-0 {
+  width: 0%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-1 {
+  width: 10%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-2 {
+  width: 20%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-3 {
+  width: 30%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-4 {
+  width: 40%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-5 {
+  width: 50%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-6 {
+  width: 60%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-7 {
+  width: 70%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-8 {
+  width: 80%;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .level-container
+  .right-side
+  .e-9 {
+  width: 90%;
+}
+
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .image-container
+  .image {
+  width: 160px;
+  height: 100px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.personal-schedule-container .player-condition .player-card .select-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 160px;
+  height: 80px;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .select-container
+  .schedule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  font-weight: bold;
+}
+.personal-schedule-container
+  .player-condition
+  .player-card
+  .select-container
+  .clicked {
+  background-color: white;
+  color: black;
+}

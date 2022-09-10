@@ -10,6 +10,7 @@ import BookPage from "./page/BookPage";
 import MyTeamPage from "./page/MyTeamPage";
 import MakeTeamPage from "./page/MakeTeamPage";
 import EntryChangePage from "./page/EntryChangePage";
+import PersonalSchedulePage from "./page/PersonalSchedulePage";
 import Header from "./component/Header";
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
           <Route path="/my-team" element={<MyTeamPage></MyTeamPage>} />
           <Route path="/make-team" element={<MakeTeamPage></MakeTeamPage>} />
           <Route path="/entry" element={<EntryChangePage></EntryChangePage>} />
+          <Route
+            path="/personal-schedule"
+            element={<PersonalSchedulePage></PersonalSchedulePage>}
+          />
         </Routes>
       </div>
     </div>
