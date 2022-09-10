@@ -18,6 +18,17 @@ const Sponsor = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const submit = (sponsorId) => {
+    axios
+      .post(API_SERVER + `/api/my-team/sponsor?user=${id}&sponsor=${sponsorId}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="sponsor-container">
       <div className="label-container">계약된 스폰서</div>
@@ -35,7 +46,7 @@ const Sponsor = ({ id }) => {
                 <div className="description">
                   승리 시 {sponsor.money}원 만큼 얻습니다.
                   <br></br>
-                  <br></br> 계약 조건: {sponsor.win} 이상
+                  <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>
                 <div className="button-container"></div>
               </div>
@@ -58,10 +69,15 @@ const Sponsor = ({ id }) => {
                 <div className="description">
                   승리 시 {sponsor.money}원 만큼 얻습니다.
                   <br></br>
-                  <br></br> 계약 조건: {sponsor.win} 이상
+                  <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>
                 <div className="button-container">
-                  <div className="register-button button2 background">
+                  <div
+                    onClick={() => {
+                      submit(sponsor.id);
+                    }}
+                    className="register-button button2 background"
+                  >
                     등록하기
                   </div>
                 </div>
@@ -85,7 +101,7 @@ const Sponsor = ({ id }) => {
                 <div className="description">
                   승리 시 {sponsor.money}원 만큼 얻습니다.
                   <br></br>
-                  <br></br> 계약 조건: {sponsor.win} 이상
+                  <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>
                 <div className="button-container"></div>
               </div>

@@ -15,7 +15,19 @@ const Enterprise = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const submit = (enterPriseid) => {
+    axios
+      .post(
+        API_SERVER +
+          `/api/my-team/enterprise?user=${id}&enterprise=${enterPriseid}`
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="sponsor-container">
       <div className="label-container">진행중인 사업</div>
@@ -58,7 +70,12 @@ const Enterprise = ({ id }) => {
                   {enterprise.earningMoney}원 만큼 얻습니다.
                 </div>
                 <div className="button-container">
-                  <div className="register-button button2 background">
+                  <div
+                    onClick={() => {
+                      submit(enterprise.id);
+                    }}
+                    className="register-button button2 background"
+                  >
                     등록하기
                   </div>
                 </div>
