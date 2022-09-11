@@ -7,6 +7,7 @@ import "../style.css";
 const Enterprise = ({ id }) => {
   const [yet, setYet] = useState([]);
   const [ing, setIng] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/enterprise/${id}`).then((res) => {
       setIng(res.data.ing);
@@ -22,10 +23,11 @@ const Enterprise = ({ id }) => {
           `/api/my-team/enterprise?user=${id}&enterprise=${enterPriseid}`
       )
       .then((res) => {
-        console.log(res.data);
+        alert(res.data.message);
+        navigate("/my-team");
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.data.message);
       });
   };
   return (

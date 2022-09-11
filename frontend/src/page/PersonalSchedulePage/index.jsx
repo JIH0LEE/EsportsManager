@@ -14,13 +14,25 @@ function PersonalSchedulePage() {
   const [adc, setAdc] = useState(null);
   const [sup, setSup] = useState(null);
   const [sub, setSub] = useState([]);
-  const [sumbitdata, setSubmitData] = useState([]);
+  const [submitData, setSubmitData] = useState([]);
   const { userData } = useSelector((state) => state);
 
   const changeSubmitData = (idx, id) => {
-    const changedArray = [...sumbitdata];
+    const changedArray = [...submitData];
     changedArray[idx].scheduleId = id;
     setSubmitData(changedArray);
+  };
+
+  const submit = () => {
+    const body = { headCoachId: userData.id, submitData: submitData };
+    axios
+      .post(API_SERVER + "/api/my-team/schedule", body)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/${userData.id}`).then((res) => {
@@ -65,12 +77,14 @@ function PersonalSchedulePage() {
           adc={adc}
           sup={sup}
           sub={sub}
-          submitData={sumbitdata}
+          submitData={submitData}
           func={changeSubmitData}
         ></Player>
       </div>
       <div className="button-container">
-        <div className="submit button">진행하기</div>
+        <div className="submit button" onClick={submit}>
+          진행하기
+        </div>
       </div>
     </div>
   );
