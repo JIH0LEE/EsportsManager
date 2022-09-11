@@ -1,26 +1,10 @@
 package com.core.backend.service;
 
-import com.core.backend.controller.dto.LeagueDetailedInfoResponse;
-import com.core.backend.controller.dto.MessageResponse;
-import com.core.backend.controller.dto.MyTeamRequest;
-import com.core.backend.controller.dto.TeamRankResponse;
-import com.core.backend.domain.BaseTeam;
-import com.core.backend.domain.HeadCoach;
-import com.core.backend.domain.League;
-import com.core.backend.domain.LeagueSchedule;
-import com.core.backend.domain.LeagueTeam;
-import com.core.backend.domain.MyPlayer;
-import com.core.backend.domain.MyTeam;
-import com.core.backend.domain.Player;
+import com.core.backend.controller.dto.*;
+import com.core.backend.domain.*;
 import com.core.backend.domain.enums.Condition;
 import com.core.backend.domain.enums.Position;
-import com.core.backend.domain.repository.BaseTeamRepository;
-import com.core.backend.domain.repository.HeadCoachRepository;
-import com.core.backend.domain.repository.LeagueRepository;
-import com.core.backend.domain.repository.LeagueScheduleRepository;
-import com.core.backend.domain.repository.LeagueTeamRepository;
-import com.core.backend.domain.repository.MyPlayerRepository;
-import com.core.backend.domain.repository.MyTeamRepository;
+import com.core.backend.domain.repository.*;
 import com.core.backend.exception.NoLeague;
 import com.core.backend.exception.NoValidHeadCoach;
 import com.core.backend.exception.TeamNameExist;
@@ -31,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.bridge.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -48,6 +33,9 @@ public class LeagueService {
     private final LeagueRepository leagueRepository;
     private final LeagueTeamRepository leagueTeamRepository;
     private final LeagueScheduleRepository leagueScheduleRepository;
+    private final SponsorRepository sponsorRepository;
+    private final PersonalScheduleRepository personalScheduleRepository;
+    private final EnterpriseRepository enterpriseRepository;
 
     private MyTeam findMyTeamByHeadCoachId(Long id){
         return myTeamRepository.findByHeadCoach(headCoachRepository.findById(id).orElseThrow());
@@ -241,7 +229,7 @@ public class LeagueService {
         return power/myPlayerList.size()-250;
     }
 
-    private void progressMyTeam(MyTeam myTeam,LeagueTeam leagueTeam,int teamNum){
+    private boolean progressMyTeam(MyTeam myTeam,LeagueTeam leagueTeam,int teamNum){
         int team1Power;
         int team2Power;
         int score = 0;
@@ -270,12 +258,20 @@ public class LeagueService {
             //1팀이 내 팀
            myTeam.updateWinPoint(score);
            leagueTeam.updateWinPoint(-score);
+           if(score > 0) {
+               return true;
+           }
         }
         else{
             //2팀이 내 팀
             myTeam.updateWinPoint(-score);
             leagueTeam.updateWinPoint(score);
+            if(score < 0) {
+                return true;
+            }
+
         }
+        return false;
     }
     private void progressOtherTeam(LeagueTeam leagueTeam1,LeagueTeam leagueTeam2){
         int team1Power;
@@ -299,19 +295,28 @@ public class LeagueService {
         leagueTeam1.updateWinPoint(score);
         leagueTeam2.updateWinPoint(-score);
     }
-    private void playGame(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam,League league){
+    private boolean playMyGame(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam,League league){
+        boolean isWin = true;
         for (LeagueSchedule leagueSchedule : leagueScheduleList ){
             if(leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())){
-                //내 팀 대결
                 BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
                 LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam);
-                progressMyTeam(myTeam,oppositeTeam,1);
+                isWin =  progressMyTeam(myTeam,oppositeTeam,1);
             }
             else if(leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())){
-
                 BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
                 LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,baseTeam);
-                progressMyTeam(myTeam,oppositeTeam,2);
+                isWin =  progressMyTeam(myTeam,oppositeTeam,2);
+            }
+        }
+        return isWin;
+    }
+
+    private void playOtherGame(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam,League league){
+        for (LeagueSchedule leagueSchedule : leagueScheduleList ){
+            if(leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())){
+            }
+            else if(leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())){
             }
             else{
                 BaseTeam baseTeam1 = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
@@ -322,28 +327,59 @@ public class LeagueService {
             }
         }
     }
-
-    public MessageResponse progressLeague(Long id){
-        for(int i =0; i<61;i++){
-            HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
-            League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
-            MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
-            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
-            Long baseTeamId = league.getMyTeam().getBaseTeam().getId();
-            if(!leagueScheduleList.get(0).isGame()){
-                addDay(league);
-//            return new MessageResponse(true,"오늘 경기가 없습니다.");
-            }
-            else{
-                playGame(leagueScheduleList,myTeam,league);
-                addDay(league);
-//            return new MessageResponse(true,"오늘 경기가 있습니다.");
-            }
-        }
-        return new MessageResponse(true,"끝");
+    private void applySchedule(PersonalScheduleListRequest personalScheduleRequestList){
+        MyTeam myTeam = findMyTeamByHeadCoachId(personalScheduleRequestList.getHeadCoachId());
+        personalScheduleRequestList.getPersonalScheduleRequestList().stream().forEach(
+                personalScheduleRequest -> {
+                    MyPlayer myPlayer = myPlayerRepository.findById(personalScheduleRequest.getId()).orElseThrow();
+                    PersonalSchedule schedule =
+                            personalScheduleRepository.findById(personalScheduleRequest.getScheduleId()).orElseThrow();
+                    myTeam.changeMoney(schedule.getMoney());
+                    myPlayer.applySchedule(schedule);
+                }
+        );
     }
-    
-    public void nextDay1(){
-        //선수 스텟 업데이트
+
+    private void getMoneyFromSponsors(MyTeam myTeam){
+        List<Long> sponsors = myTeam.getSponsors();
+        sponsors.stream().forEach(sponsor->{
+            myTeam.changeMoney(sponsorRepository.findById(sponsor).orElseThrow().getMoney());
+        });
+    }
+
+    private void getMoneyByEnterprises(MyTeam myTeam){
+        List<Long> enterprises = myTeam.getEnterprises();
+        enterprises.stream().forEach(enterprise->{
+            myTeam.changeMoney(enterpriseRepository.findById(enterprise).orElseThrow().getEarningMoney());
+        });
+    }
+
+    public MessageResponse progressLeague(PersonalScheduleListRequest personalScheduleRequestList){
+        HeadCoach headCoach = headCoachRepository.findById(personalScheduleRequestList.getHeadCoachId()).orElseThrow();
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
+        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+        applySchedule(personalScheduleRequestList);
+        if(personalScheduleRequestList.isGame()){
+
+            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+            playOtherGame(leagueScheduleList,myTeam,league);
+        }
+        getMoneyByEnterprises(myTeam);
+        addDay(league);
+        return new MessageResponse(true,"일정을 성공적으로 수행하였습니다.");
+    }
+
+    public MessageResponse progressLeague(Long id) {
+        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
+        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+        List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+        playOtherGame(leagueScheduleList,myTeam,league);
+        if(playMyGame(leagueScheduleList,myTeam,league)){
+            getMoneyFromSponsors(myTeam);
+        }
+        getMoneyByEnterprises(myTeam);
+        addDay(league);
+        return new MessageResponse(true,"일정을 성공적으로 수행하였습니다.");
     }
 }

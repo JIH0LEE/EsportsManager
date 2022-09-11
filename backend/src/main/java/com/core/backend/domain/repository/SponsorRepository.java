@@ -14,4 +14,6 @@ public interface SponsorRepository extends JpaRepository<Sponsor, Long> {
     List<Sponsor> findAllByIdNotInAndWinGreaterThan(List<Long> ids,Integer win);
     List<Sponsor> findAllByIdNotInAndWinLessThanEqual(List<Long> ids,Integer win);
 
+
+
 }

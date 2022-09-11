@@ -160,4 +160,5 @@ public class MyTeam {
     public void changeMoney(Integer plus){
         money = money + plus;
     }
+
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
 
     List<Enterprise> findAllByIdNotIn(List<Long> ids);
+
 }

@@ -58,10 +58,4 @@ public class MyTeamController {
                 .body(myTeamService.startEnterprise(id,enterpriseId));
     }
 
-    @PostMapping("/schedule")
-    public ResponseEntity<MessageResponse> applySchedule(@RequestBody PersonalScheduleListRequest request){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(myTeamService.applySchedule(request));
-    }
 }

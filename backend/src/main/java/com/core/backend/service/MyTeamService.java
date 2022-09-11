@@ -105,19 +105,7 @@ public class MyTeamService {
         return new MessageResponse(true,"성공적으로 계약이 되었습니다!");
     }
 
-    public MessageResponse applySchedule(PersonalScheduleListRequest personalScheduleRequestList){
-        MyTeam myTeam = findMyTeamByHeadCoachId(personalScheduleRequestList.getHeadCoachId());
-        personalScheduleRequestList.getPersonalScheduleRequestList().stream().forEach(
-                personalScheduleRequest -> {
-                    MyPlayer myPlayer = myPlayerRepository.findById(personalScheduleRequest.getId()).orElseThrow();
-                    PersonalSchedule schedule =
-                            personalScheduleRepository.findById(personalScheduleRequest.getScheduleId()).orElseThrow();
-                    myTeam.changeMoney(schedule.getMoney());
-                    myPlayer.applySchedule(schedule);
-                }
-        );
-        return new MessageResponse(true,"컨디션이 적용되었습니다.");
-    }
+
 
 }
 

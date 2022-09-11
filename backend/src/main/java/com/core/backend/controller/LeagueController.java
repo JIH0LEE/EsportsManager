@@ -1,9 +1,6 @@
 package com.core.backend.controller;
 
-import com.core.backend.controller.dto.LeagueDetailedInfoResponse;
-import com.core.backend.controller.dto.MessageResponse;
-import com.core.backend.controller.dto.MyTeamRequest;
-import com.core.backend.controller.dto.TeamRankResponse;
+import com.core.backend.controller.dto.*;
 import com.core.backend.service.LeagueService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -44,13 +41,17 @@ public class LeagueController {
             .body(leagueService.getRankingInfoByUser(id));
     }
 
-    @GetMapping("/league-process/{id}")
+    @PostMapping("/league-process/{id}")
     public ResponseEntity<MessageResponse> progressLeague(@PathVariable Long id) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(leagueService.progressLeague(id));
     }
-
-
+    @PostMapping("/league-process")
+    public ResponseEntity<MessageResponse> progressLeague(@RequestBody PersonalScheduleListRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(leagueService.progressLeague(request));
+    }
 
 }
