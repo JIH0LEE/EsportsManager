@@ -157,4 +157,7 @@ public class MyTeam {
             money = money - 100000000;
         }
     }
+    public void changeMoney(Integer plus){
+        money = money + plus;
+    }
 }

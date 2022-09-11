@@ -3,9 +3,9 @@ package com.core.backend.controller.dto;
 import lombok.Getter;
 
 @Getter
-public class ChangePersonalScheduleRequest {
+public class PersonalScheduleRequest {
 
-    Long id;
+    private Long id;
 
-    Long scheduleId;
+    private Long scheduleId;
 }

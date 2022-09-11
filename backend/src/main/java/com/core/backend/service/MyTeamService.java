@@ -5,11 +5,9 @@ import com.core.backend.domain.*;
 import com.core.backend.domain.repository.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.core.backend.exception.NotEnoughMoney;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +22,7 @@ public class MyTeamService {
     private final MyPlayerRepository myPlayerRepository;
     private final HeadCoachRepository headCoachRepository;
     private final EnterpriseRepository enterpriseRepository;
+    private final PersonalScheduleRepository personalScheduleRepository;
 
     private MyTeam findMyTeamByHeadCoachId(Long id){
         return myTeamRepository.findByHeadCoach(headCoachRepository.findById(id).orElseThrow());
@@ -103,6 +102,20 @@ public class MyTeamService {
         MyTeam myTeam = findMyTeamByHeadCoachId(headCoachId);
         myTeam.startEnterprise(enterpriseId);
         return new MessageResponse(true,"성공적으로 계약이 되었습니다!");
+    }
+
+    public MessageResponse applySchedule(PersonalScheduleListRequest personalScheduleRequestList){
+        MyTeam myTeam = findMyTeamByHeadCoachId(personalScheduleRequestList.getHeadCoachId());
+        personalScheduleRequestList.getPersonalScheduleRequestList().stream().forEach(
+                personalScheduleRequest -> {
+                    MyPlayer myPlayer = myPlayerRepository.findById(personalScheduleRequest.getId()).orElseThrow();
+                    PersonalSchedule schedule =
+                            personalScheduleRepository.findById(personalScheduleRequest.getScheduleId()).orElseThrow();
+                    myTeam.changeMoney(schedule.getMoney());
+                    myPlayer.applySchedule(schedule);
+                }
+        );
+        return new MessageResponse(true,"컨디션이 적용되었습니다.");
     }
 
 }

@@ -45,4 +45,46 @@ public class MyPlayer {
         return player.getAllPower()+level*6;
     }
 
+    public void applySchedule(PersonalSchedule schedule){
+        applyExp(schedule.getExp());
+        applyStatus(schedule.getStatus());
+    }
+
+    private void applyStatus(Integer status){
+        if(status==-2){
+            this.status = Condition.BAD;
+        }
+        else if(status==2){
+            this.status = Condition.GOOD;
+        }
+        else if(status==1){
+            if(this.status.equals(Condition.BAD)){
+                this.status = Condition.NORMAL;
+            }
+            else{
+                this.status = Condition.GOOD;
+            }
+        }
+        else if(status==-1){
+            if(this.status.equals(Condition.GOOD)){
+                this.status = Condition.NORMAL;
+            }
+            else{
+                this.status = Condition.BAD;
+            }
+        }
+    }
+
+    public void applyExp(Integer exp){
+        if(level==10){
+            return;
+        }
+        this.exp = this.exp+exp;
+        if(this.exp>=100){
+            level = level + 1;
+            this.exp = this.exp - 100;
+        }
+
+    }
+
 }

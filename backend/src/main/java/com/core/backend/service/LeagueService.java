@@ -271,4 +271,8 @@ public class LeagueService {
         }
         return new MessageResponse(true,"끝");
     }
+    
+    public void nextDay1(){
+        //선수 스텟 업데이트
+    }
 }

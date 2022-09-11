@@ -1,11 +1,15 @@
 package com.core.backend.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
-public class PersonalScheduleRequest {
+public class PersonalScheduleListRequest {
 
-    Long id;
+    private Long headCoachId;
 
-    Long scheduleId;
+    @JsonProperty("submitData")
+    private List<PersonalScheduleRequest> personalScheduleRequestList;
 }
