@@ -36,6 +36,7 @@ public class MyTeamService {
     public MessageResponse changeEntry(ChangeEntryRequest changeEntryRequest){
         String [] positionArray = {"TOP","JUNGLE","MIDDLE","ADC","SUPPORT","SUB"};
         List<Long> ids = changeEntryRequest.getMyPlayerList();
+        System.out.println(ids.size());
         for(int i = 0; i < ids.size();i++){
             String position;
             if(i>=5){

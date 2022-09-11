@@ -1,5 +1,6 @@
 package com.core.backend.controller;
 
+import com.core.backend.controller.dto.LeagueDetailedInfoResponse;
 import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.TeamRankResponse;
@@ -31,16 +32,10 @@ public class LeagueController {
     }
 
     @GetMapping("/league-info/{id}")
-    public ResponseEntity<MessageResponse> getLeagueInfo(@PathVariable Long id) {
-        if (leagueService.getLeagueInfo(id).isPresent()) {
-            return ResponseEntity
+    public ResponseEntity<LeagueDetailedInfoResponse> getLeagueInfo(@PathVariable Long id) {
+        return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new MessageResponse(true, "이미 생성된 리그가 있습니다."));
-        } else {
-            return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new MessageResponse(false, "생성된 리그가 없습니다."));
-        }
+                .body(leagueService.getLeagueDetailedInfo(id));
     }
     @GetMapping("/league-rank/{id}")
     public ResponseEntity<List<TeamRankResponse>> getLeagueRankingInfoByUser(@PathVariable Long id) {
@@ -55,5 +50,7 @@ public class LeagueController {
             .status(HttpStatus.OK)
             .body(leagueService.progressLeague(id));
     }
+
+
 
 }

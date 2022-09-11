@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class LeagueDetailedInfo {
+public class LeagueDetailedInfoResponse {
 
     private boolean success;
 

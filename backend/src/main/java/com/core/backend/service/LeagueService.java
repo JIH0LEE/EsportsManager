@@ -1,5 +1,6 @@
 package com.core.backend.service;
 
+import com.core.backend.controller.dto.LeagueDetailedInfoResponse;
 import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.TeamRankResponse;
@@ -30,6 +31,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +48,10 @@ public class LeagueService {
     private final LeagueRepository leagueRepository;
     private final LeagueTeamRepository leagueTeamRepository;
     private final LeagueScheduleRepository leagueScheduleRepository;
+
+    private MyTeam findMyTeamByHeadCoachId(Long id){
+        return myTeamRepository.findByHeadCoach(headCoachRepository.findById(id).orElseThrow());
+    }
 
     private void makeMyPlayer(MyTeam myTeam, List<Player> playerList, String position) {
         List<Player> players =
@@ -128,6 +135,72 @@ public class LeagueService {
         return leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoachRepository.findById(id).orElseThrow());
     }
 
+
+    private boolean isMyGame(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam){
+        for (LeagueSchedule leagueSchedule : leagueScheduleList ){
+            if(leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())
+                    || leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<String> findTodayMatch(List<LeagueSchedule> leagueScheduleList,MyTeam myTeam){
+        List<String> result = new ArrayList<>();
+        for (LeagueSchedule leagueSchedule : leagueScheduleList ){
+            if(leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())){
+                result.add(myTeam.getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow().getName());
+            }
+            else if(leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())){
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow().getName());
+                result.add(myTeam.getName());
+            }
+            else{
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow().getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow().getName());
+            }
+        }
+        return result;
+    }
+    public LeagueDetailedInfoResponse getLeagueDetailedInfo(Long id){
+        Optional<League> isLeague = getLeagueInfo(id);
+        if (getLeagueInfo(id).isPresent()) {
+            League league = isLeague.get();
+            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+            if(!leagueScheduleList.get(0).isGame()){
+                return new LeagueDetailedInfoResponse(
+                        true,
+                        "오늘 경기가 없습니다.",
+                        false,
+                        false,
+                        null,
+                        league.getDay()
+                );
+            }
+            else{
+                MyTeam myTeam = findMyTeamByHeadCoachId(id);
+                return new LeagueDetailedInfoResponse(
+                        true,
+                        "오늘 경기가 있습니다",
+                        true,
+                        isMyGame(leagueScheduleList,myTeam),
+                        findTodayMatch(leagueScheduleList,myTeam),
+                        league.getDay()
+                );
+            }
+        } else {
+            return new LeagueDetailedInfoResponse(
+                    false   ,
+                    "리그가 생성되지 않았습니다.",
+                    true,
+                    false,
+                    null,
+                    0
+            );
+        }
+    }
     public List<TeamRankResponse> getRankingInfoByUser(Long id){
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow(NoValidHeadCoach::new);
         League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow(NoLeague::new);
@@ -138,10 +211,9 @@ public class LeagueService {
         Comparator<TeamRankResponse> compare = Comparator
             .comparing(TeamRankResponse::getMatchWin)
             .thenComparing(TeamRankResponse::getWinPoint).reversed();
-        List<TeamRankResponse> sortedTeamRankResponseList = teamRankResponseList.stream()
-            .sorted(compare)
-            .collect(Collectors.toList());
-        return sortedTeamRankResponseList;
+        return teamRankResponseList.stream()
+                .sorted(compare)
+                .collect(Collectors.toList());
 
     }
 
@@ -170,8 +242,8 @@ public class LeagueService {
     }
 
     private void progressMyTeam(MyTeam myTeam,LeagueTeam leagueTeam,int teamNum){
-        Integer team1Power;
-        Integer team2Power;
+        int team1Power;
+        int team2Power;
         int score = 0;
         if (teamNum==1){
             team1Power = getMyTeamPower(myTeam);
@@ -217,7 +289,6 @@ public class LeagueService {
                 break;
             }
             double rand = Math.random();
-
             if(rand<=team1Rate){
                 score+=1;
             }
