@@ -54,18 +54,25 @@ function GameReadyPage() {
     arr.forEach((element) => {
       myPlayerList.push(element.id);
     });
-    // console.log(location.state.id);
     let body = {
       id: teamId,
       myPlayerList: myPlayerList,
     };
     axios
       .post(API_SERVER + "/api/my-team/change-entry", body)
+      .then(() => {})
+      .catch((err) => {
+        alert(err);
+      });
+  };
+  const submit = () => {
+    axios
+      .post(API_SERVER + `/api/league/league-process/${userData.id}`)
       .then((res) => {
         console.log(res.data);
       })
       .catch((err) => {
-        alert(err);
+        console.log(err);
       });
   };
   return (
@@ -176,7 +183,9 @@ function GameReadyPage() {
         <div className="no-sub basic">서브 선수가 없습니다</div>
       )}
       <div className="button-container">
-        <div className="submit button">진행하기</div>
+        <div className="submit button" onClick={submit}>
+          진행하기
+        </div>
       </div>
     </div>
   );

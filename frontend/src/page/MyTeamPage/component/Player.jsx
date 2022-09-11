@@ -8,7 +8,7 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
   return (
     <div className="player-container">
       <div className="regular-container">
-        <div className="position-label  basic">REGULAR</div>
+        <div className="label-container">REGULAR</div>
         <div className="player-card-container">
           {top ? (
             <div className="player">
@@ -49,7 +49,7 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
         </div>
       </div>
       <div className="regular-container">
-        <div className="position-label  basic">SUB</div>
+        <div className="label-container">SUB</div>
         {sub.length === 0 ? (
           <div className="none-container">서브 선수가 없습니다</div>
         ) : (

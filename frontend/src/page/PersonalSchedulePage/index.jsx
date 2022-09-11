@@ -28,12 +28,14 @@ function PersonalSchedulePage() {
   };
 
   const submit = () => {
-    const body = { headCoachId: userData.id, submitData: submitData };
+    const body = {
+      headCoachId: userData.id,
+      game: isGame,
+      submitData: submitData,
+    };
     axios
-      .post(API_SERVER + "/api/my-team/schedule", body)
-      .then((res) => {
-        console.log(res.data);
-      })
+      .post(API_SERVER + "/api/league/league-process", body)
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });

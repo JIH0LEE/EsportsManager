@@ -18,6 +18,7 @@ function MyTeamPage() {
   const [sup, setSup] = useState(null);
   const [sub, setSub] = useState([]);
   const [logo, setLogo] = useState(null);
+  const [money, setMoney] = useState(0);
   const [selected, setSelected] = useState("PLAYER");
 
   const { userData } = useSelector((state) => state);
@@ -43,10 +44,16 @@ function MyTeamPage() {
       setAdc(res.data.adc);
       setSup(res.data.sup);
       setSub(res.data.sub);
+      setMoney(res.data.money);
+      console.log(res.data);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const changeMoneyFormat = (price) => {
+    return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
   const selectedComponent = () => {
     if (selected === "PLAYER") {
       return (
@@ -75,6 +82,7 @@ function MyTeamPage() {
         </div>
         <div className="team-name">{teamName}</div>
       </div>
+      <div className="money-container">자금 : {changeMoneyFormat(money)}￦</div>
       <div className="menu-container">
         <div
           className={`menu button${selected === "PLAYER" ? " clicked" : ""}`}
