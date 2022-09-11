@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API_SERVER } from "../../common";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import Auth from "../../hoc/Auth";
@@ -16,6 +16,10 @@ function PersonalSchedulePage() {
   const [sub, setSub] = useState([]);
   const [submitData, setSubmitData] = useState([]);
   const { userData } = useSelector((state) => state);
+  const location = useLocation();
+  const isGame = location.state.game;
+  const teams = location.state.teams;
+  const day = location.state.day;
 
   const changeSubmitData = (idx, id) => {
     const changedArray = [...submitData];
@@ -59,6 +63,31 @@ function PersonalSchedulePage() {
   }, []);
   return (
     <div className="schedule-page background basic">
+      <div className="label-container label">리그 정보</div>
+      <div className="league-info-container">
+        <div className="day-container">Day {day}</div>
+        <div className="match-container">
+          {isGame ? (
+            <>
+              {teams.length === 4 ? (
+                <>
+                  <div className="match">
+                    MATCH 1 : {teams[0]} vs {teams[1]}
+                  </div>
+                  <br></br>
+                  <div className="match">
+                    MATCH 2 : {teams[2]} vs {teams[3]}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+          ) : (
+            <>경기가 없습니다.</>
+          )}
+        </div>
+      </div>
       <div className="label-container label">개인 스케줄 관리</div>
       <div className="schedule-info">
         운동 : 컨디션이 약간 상승하고 경험치가 약간 상승합니다.

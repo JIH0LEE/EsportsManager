@@ -3,12 +3,47 @@ import "./style.css";
 import { AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_SERVER } from "../../common";
 import { logout } from "../../redux/action";
 
 function Header() {
   const { userData } = useSelector((state) => state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const chooseRoute = () => {
+    if (!userData.isLogin) {
+      alert("로그인이 필요합니다");
+      navigate("/login");
+    }
+    axios
+      .get(API_SERVER + `/api/league/league-info/${userData.id}`)
+      .then((res) => {
+        if (!res.data.success) {
+          alert("팀을 생성해주세요");
+          navigate("/make-team");
+          return;
+        }
+        if (!res.data.myGame) {
+          navigate("/personal-schedule", {
+            state: {
+              day: res.data.day,
+              game: res.data.game,
+              teams: res.data.teams,
+            },
+          });
+          return;
+        } else {
+          navigate("/game-ready", {
+            state: {
+              day: res.data.day,
+              game: res.data.game,
+              teams: res.data.teams,
+            },
+          });
+        }
+      });
+  };
   return (
     <div className="header background">
       <div className="inner basic">
@@ -21,7 +56,9 @@ function Header() {
           <img src="./image/logo.png" alt="log" className="image" />
         </div>
         <div className="nav-bar">
-          <div className="nav-elem button">{"스케줄 진행하기"}</div>
+          <div className="nav-elem button" onClick={chooseRoute}>
+            {"스케줄 진행하기"}
+          </div>
           <div
             className="nav-elem button"
             onClick={() => {

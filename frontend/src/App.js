@@ -11,6 +11,7 @@ import MyTeamPage from "./page/MyTeamPage";
 import MakeTeamPage from "./page/MakeTeamPage";
 import EntryChangePage from "./page/EntryChangePage";
 import PersonalSchedulePage from "./page/PersonalSchedulePage";
+import GameReadyPage from "./page/GameReadyPage";
 import Header from "./component/Header";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             path="/personal-schedule"
             element={<PersonalSchedulePage></PersonalSchedulePage>}
           />
+          <Route path="/game-ready" element={<GameReadyPage></GameReadyPage>} />
         </Routes>
       </div>
     </div>

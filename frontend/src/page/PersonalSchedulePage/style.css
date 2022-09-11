@@ -261,3 +261,41 @@
   background-color: white;
   color: black;
 }
+
+.league-info-container {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 1100px;
+  height: 120px;
+}
+.league-info-container .day-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  width: 150px;
+  height: 100px;
+  border: white solid 2px;
+  border-radius: 10px;
+}
+.league-info-container .match-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: bold;
+  width: 900px;
+  height: 100px;
+  border: white solid 2px;
+  border-radius: 10px;
+}
+.league-info-container .match-container .match {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 800px;
+  height: 100px;
+}
