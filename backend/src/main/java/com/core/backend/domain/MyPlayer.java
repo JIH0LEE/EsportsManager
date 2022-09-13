@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -84,7 +86,38 @@ public class MyPlayer {
             level = level + 1;
             this.exp = this.exp - 100;
         }
-
     }
 
+    public float getConditionInfo(){
+        if(status==Condition.BAD){
+            return 0.9f;
+        }
+        if (status==Condition.GOOD){
+            return 1.1f;
+        }
+        return 1.0f;
+    }
+
+    public int getDistinctPower(String status){
+        float condition = getConditionInfo();
+        if(status.equals("LANE")){
+            return (int)((this.player.getLaneStatus()+this.level)*condition);
+        }
+        if(status.equals("OPERATION")){
+            return (int)((this.player.getOperationStatus()+this.level)*condition);
+        }
+        if(status.equals("JUNGLING")){
+            return (int)((this.player.getJunglingStatus()+this.level)*condition);
+        }
+        if(status.equals("GANKING")){
+            return (int)((this.player.getGankingStatus()+this.level)*condition);
+        }
+        if(status.equals("ROAMING")){
+            return (int)((this.player.getRoamingStatus()+this.level)*condition);
+        }
+        if(status.equals("FIGHT")){
+            return (int)((this.player.getFightStatus()+this.level)*condition);
+        }
+        return 0;
+    }
 }

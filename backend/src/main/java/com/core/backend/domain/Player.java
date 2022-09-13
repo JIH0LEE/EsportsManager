@@ -17,6 +17,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -60,6 +62,28 @@ public class Player {
 
     public Integer getAllPower(){
         return laneStatus+fightStatus+operationStatus+roamingStatus+gankingStatus+junglingStatus;
+    }
+
+    public int getDistinctPower(String status){
+        if(status.equals("LANE")){
+            return this.getLaneStatus();
+        }
+        if(status.equals("OPERATION")){
+            return this.getOperationStatus();
+        }
+        if(status.equals("JUNGLING")){
+            return this.getJunglingStatus();
+        }
+        if(status.equals("GANKING")){
+            return this.getGankingStatus();
+        }
+        if(status.equals("ROAMING")){
+            return this.getRoamingStatus();
+        }
+        if(status.equals("FIGHT")){
+            return this.getFightStatus();
+        }
+        return 0;
     }
 
 }
