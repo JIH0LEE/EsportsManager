@@ -151,6 +151,27 @@
   background-color: rgb(0, 43, 91, 0.8);
   border-radius: 10px;
 }
+.pick-item .swap {
+  position: absolute;
+  background-color: rgb(0, 0, 0, 0.8);
+
+  width: 90px;
+  height: 90px;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pick-item .non-swap {
+  position: absolute;
+  background-color: rgb(238, 238, 238, 0.8);
+  width: 90px;
+  height: 90px;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .pick-list .champion-list {
   display: flex;
   flex-direction: column;
@@ -239,6 +260,7 @@
   filter: grayscale(100%);
 }
 .pick-item {
+  position: relative;
   color: white;
   width: 100px;
   height: 120px;

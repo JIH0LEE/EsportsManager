@@ -26,6 +26,8 @@ function BanpickPage() {
   const [clickedChamp, setClickedChamp] = useState(0);
   const [stageNum, setStageNum] = useState(0);
   const [aiPickedPos, setAiPickedPos] = useState([]);
+  const [isSwapStage, setIsSwapStage] = useState(false);
+  const [enemySwap, setEnemySwap] = useState(false);
   const [aiUnPickedPos, setAiUnPickedPos] = useState([
     "TOP",
     "JUNGLE",
@@ -92,27 +94,10 @@ function BanpickPage() {
     setShowChapions(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
-  const test = () => {
-    console.log("_________________________");
-    console.log(blueBan);
-    console.log(redBan);
-    console.log(bluePick);
-    console.log(redPick);
-  };
-  test();
   const nextStage = () => {
-    console.log(blueBanId.includes(clickedChamp.id));
-    console.log(bluePickId.includes(clickedChamp.id));
-    console.log(redBanId.includes(clickedChamp.id));
-    console.log(redPickId.includes(clickedChamp.id));
-    console.log(
-      blueBanId.includes(clickedChamp.id) ||
-        bluePickId.includes(clickedChamp.id) ||
-        redBanId.includes(clickedChamp.id) ||
-        redPickId.includes(clickedChamp.id)
-    );
     const parsing = stage[stageNum].split(" ");
     if (parsing[0] === "Swap") {
+      setIsSwapStage(true);
       return;
     }
 
@@ -120,6 +105,17 @@ function BanpickPage() {
       action();
     } else {
       aiAction();
+    }
+  };
+  const swap = (arr) => {
+    if (!enemySwap) {
+      aiSwap();
+      setEnemySwap(true);
+    }
+    if (isBlue) {
+      setBluePick(arr);
+    } else {
+      setRedPick(arr);
     }
   };
 
@@ -133,36 +129,7 @@ function BanpickPage() {
       return false;
     }
   };
-  const clickable = (e) => {
-    const champion = e.target.value;
-    const parsing = stage[stageNum].split(" ");
-    console.log(1);
-    if (isBlue && parsing[0] === "Blue") {
-      if (
-        blueBanId.includes(champion.id) ||
-        bluePickId.includes(champion.id) ||
-        redBanId.includes(champion.id) ||
-        redPickId.includes(champion.id)
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-    if (!isBlue && parsing[0] === "Red") {
-      if (
-        blueBanId.includes(champion.id) ||
-        bluePickId.includes(champion.id) ||
-        redBanId.includes(champion.id) ||
-        redPickId.includes(champion.id)
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-    return false;
-  };
+
   const aiSwap = () => {
     let swaped = [];
     const arr = ["TOP", "JUNGLE", "MIDDLE", "ADC", "SUPPORT"];
@@ -254,6 +221,9 @@ function BanpickPage() {
         setBlueBanId(temp3);
       }
     }
+    if (stage[stageNum + 1] === "Swap") {
+      setIsSwapStage(true);
+    }
     setStageNum(stageNum + 1);
   };
   const action = () => {
@@ -306,22 +276,13 @@ function BanpickPage() {
         setRedBanId(temp3);
       }
     }
+    if (stage[stageNum + 1] === "Swap") {
+      setIsSwapStage(true);
+    }
     setStageNum(stageNum + 1);
     setClickedChamp(0);
   };
 
-  const disableIcon = (champion) => {
-    if (
-      !blueBanId.includes(champion.id) &&
-      !bluePickId.includes(champion.id) &&
-      !redBanId.includes(champion.id) &&
-      !redPickId.includes(champion.id)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
   return (
     <div className="banpick-container">
       {blueTeam ? (
@@ -347,7 +308,13 @@ function BanpickPage() {
           </div>
           <div className="banpick-board">
             <div className="pick-list">
-              <BluePick bluePick={bluePick} blueTeam={blueTeam}></BluePick>
+              <BluePick
+                bluePick={bluePick}
+                blueTeam={blueTeam}
+                isBlue={isBlue}
+                isSwapStage={isSwapStage}
+                func={swap}
+              ></BluePick>
               <div className="champion-list">
                 <div className="button-container">
                   <button
@@ -446,7 +413,13 @@ function BanpickPage() {
                   ))}
                 </div>
               </div>
-              <RedPick redTeam={redTeam} redPick={redPick}></RedPick>
+              <RedPick
+                redTeam={redTeam}
+                redPick={redPick}
+                isBlue={isBlue}
+                isSwapStage={isSwapStage}
+                func={swap}
+              ></RedPick>
             </div>
             <Ban redBan={redBan} blueBan={blueBan}></Ban>
           </div>
