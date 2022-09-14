@@ -12,6 +12,7 @@ import MakeTeamPage from "./page/MakeTeamPage";
 import EntryChangePage from "./page/EntryChangePage";
 import PersonalSchedulePage from "./page/PersonalSchedulePage";
 import GameReadyPage from "./page/GameReadyPage";
+import LeagueReadyPage from "./page/LeagueReadyPage";
 import Header from "./component/Header";
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
           <Route path="/my-team" element={<MyTeamPage></MyTeamPage>} />
           <Route path="/make-team" element={<MakeTeamPage></MakeTeamPage>} />
           <Route path="/entry" element={<EntryChangePage></EntryChangePage>} />
+          <Route
+            path="/league-ready"
+            element={<LeagueReadyPage></LeagueReadyPage>}
+          />
           <Route
             path="/personal-schedule"
             element={<PersonalSchedulePage></PersonalSchedulePage>}

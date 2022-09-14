@@ -24,24 +24,7 @@ function Header() {
           navigate("/make-team");
           return;
         }
-        if (!res.data.myGame) {
-          navigate("/personal-schedule", {
-            state: {
-              day: res.data.day,
-              game: res.data.game,
-              teams: res.data.teams,
-            },
-          });
-          return;
-        } else {
-          navigate("/game-ready", {
-            state: {
-              day: res.data.day,
-              game: res.data.game,
-              teams: res.data.teams,
-            },
-          });
-        }
+        navigate("/league-ready");
       });
   };
   return (

@@ -1,6 +1,5 @@
 .banpick-container {
   width: 1200px;
-  height: 1000px;
   display: flex;
   align-items: center;
   margin-top: 50px;
@@ -40,7 +39,7 @@
   height: 80px;
 }
 .command-container .submit-button:hover {
-  font-size: 30px;
+  font-size: 25px;
 }
 .score-board {
   display: flex;
@@ -92,6 +91,46 @@
   height: 120px;
   background-color: rgb(0, 0, 0, 0.8);
   border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.ban-list .ban-left {
+  width: 50%;
+  height: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-right: auto;
+  align-items: center;
+}
+.ban-list .ban-right {
+  width: 50%;
+  height: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: auto;
+  align-items: center;
+}
+.ban-image-container {
+  color: white;
+  width: 90px;
+  height: 90px;
+  border: solid 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  object-fit: cover;
+}
+.ban-image-container .image {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  object-fit: cover;
 }
 .pick-list {
   display: flex;
@@ -103,6 +142,10 @@
   margin: 5px 0px;
 }
 .pick-list .blue-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   height: 100%;
   width: 120px;
   background-color: rgb(0, 43, 91, 0.8);
@@ -130,10 +173,8 @@
   justify-content: center;
   height: 40px;
   width: 120px;
-
   font-weight: bold;
   font-size: 20px;
-
   border-radius: 10px;
 }
 
@@ -174,12 +215,63 @@
 }
 
 .champion-item {
+  background-color: black;
   width: 80px;
   height: 80px;
+  padding: 0px;
   overflow: hidden;
   object-fit: contain;
+}
+
+.champion-item:enabled:hover {
+  border: 2px solid red;
+}
+.clicked-champ {
+  border: 2px solid red;
 }
 .champion-item .img {
   width: 80px;
   height: 80px;
+}
+.champion-item .gray-color {
+  width: 80px;
+  height: 80px;
+  filter: grayscale(100%);
+}
+.pick-item {
+  color: white;
+  width: 100px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.pick-item .name-container {
+  color: white;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pick-item .image-container {
+  color: white;
+  width: 90px;
+  height: 90px;
+  border: solid 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  object-fit: cover;
+}
+.pick-item .image-container .image {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  object-fit: cover;
 }

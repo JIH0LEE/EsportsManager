@@ -41,7 +41,7 @@ const Player = ({ player }) => {
               {" "}
               <div className="name">전투 :</div>
               <div className="num">
-                <span>&nbsp;{player.player.battelStatus}</span>
+                <span>&nbsp;{player.player.fightStatus}</span>
                 <span style={{ color: "red" }}>+{player.level}</span>
               </div>
             </div>

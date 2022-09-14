@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API_SERVER } from "../../common";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import Player from "./component/Player";
@@ -15,7 +15,7 @@ function GameReadyPage() {
   const positionArr = ["TOP", "JNG", "MID", "ADC", "SUB"];
 
   const { userData } = useSelector((state) => state);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const isGame = location.state.game;
   const teams = location.state.teams;
@@ -66,14 +66,7 @@ function GameReadyPage() {
       });
   };
   const submit = () => {
-    axios
-      .post(API_SERVER + `/api/league/league-process/${userData.id}`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    navigate("/banpick");
   };
   return (
     <div className="entry-change-container">

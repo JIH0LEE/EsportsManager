@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API_SERVER } from "../../common";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import Auth from "../../hoc/Auth";
@@ -20,11 +20,14 @@ function PersonalSchedulePage() {
   const isGame = location.state.game;
   const teams = location.state.teams;
   const day = location.state.day;
-
+  const navigate = useNavigate();
   const changeSubmitData = (idx, id) => {
     const changedArray = [...submitData];
     changedArray[idx].scheduleId = id;
     setSubmitData(changedArray);
+  };
+  const toLeagueReady = () => {
+    navigate("/league-ready");
   };
 
   const submit = () => {
@@ -35,7 +38,10 @@ function PersonalSchedulePage() {
     };
     axios
       .post(API_SERVER + "/api/league/league-process", body)
-      .then((res) => {})
+      .then((res) => {
+        alert(res.data.message);
+        toLeagueReady();
+      })
       .catch((err) => {
         console.log(err);
       });
