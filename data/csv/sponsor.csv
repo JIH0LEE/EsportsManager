@@ -1,0 +1,4 @@
+id;name;description;money;win;image
+1;로지텍;유명 컴퓨터 주변기기 브랜드;1000000;5;https://lck-esports-manager.s3.ap-northeast-2.amazonaws.com/sponsor/logitech.png
+2;아디다스;유명 스포츠 브랜드;2000000;8;https://lck-esports-manager.s3.ap-northeast-2.amazonaws.com/sponsor/addidas.jpg
+3;삼성;대한민국 최고 기업;4000000;12;https://lck-esports-manager.s3.ap-northeast-2.amazonaws.com/sponsor/samsung.png
