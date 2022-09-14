@@ -23,28 +23,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class League {
+public class GameMatch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "head_coach_id")
-    private HeadCoach headCoach;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "my_team_id")
     private MyTeam myTeam;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<LeagueTeam> leagueTeamList = new ArrayList<>();
-
-    private Integer day;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "oppostite_team_id")
+    private BaseTeam oppositeTeam;
 
     private boolean finish;
 
-    public void addDay(){
-        day=day+1;
-    }
+    private Integer gameSetCount;
+
+    private Integer gameScore;
+
+    private boolean isBlue;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "league_id")
+    private League league;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameMatch", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GameSet> gameSets = new ArrayList<>();
+
 }

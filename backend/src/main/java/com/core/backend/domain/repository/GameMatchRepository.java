@@ -1,9 +1,14 @@
 package com.core.backend.domain.repository;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
+
+import com.core.backend.domain.GameMatch;
+import com.core.backend.domain.League;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface MatchRepository extends JpaRepository<Match, Long> {
+public interface GameMatchRepository extends JpaRepository<GameMatch, Long> {
+
+    Optional<GameMatch> findGameMatchByLeagueAndFinishFalse(League league);
 
 }

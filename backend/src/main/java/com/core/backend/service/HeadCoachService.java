@@ -61,8 +61,8 @@ public class HeadCoachService {
         return HeadCoachResponse.of(headCoach);
     }
 
-    public MessageResponse deleteHeadCoachById(Long id){
+    public MessageResponse deleteHeadCoachById(Long id) {
         headCoachRepository.deleteById(id);
-        return new MessageResponse(true,"정상적으로 삭제되었습니다.");
+        return new MessageResponse(true, "정상적으로 삭제되었습니다.");
     }
 }

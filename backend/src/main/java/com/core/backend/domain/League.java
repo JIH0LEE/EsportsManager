@@ -40,11 +40,14 @@ public class League {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<LeagueTeam> leagueTeamList = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<GameMatch> gameMatchList = new ArrayList<>();
+
     private Integer day;
 
     private boolean finish;
 
-    public void addDay(){
-        day=day+1;
+    public void addDay() {
+        day = day + 1;
     }
 }

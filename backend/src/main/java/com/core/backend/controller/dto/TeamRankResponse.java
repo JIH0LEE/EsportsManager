@@ -17,7 +17,7 @@ public class TeamRankResponse {
 
     private Integer winPoint;
 
-    public static TeamRankResponse of(LeagueTeam leagueTeam){
+    public static TeamRankResponse of(LeagueTeam leagueTeam) {
         return new TeamRankResponse(
             leagueTeam.getBaseTeam().getName(),
             leagueTeam.getMatchWin(),
@@ -26,7 +26,7 @@ public class TeamRankResponse {
         );
     }
 
-    public static TeamRankResponse of(MyTeam myTeam){
+    public static TeamRankResponse of(MyTeam myTeam) {
         return new TeamRankResponse(
             myTeam.getName(),
             myTeam.getMatchWin(),

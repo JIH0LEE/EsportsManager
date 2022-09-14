@@ -68,12 +68,12 @@ public class MyTeamResponse {
             .filter(myPlayerResponse -> Objects.equals(myPlayerResponse.getPosition(), "SUB"))
             .collect(Collectors.toList());
         return new MyTeamResponse(
-                myTeam.getId(),
-                myTeam.getName(),
-                HeadCoachResponse.of(myTeam.getHeadCoach()),
-                top, jng, mid, adc, sup, sub,
-                BaseTeamResponse.of(myTeam.getBaseTeam()),
-                myTeam.getMoney()
+            myTeam.getId(),
+            myTeam.getName(),
+            HeadCoachResponse.of(myTeam.getHeadCoach()),
+            top, jng, mid, adc, sup, sub,
+            BaseTeamResponse.of(myTeam.getBaseTeam()),
+            myTeam.getMoney()
         );
     }
 }

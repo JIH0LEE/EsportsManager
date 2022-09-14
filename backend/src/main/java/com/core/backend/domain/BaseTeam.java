@@ -1,7 +1,9 @@
 package com.core.backend.domain;
 
+import com.core.backend.domain.enums.Position;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,5 +34,11 @@ public class BaseTeam {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "baseTeam", orphanRemoval = true)
     private List<Player> players = new ArrayList<>();
+
+    public Player findPlayerByPosition(String position) {
+        return players.stream()
+            .filter(player -> player.getPosition() == Position.valueOf(position))
+            .collect(Collectors.toList()).get(0);
+    }
 
 }

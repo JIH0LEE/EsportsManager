@@ -17,8 +17,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -60,27 +58,27 @@ public class Player {
     @JoinColumn(name = "base_team_id")
     private BaseTeam baseTeam;
 
-    public Integer getAllPower(){
-        return laneStatus+fightStatus+operationStatus+roamingStatus+gankingStatus+junglingStatus;
+    public Integer getAllPower() {
+        return laneStatus + fightStatus + operationStatus + roamingStatus + gankingStatus + junglingStatus;
     }
 
-    public int getDistinctPower(String status){
-        if(status.equals("LANE")){
+    public int getDistinctPower(String status) {
+        if (status.equals("LANE")) {
             return this.getLaneStatus();
         }
-        if(status.equals("OPERATION")){
+        if (status.equals("OPERATION")) {
             return this.getOperationStatus();
         }
-        if(status.equals("JUNGLING")){
+        if (status.equals("JUNGLING")) {
             return this.getJunglingStatus();
         }
-        if(status.equals("GANKING")){
+        if (status.equals("GANKING")) {
             return this.getGankingStatus();
         }
-        if(status.equals("ROAMING")){
+        if (status.equals("ROAMING")) {
             return this.getRoamingStatus();
         }
-        if(status.equals("FIGHT")){
+        if (status.equals("FIGHT")) {
             return this.getFightStatus();
         }
         return 0;

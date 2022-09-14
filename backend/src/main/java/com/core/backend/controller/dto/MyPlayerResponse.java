@@ -26,12 +26,12 @@ public class MyPlayerResponse {
 
     public static MyPlayerResponse of(MyPlayer myPlayer) {
         return new MyPlayerResponse(
-                myPlayer.getId(),
-                myPlayer.getLevel(),
-                myPlayer.getPosition(),
-                myPlayer.getStatus(),
-                myPlayer.getExp(),
-                PlayerResponse.of(myPlayer.getPlayer())
+            myPlayer.getId(),
+            myPlayer.getLevel(),
+            myPlayer.getPosition(),
+            myPlayer.getStatus(),
+            myPlayer.getExp(),
+            PlayerResponse.of(myPlayer.getPlayer())
         );
     }
 }

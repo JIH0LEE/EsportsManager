@@ -1,6 +1,10 @@
 package com.core.backend.controller;
 
-import com.core.backend.controller.dto.*;
+import com.core.backend.controller.dto.LeagueDetailedInfoResponse;
+import com.core.backend.controller.dto.MessageResponse;
+import com.core.backend.controller.dto.MyTeamRequest;
+import com.core.backend.controller.dto.PersonalScheduleListRequest;
+import com.core.backend.controller.dto.TeamRankResponse;
 import com.core.backend.service.LeagueService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +35,10 @@ public class LeagueController {
     @GetMapping("/league-info/{id}")
     public ResponseEntity<LeagueDetailedInfoResponse> getLeagueInfo(@PathVariable Long id) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(leagueService.getLeagueDetailedInfo(id));
+            .status(HttpStatus.OK)
+            .body(leagueService.getLeagueDetailedInfo(id));
     }
+
     @GetMapping("/league-rank/{id}")
     public ResponseEntity<List<TeamRankResponse>> getLeagueRankingInfoByUser(@PathVariable Long id) {
         return ResponseEntity
@@ -47,11 +52,12 @@ public class LeagueController {
             .status(HttpStatus.OK)
             .body(leagueService.progressLeague(id));
     }
+
     @PostMapping("/league-process")
     public ResponseEntity<MessageResponse> progressLeague(@RequestBody PersonalScheduleListRequest request) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(leagueService.progressLeague(request));
+            .status(HttpStatus.OK)
+            .body(leagueService.progressLeague(request));
     }
 
 }

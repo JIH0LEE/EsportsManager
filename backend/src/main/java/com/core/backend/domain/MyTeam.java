@@ -1,6 +1,7 @@
 package com.core.backend.domain;
 
 
+import com.core.backend.exception.NotEnoughMoney;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -14,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import com.core.backend.exception.NotEnoughMoney;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,88 +75,83 @@ public class MyTeam {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "myTeam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MyPlayer> myPlayerList = new ArrayList<>();
 
-    public void updateWinPoint(int score){
-        if(score==1){
-            this.setWin =this.setWin+2;
-            this.setLose =this.setLose+1;
-            this.matchWin=this.matchWin+1;
-            this.winPoint=this.winPoint+1;
-        }
-        else if(score==-1){
-            this.setWin =this.setWin+1;
-            this.setLose =this.setLose+2;
-            this.matchLose=this.matchLose+1;
-            this.winPoint=this.winPoint-1;
-        }
-        else if(score==2){
-            this.setWin =this.setWin+2;
-            this.matchWin=this.matchWin+1;
-            this.winPoint=this.winPoint+2;
-        }
-        else{
-            this.setLose =this.setLose+2;
-            this.matchLose=this.matchLose+1;
-            this.winPoint=this.winPoint-2;
+    public void updateWinPoint(int score) {
+        if (score == 1) {
+            this.setWin = this.setWin + 2;
+            this.setLose = this.setLose + 1;
+            this.matchWin = this.matchWin + 1;
+            this.winPoint = this.winPoint + 1;
+        } else if (score == -1) {
+            this.setWin = this.setWin + 1;
+            this.setLose = this.setLose + 2;
+            this.matchLose = this.matchLose + 1;
+            this.winPoint = this.winPoint - 1;
+        } else if (score == 2) {
+            this.setWin = this.setWin + 2;
+            this.matchWin = this.matchWin + 1;
+            this.winPoint = this.winPoint + 2;
+        } else {
+            this.setLose = this.setLose + 2;
+            this.matchLose = this.matchLose + 1;
+            this.winPoint = this.winPoint - 2;
         }
     }
 
-    public List<Long> getSponsors(){
+    public List<Long> getSponsors() {
         List<Long> sponsors = new ArrayList<Long>();
-        if(sponsor1!=null){
+        if (sponsor1 != null) {
             sponsors.add(sponsor1);
         }
-        if(sponsor2!=null){
+        if (sponsor2 != null) {
             sponsors.add(sponsor2);
         }
-        if(sponsor3!=null){
+        if (sponsor3 != null) {
             sponsors.add(sponsor3);
         }
         return sponsors;
     }
 
-    public List<Long> getEnterprises(){
+    public List<Long> getEnterprises() {
         List<Long> enterprises = new ArrayList<Long>();
-        if(enterprise1!=null){
+        if (enterprise1 != null) {
             enterprises.add(enterprise1);
         }
-        if(enterprise2!=null){
+        if (enterprise2 != null) {
             enterprises.add(enterprise2);
         }
         return enterprises;
     }
 
-    public void contractSponsor(Long id){
-        if(sponsor1==null){
+    public void contractSponsor(Long id) {
+        if (sponsor1 == null) {
             sponsor1 = id;
-        }
-        else if(sponsor2==null){
-            sponsor2 =id;
-        }
-        else{
+        } else if (sponsor2 == null) {
+            sponsor2 = id;
+        } else {
             sponsor3 = id;
         }
     }
-    public void startEnterprise(Long id){
-        if(enterprise1==null){
+
+    public void startEnterprise(Long id) {
+        if (enterprise1 == null) {
             enterprise1 = id;
-        }
-        else{
+        } else {
             enterprise2 = id;
         }
-        if(id==1L){
-            if(money<20000000){
+        if (id == 1L) {
+            if (money < 20000000) {
                 throw new NotEnoughMoney();
             }
             money = money - 20000000;
-        }
-        else{
-            if(money<100000000){
+        } else {
+            if (money < 100000000) {
                 throw new NotEnoughMoney();
             }
             money = money - 100000000;
         }
     }
-    public void changeMoney(Integer plus){
+
+    public void changeMoney(Integer plus) {
         money = money + plus;
     }
 

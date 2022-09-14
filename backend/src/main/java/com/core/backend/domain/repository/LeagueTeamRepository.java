@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface LeagueTeamRepository extends JpaRepository<LeagueTeam, Long> {
+
     LeagueTeam findLeagueTeamByLeagueAndBaseTeam(League league, BaseTeam baseTeam);
 
 }

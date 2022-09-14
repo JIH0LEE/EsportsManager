@@ -60,8 +60,8 @@ public class ExceptionController {
     public ResponseEntity<ExceptionResponse> notEnoughMoneyHandler(Exception ex) {
         ex.printStackTrace();
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse("자금이 부족합니다."));
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse("자금이 부족합니다."));
     }
 
     @ExceptionHandler(Exception.class)

@@ -2,7 +2,6 @@ package com.core.backend.controller.dto;
 
 
 import com.core.backend.domain.Enterprise;
-import com.core.backend.domain.Sponsor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -24,12 +23,12 @@ public class EnterpriseResponse {
 
     public static EnterpriseResponse of(Enterprise enterprise) {
         return new EnterpriseResponse(
-                enterprise.getId(),
-                enterprise.getName(),
-                enterprise.getDescription(),
-                enterprise.getEarningMoney(),
-                enterprise.getCost(),
-                enterprise.getImage()
+            enterprise.getId(),
+            enterprise.getName(),
+            enterprise.getDescription(),
+            enterprise.getEarningMoney(),
+            enterprise.getCost(),
+            enterprise.getImage()
         );
     }
 }

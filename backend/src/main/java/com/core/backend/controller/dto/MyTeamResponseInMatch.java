@@ -1,13 +1,14 @@
 package com.core.backend.controller.dto;
 
 import com.core.backend.domain.BaseTeam;
-import com.core.backend.domain.Player;
+import com.core.backend.domain.MyPlayer;
+import com.core.backend.domain.MyTeam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class BaseTeamResponseInMatch {
+public class MyTeamResponseInMatch {
 
     private String name;
 
@@ -21,14 +22,15 @@ public class BaseTeamResponseInMatch {
 
     private PlayerResponse sup;
 
-    public static BaseTeamResponseInMatch of(BaseTeam baseTeam) {
-        return new BaseTeamResponseInMatch(
-            baseTeam.getName(),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("TOP")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("JUNGLE")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("MIDDLE")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("ADC")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("SUPPORT"))
+    public static MyTeamResponseInMatch of(MyTeam myTeam) {
+        MyTeamResponse myTeamResponse = MyTeamResponse.of(myTeam);
+        return new MyTeamResponseInMatch(
+            myTeam.getName(),
+            myTeamResponse.getTop().getPlayerResponse(),
+            myTeamResponse.getJng().getPlayerResponse(),
+            myTeamResponse.getMid().getPlayerResponse(),
+            myTeamResponse.getAdc().getPlayerResponse(),
+            myTeamResponse.getSup().getPlayerResponse()
         );
     }
 }
