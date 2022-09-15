@@ -10,6 +10,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MyTeamResponseInMatch {
 
+    private Long id;
+
     private String name;
 
     private PlayerResponse top;
@@ -25,12 +27,13 @@ public class MyTeamResponseInMatch {
     public static MyTeamResponseInMatch of(MyTeam myTeam) {
         MyTeamResponse myTeamResponse = MyTeamResponse.of(myTeam);
         return new MyTeamResponseInMatch(
-            myTeam.getName(),
-            myTeamResponse.getTop().getPlayerResponse(),
-            myTeamResponse.getJng().getPlayerResponse(),
-            myTeamResponse.getMid().getPlayerResponse(),
-            myTeamResponse.getAdc().getPlayerResponse(),
-            myTeamResponse.getSup().getPlayerResponse()
+                myTeam.getId(),
+                myTeam.getName(),
+                myTeamResponse.getTop().getPlayerResponse(),
+                myTeamResponse.getJng().getPlayerResponse(),
+                myTeamResponse.getMid().getPlayerResponse(),
+                myTeamResponse.getAdc().getPlayerResponse(),
+                myTeamResponse.getSup().getPlayerResponse()
         );
     }
 }

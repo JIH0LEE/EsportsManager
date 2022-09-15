@@ -9,6 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class BaseTeamResponseInMatch {
 
+    private Long Id;
+
     private String name;
 
     private PlayerResponse top;
@@ -23,12 +25,13 @@ public class BaseTeamResponseInMatch {
 
     public static BaseTeamResponseInMatch of(BaseTeam baseTeam) {
         return new BaseTeamResponseInMatch(
-            baseTeam.getName(),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("TOP")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("JUNGLE")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("MIDDLE")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("ADC")),
-            PlayerResponse.of(baseTeam.findPlayerByPosition("SUPPORT"))
+                baseTeam.getId(),
+                baseTeam.getName(),
+                PlayerResponse.of(baseTeam.findPlayerByPosition("TOP")),
+                PlayerResponse.of(baseTeam.findPlayerByPosition("JUNGLE")),
+                PlayerResponse.of(baseTeam.findPlayerByPosition("MIDDLE")),
+                PlayerResponse.of(baseTeam.findPlayerByPosition("ADC")),
+                PlayerResponse.of(baseTeam.findPlayerByPosition("SUPPORT"))
         );
     }
 }

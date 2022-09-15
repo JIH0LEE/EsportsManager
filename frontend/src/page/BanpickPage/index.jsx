@@ -28,6 +28,9 @@ function BanpickPage() {
   const [aiPickedPos, setAiPickedPos] = useState([]);
   const [isSwapStage, setIsSwapStage] = useState(false);
   const [enemySwap, setEnemySwap] = useState(false);
+  const [myTeam, setMyTeam] = useState(0);
+  const [oppositeTeam, setOppositeTeam] = useState(0);
+  const [matchId, setMatchId] = useState(0);
   const [aiUnPickedPos, setAiUnPickedPos] = useState([
     "TOP",
     "JUNGLE",
@@ -76,8 +79,14 @@ function BanpickPage() {
         if (res.data.blue) {
           setBlueTeam(res.data.myTeam);
           setRedTeam(res.data.oppositeTeam);
-          setIsBlue(res.data.blue);
+        } else {
+          setRedTeam(res.data.myTeam);
+          setBlueTeam(res.data.oppositeTeam);
         }
+        setIsBlue(res.data.blue);
+        setMyTeam(res.data.myTeam.id);
+        setOppositeTeam(res.data.oppositeTeam.id);
+        setMatchId(res.data.id);
       })
       .catch((err) => {
         alert(err);
@@ -94,6 +103,29 @@ function BanpickPage() {
     setShowChapions(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
+  const submit = () => {
+    let bluePickIdList = [];
+    let redPickIdList = [];
+    var i = 0;
+    for (i = 0; i < 5; i++) {
+      bluePickIdList.push(bluePick[i].id);
+      redPickIdList.push(redPick[i].id);
+    }
+
+    const body = {
+      headCoachId: userData.id,
+      matchId: matchId,
+      bluePick: bluePickIdList,
+      redPick: redPickIdList,
+      isBlue: isBlue,
+      myTeam: myTeam,
+      oppositeTeam: oppositeTeam,
+    };
+
+    axios.post(API_SERVER + "/api/set/banpick", body).then((res) => {
+      console.log(res.data);
+    });
+  };
   const nextStage = () => {
     const parsing = stage[stageNum].split(" ");
     if (parsing[0] === "Swap") {
@@ -289,14 +321,22 @@ function BanpickPage() {
         <>
           <div className="command-container">
             <div className="command background basic">{stage[stageNum]}</div>
-            {isMyTurn() ? (
-              <div className="submit-button button" onClick={nextStage}>
-                확인
+            {enemySwap ? (
+              <div className="submit-button button" onClick={submit}>
+                밴픽 완료
               </div>
             ) : (
-              <div className="submit-button button" onClick={nextStage}>
-                상대 진행
-              </div>
+              <>
+                {isMyTurn() ? (
+                  <div className="submit-button button" onClick={nextStage}>
+                    확인
+                  </div>
+                ) : (
+                  <div className="submit-button button" onClick={nextStage}>
+                    상대 진행
+                  </div>
+                )}
+              </>
             )}
           </div>
           <div className="score-board">

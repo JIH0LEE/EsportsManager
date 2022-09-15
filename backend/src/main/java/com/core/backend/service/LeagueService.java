@@ -5,15 +5,7 @@ import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.PersonalScheduleListRequest;
 import com.core.backend.controller.dto.TeamRankResponse;
-import com.core.backend.domain.BaseTeam;
-import com.core.backend.domain.HeadCoach;
-import com.core.backend.domain.League;
-import com.core.backend.domain.LeagueSchedule;
-import com.core.backend.domain.LeagueTeam;
-import com.core.backend.domain.MyPlayer;
-import com.core.backend.domain.MyTeam;
-import com.core.backend.domain.PersonalSchedule;
-import com.core.backend.domain.Player;
+import com.core.backend.domain.*;
 import com.core.backend.domain.enums.Condition;
 import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.BaseTeamRepository;
@@ -383,13 +375,23 @@ public class LeagueService {
         return new MessageResponse(true, "일정을 성공적으로 수행하였습니다.");
     }
 
-    public MessageResponse progressLeague(Long id) {
-        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
-        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
-        MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
+    private boolean postProcess(GameMatch gameMatch,League league){
+        BaseTeam oppositeTeamBaseTeam = gameMatch.getOppositeTeam();
+        LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,oppositeTeamBaseTeam);
+        if(gameMatch.isBlue()&&gameMatch.getGameScore()==1 || !gameMatch.isBlue()&&gameMatch.getGameScore()==-1){
+            return true;
+        }
+
+        return false;
+    }
+
+    public MessageResponse progressLeague(  GameMatch gameMatch) {
+        League league = gameMatch.getLeague();
+        MyTeam myTeam = gameMatch.getMyTeam();
+
         List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
         playOtherGame(leagueScheduleList, myTeam, league);
-        if (playMyGame(leagueScheduleList, myTeam, league)) {
+        if (checkWin(gameMatch)) {
             getMoneyFromSponsors(myTeam);
         }
         getMoneyByEnterprises(myTeam);

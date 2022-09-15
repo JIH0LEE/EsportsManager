@@ -32,25 +32,24 @@ public class GameSet {
 
     private Long oppositeTeam;
 
-    @Column(columnDefinition = "varchar(20) default '1'")
     private Long blueTopChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long blueJngChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long blueMidChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long blueAdcChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long blueSupChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long redTopChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long redJngChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long redMidChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long redAdcChamp;
-    @Column(columnDefinition = "varchar(20) default '1'")
+
     private Long redSupChamp;
 
     @Column(columnDefinition = "varchar(20) default '1000'")
@@ -136,6 +135,8 @@ public class GameSet {
     private Integer curTime;
 
     private boolean isBlue;
+
+    private boolean finished;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_match_id")
@@ -516,19 +517,24 @@ public class GameSet {
     }
 
     public boolean isBlueWinable() {
-        if (blueTopTower1 == 0 && blueTopTower2 == 0 && blueMidTower1 == 0 &&
-            blueMidTower2 == 0 && blueBottomTower1 == 0 && blueBottomTower2 == 0) {
+        if (redTopTower1 == 0 && redTopTower2 == 0 && redMidTower1 == 0 &&
+                redMidTower2 == 0 && redBottomTower1 == 0 && redBottomTower2 == 0) {
             return true;
         }
         return false;
     }
 
     public boolean isRedWinable() {
-        if (redTopTower1 == 0 && redTopTower2 == 0 && redMidTower1 == 0 &&
-            redMidTower2 == 0 && redBottomTower1 == 0 && redBottomTower2 == 0) {
+        if (blueTopTower1 == 0 && blueTopTower2 == 0 && blueMidTower1 == 0 &&
+                blueMidTower2 == 0 && blueBottomTower1 == 0 && blueBottomTower2 == 0) {
             return true;
         }
+
         return false;
+    }
+
+    public void finishGame(){
+        finished = true;
     }
 
 }

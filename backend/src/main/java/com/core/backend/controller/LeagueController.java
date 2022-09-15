@@ -46,12 +46,12 @@ public class LeagueController {
             .body(leagueService.getRankingInfoByUser(id));
     }
 
-    @PostMapping("/league-process/{id}")
-    public ResponseEntity<MessageResponse> progressLeague(@PathVariable Long id) {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(leagueService.progressLeague(id));
-    }
+//    @PostMapping("/league-process/{id}")
+//    public ResponseEntity<MessageResponse> progressLeague(@PathVariable Long id) {
+//        return ResponseEntity
+//            .status(HttpStatus.OK)
+//            .body(leagueService.progressLeague(id));
+//    }
 
     @PostMapping("/league-process")
     public ResponseEntity<MessageResponse> progressLeague(@RequestBody PersonalScheduleListRequest request) {

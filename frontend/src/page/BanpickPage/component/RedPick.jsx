@@ -17,7 +17,7 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
   };
 
   return (
-    <div className="blue-list">
+    <div className="red-list">
       <div className="pick-item">
         <div className="name-container"> {redTeam.top.nickName}</div>
         <div

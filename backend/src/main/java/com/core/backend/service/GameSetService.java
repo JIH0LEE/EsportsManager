@@ -1,16 +1,11 @@
 package com.core.backend.service;
 
-import com.core.backend.domain.BaseTeam;
-import com.core.backend.domain.GameSet;
-import com.core.backend.domain.LeagueTeam;
-import com.core.backend.domain.MyTeam;
+import com.core.backend.controller.dto.BanpickRequest;
+import com.core.backend.controller.dto.BanpickResponse;
+import com.core.backend.controller.dto.MessageResponse;
+import com.core.backend.domain.*;
 import com.core.backend.domain.enums.Position;
-import com.core.backend.domain.repository.ChampionRepository;
-import com.core.backend.domain.repository.GameSetRepository;
-import com.core.backend.domain.repository.LeagueTeamRepository;
-import com.core.backend.domain.repository.MyPlayerRepository;
-import com.core.backend.domain.repository.MyTeamRepository;
-import com.core.backend.domain.repository.PlayerRepository;
+import com.core.backend.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +22,7 @@ public class GameSetService {
     private final ChampionRepository championRepository;
     private final PlayerRepository playerRepository;
     private final LeagueTeamRepository leagueTeamRepository;
+    private final GameMatchRepository gameMatchRepository;
 
     private boolean isBigBattle(GameSet gameSet) {
         Integer currentTime = gameSet.getCurTime();
@@ -520,26 +516,11 @@ public class GameSetService {
         gameSet.updateTime();
     }
 
-    public void play() {
-        //Set 생성
-        MyTeam myTeam = myTeamRepository.findById(1L).orElseThrow();
-        LeagueTeam oppositeTeam = leagueTeamRepository.findById(9L).orElseThrow();
+    public GameMatch play(Long id) {
+        GameSet gameSet = gameSetRepository.findById(id).orElseThrow();
+        MyTeam myTeam = myTeamRepository.findById(gameSet.getMyTeam()).orElseThrow();
+        LeagueTeam oppositeTeam = leagueTeamRepository.findById(gameSet.getOppositeTeam()).orElseThrow();
         BaseTeam baseTeam = oppositeTeam.getBaseTeam();
-//        GameSet gameSet = new GameSet();
-//        gameSet.setCurTime(2);
-//        gameSet.setBlueTopChamp(1L);
-//        gameSet.setBlueJngChamp(1L);
-//        gameSet.setBlueMidChamp(1L);
-//        gameSet.setBlueAdcChamp(1L);
-//        gameSet.setBlueSupChamp(1L);
-//        gameSet.setRedTopChamp(1L);
-//        gameSet.setRedJngChamp(1L);
-//        gameSet.setRedMidChamp(1L);
-//        gameSet.setRedAdcChamp(1L);
-//        gameSet.setRedSupChamp(1L);
-//        gameSetRepository.save(gameSet);
-        GameSet gameSet = gameSetRepository.findById(15L).orElseThrow();
-        int i = 0;
         while (true) {
             System.out.println("_______________________________________");
             System.out.println(gameSet.getCurTime());
@@ -548,23 +529,30 @@ public class GameSetService {
             if (blueWin || redWin) {
                 if (blueWin && redWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
+                        gameSet.getGameMatch().updateSetInfo(1);
                         System.out.println("블루팀이 승리하였습니다");
 
                     } else {
+                        gameSet.getGameMatch().updateSetInfo(-1);
                         System.out.println("레드팀이 승리하였습니다");
 
                     }
+                    gameSet.finishGame();
                     break;
                 }
                 if (blueWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
+                        gameSet.getGameMatch().updateSetInfo(1);
                         System.out.println("블루팀이 승리하였습니다");
+                        gameSet.finishGame();
                         break;
                     }
                 }
                 if (redWin) {
                     if (!fight(myTeam, oppositeTeam, gameSet)) {
+                        gameSet.getGameMatch().updateSetInfo(-1);
                         System.out.println("레드팀이 승리하였습니다");
+                        gameSet.finishGame();
                         break;
                     }
                 }
@@ -585,7 +573,31 @@ public class GameSetService {
             }
             addTime(gameSet);
         }
+        return gameSet.getGameMatch();
+    }
 
+    public BanpickResponse banpick(BanpickRequest banpickRequest){
+        GameMatch gameMatch = gameMatchRepository.findById(banpickRequest.getMatchId()).orElseThrow();
+        GameSet gameSet =GameSet.builder()
+                .myTeam(banpickRequest.getMyTeam())
+                .oppositeTeam(banpickRequest.getOppositeTeam())
+                .blueTopChamp(banpickRequest.getBluePick().get(0))
+                .blueJngChamp(banpickRequest.getBluePick().get(1))
+                .blueMidChamp(banpickRequest.getBluePick().get(2))
+                .blueAdcChamp(banpickRequest.getBluePick().get(3))
+                .blueSupChamp(banpickRequest.getBluePick().get(4))
+                .redTopChamp(banpickRequest.getRedPick().get(0))
+                .redJngChamp(banpickRequest.getRedPick().get(1))
+                .redMidChamp(banpickRequest.getRedPick().get(2))
+                .redAdcChamp(banpickRequest.getRedPick().get(3))
+                .redSupChamp(banpickRequest.getRedPick().get(4))
+                .curTime(2)
+                .isBlue(banpickRequest.isBlue())
+                .finished(false)
+                .gameMatch(gameMatch)
+                .build();
+        gameSetRepository.save(gameSet);
+        return new BanpickResponse(gameSet.getId());
     }
 
 }
