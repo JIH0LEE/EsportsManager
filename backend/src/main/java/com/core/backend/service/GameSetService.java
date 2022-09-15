@@ -556,6 +556,7 @@ public class GameSetService {
                         break;
                     }
                 }
+                addTime(gameSet);
                 continue;
             }
             if (isBigBattle(gameSet)) {

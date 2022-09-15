@@ -57,7 +57,6 @@ public class GameMatch {
         gameScore +=win;;
         if((gameScore==1 || gameScore==-1) &&gameSetCount==3){
             finish = true;
-
         }
         if(gameScore==2 || gameScore==-2){
             finish = true;

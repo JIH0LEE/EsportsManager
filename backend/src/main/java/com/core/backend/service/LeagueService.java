@@ -303,21 +303,21 @@ public class LeagueService {
         leagueTeam2.updateWinPoint(-score);
     }
 
-    private boolean playMyGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam, League league) {
-        boolean isWin = true;
-        for (LeagueSchedule leagueSchedule : leagueScheduleList) {
-            if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
-                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
-                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
-                isWin = progressMyTeam(myTeam, oppositeTeam, 1);
-            } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
-                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
-                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
-                isWin = progressMyTeam(myTeam, oppositeTeam, 2);
-            }
-        }
-        return isWin;
-    }
+//    private boolean playMyGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam, League league) {
+//        boolean isWin = true;
+//        for (LeagueSchedule leagueSchedule : leagueScheduleList) {
+//            if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
+//                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
+//                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
+//                isWin = progressMyTeam(myTeam, oppositeTeam, 1);
+//            } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
+//                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
+//                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
+//                isWin = progressMyTeam(myTeam, oppositeTeam, 2);
+//            }
+//        }
+//        return isWin;
+//    }
 
     private void playOtherGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam, League league) {
         for (LeagueSchedule leagueSchedule : leagueScheduleList) {
@@ -378,20 +378,34 @@ public class LeagueService {
     private boolean postProcess(GameMatch gameMatch,League league){
         BaseTeam oppositeTeamBaseTeam = gameMatch.getOppositeTeam();
         LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,oppositeTeamBaseTeam);
-        if(gameMatch.isBlue()&&gameMatch.getGameScore()==1 || !gameMatch.isBlue()&&gameMatch.getGameScore()==-1){
-            return true;
-        }
+        MyTeam myTeam = gameMatch.getMyTeam();
+        int gameScore = gameMatch.getGameScore();
+        boolean isWin = false;
+        if(gameMatch.isBlue()){
+            if(gameScore>0){
+                isWin = true;
+            }
+            myTeam.updateWinPoint(gameScore);
+            oppositeTeam.updateWinPoint(-gameScore);
 
-        return false;
+        }
+        else{
+            if(gameScore<0){
+                isWin = true;
+            }
+            myTeam.updateWinPoint(-gameScore);
+            oppositeTeam.updateWinPoint(gameScore);
+        }
+        return isWin;
+
     }
 
     public MessageResponse progressLeague(  GameMatch gameMatch) {
         League league = gameMatch.getLeague();
         MyTeam myTeam = gameMatch.getMyTeam();
-
         List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
         playOtherGame(leagueScheduleList, myTeam, league);
-        if (checkWin(gameMatch)) {
+        if (postProcess(gameMatch,league)) {
             getMoneyFromSponsors(myTeam);
         }
         getMoneyByEnterprises(myTeam);
