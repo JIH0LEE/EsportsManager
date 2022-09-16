@@ -1,5 +1,7 @@
 package com.core.backend.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -138,7 +140,7 @@ public class GameSet {
 
     private boolean finished;
 
-    @Column(length = 10000)
+    @Column(length = 10000,columnDefinition = "varchar(20) default ''")
     private String gameLog;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -284,7 +286,7 @@ public class GameSet {
             if (position.equals("TOP")) {
                 if (redTopTower1 != 0) {
                     redTopTower1 -= damage;
-                    if (redTopTower1 < 0) {
+                    if (redTopTower1 <= 0) {
                         redTopTower1 = 0;
                         changeAllGold(true, 100);
                         String log = makeTimeLog()+"레드팀 탑 외각 타워가 파괴되었습니다.;";
@@ -293,7 +295,7 @@ public class GameSet {
                     }
                 } else {
                     redTopTower2 -= damage;
-                    if (redTopTower2 < 0) {
+                    if (redTopTower2 <= 0) {
                         redTopTower2 = 0;
                         changeAllGold(true, 200);
                         String log = makeTimeLog()+"레드팀 탑 내각 타워가 파괴되었습니다.;";
@@ -305,7 +307,7 @@ public class GameSet {
             if (position.equals("MIDDLE")) {
                 if (redMidTower1 != 0) {
                     redMidTower1 -= damage;
-                    if (redMidTower1 < 0) {
+                    if (redMidTower1 <= 0) {
                         redMidTower1 = 0;
                         changeAllGold(true, 100);
                         String log = makeTimeLog()+"레드팀 미드 외각 타워가 파괴되었습니다.;";
@@ -314,7 +316,7 @@ public class GameSet {
                     }
                 } else {
                     redMidTower2 -= damage;
-                    if (redMidTower2 < 0) {
+                    if (redMidTower2 <= 0) {
                         redMidTower2 = 0;
                         changeAllGold(true, 200);
                         String log = makeTimeLog()+"레드팀 미드 내각 타워가 파괴되었습니다.;";
@@ -326,7 +328,7 @@ public class GameSet {
             if (position.equals("ADC")) {
                 if (redBottomTower1 != 0) {
                     redBottomTower1 -= damage;
-                    if (redBottomTower1 < 0) {
+                    if (redBottomTower1 <= 0) {
                         redBottomTower1 = 0;
                         changeAllGold(true, 100);
                         String log = makeTimeLog()+"레드팀 바텀 외각 타워가 파괴되었습니다.;";
@@ -335,7 +337,7 @@ public class GameSet {
                     }
                 } else {
                     redBottomTower2 -= damage;
-                    if (redBottomTower2 < 0) {
+                    if (redBottomTower2 <= 0) {
                         redBottomTower2 = 0;
                         changeAllGold(true, 200);
                         String log = makeTimeLog()+"레드팀 바텀 내각 타워가 파괴되었습니다.;";
@@ -348,7 +350,7 @@ public class GameSet {
             if (position.equals("TOP")) {
                 if (blueTopTower1 != 0) {
                     blueTopTower1 -= damage;
-                    if (blueTopTower1 < 0) {
+                    if (blueTopTower1 <= 0) {
                         blueTopTower1 = 0;
                         changeAllGold(false, 100);
                         String log = makeTimeLog()+"블루팀 탑 외각 타워가 파괴되었습니다.;";
@@ -357,7 +359,7 @@ public class GameSet {
                     }
                 } else {
                     blueTopTower2 -= damage;
-                    if (blueTopTower2 < 0) {
+                    if (blueTopTower2 <= 0) {
                         blueTopTower2 = 0;
                         changeAllGold(false, 200);
                         String log = makeTimeLog()+"블루팀 탑 내각 타워가 파괴되었습니다.;";
@@ -369,7 +371,7 @@ public class GameSet {
             if (position.equals("MIDDLE")) {
                 if (blueMidTower1 != 0) {
                     blueMidTower1 -= damage;
-                    if (blueMidTower1 < 0) {
+                    if (blueMidTower1 <= 0) {
                         blueMidTower1 = 0;
                         changeAllGold(false, 100);
                         String log = makeTimeLog()+"블루팀 미드 외각 타워가 파괴되었습니다.;";
@@ -378,7 +380,7 @@ public class GameSet {
                     }
                 } else {
                     blueMidTower2 -= damage;
-                    if (blueMidTower2 < 0) {
+                    if (blueMidTower2 <= 0) {
                         blueMidTower2 = 0;
                         changeAllGold(false, 200);
                         String log = makeTimeLog()+"블루팀 미드 내각 타워가 파괴되었습니다.;";
@@ -390,7 +392,7 @@ public class GameSet {
             if (position.equals("ADC")) {
                 if (blueBottomTower1 != 0) {
                     blueBottomTower1 -= damage;
-                    if (blueBottomTower1 < 0) {
+                    if (blueBottomTower1 <= 0) {
                         blueBottomTower1 = 0;
                         changeAllGold(false, 100);
                         String log = makeTimeLog()+"블루팀 바텀 외각 타워가 파괴되었습니다.;";
@@ -399,7 +401,7 @@ public class GameSet {
                     }
                 } else {
                     blueBottomTower2 -= damage;
-                    if (blueBottomTower2 < 0) {
+                    if (blueBottomTower2 <= 0) {
                         blueBottomTower2 = 0;
                         changeAllGold(false, 200);
                         String log = makeTimeLog()+"블루팀 바텀 내각 타워가 파괴되었습니다.;";
@@ -416,7 +418,7 @@ public class GameSet {
         if (isBlue) {
             if (redTopTower1 != 0) {
                 redTopTower1 -= damage;
-                if (redTopTower1 < 0) {
+                if (redTopTower1 <= 0) {
                     redTopTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"레드팀 탑 외각 타워가 파괴되었습니다.;";
@@ -427,7 +429,7 @@ public class GameSet {
             }
             if (redMidTower1 != 0) {
                 redMidTower1 -= damage;
-                if (redMidTower1 < 0) {
+                if (redMidTower1 <= 0) {
                     redMidTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"레드팀 미드 외각 타워가 파괴되었습니다.;";
@@ -438,7 +440,7 @@ public class GameSet {
             }
             if (redBottomTower1 != 0) {
                 redBottomTower1 -= damage;
-                if (redBottomTower1 < 0) {
+                if (redBottomTower1 <= 0) {
                     redBottomTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"레드팀 바텀 외각 타워가 파괴되었습니다.;";
@@ -449,7 +451,7 @@ public class GameSet {
             }
             if (redTopTower2 != 0) {
                 redTopTower2 -= damage;
-                if (redTopTower2 < 0) {
+                if (redTopTower2 <= 0) {
                     redTopTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"레드팀 탑 내각 타워가 파괴되었습니다.;";
@@ -460,7 +462,7 @@ public class GameSet {
             }
             if (redMidTower2 != 0) {
                 redMidTower2 -= damage;
-                if (redMidTower2 < 0) {
+                if (redMidTower2 <= 0) {
                     redMidTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"레드팀 미드 내각 타워가 파괴되었습니다.;";
@@ -471,7 +473,7 @@ public class GameSet {
             }
             if (redBottomTower2 != 0) {
                 redBottomTower2 -= damage;
-                if (redBottomTower2 < 0) {
+                if (redBottomTower2 <= 0) {
                     redBottomTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"레드팀 바텀 내각 타워가 파괴되었습니다.;";
@@ -483,7 +485,7 @@ public class GameSet {
         } else {
             if (blueTopTower1 != 0) {
                 blueTopTower1 -= damage;
-                if (blueTopTower1 < 0) {
+                if (blueTopTower1 <= 0) {
                     blueTopTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"블루팀 탑 외각 타워가 파괴되었습니다.;";
@@ -494,7 +496,7 @@ public class GameSet {
             }
             if (blueMidTower1 != 0) {
                 blueMidTower1 -= damage;
-                if (blueMidTower1 < 0) {
+                if (blueMidTower1 <= 0) {
                     blueMidTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"블루팀 미드 외각 타워가 파괴되었습니다.;";
@@ -505,7 +507,7 @@ public class GameSet {
             }
             if (blueBottomTower1 != 0) {
                 blueBottomTower1 -= damage;
-                if (blueBottomTower1 < 0) {
+                if (blueBottomTower1 <= 0) {
                     blueBottomTower1 = 0;
                     changeAllGold(true, 100);
                     String log = makeTimeLog()+"블루팀 바텀 외각 타워가 파괴되었습니다.;";
@@ -516,7 +518,7 @@ public class GameSet {
             }
             if (blueTopTower2 != 0) {
                 blueTopTower2 -= damage;
-                if (blueTopTower2 < 0) {
+                if (blueTopTower2 <= 0) {
                     blueTopTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"블루팀 탑 내각 타워가 파괴되었습니다.;";
@@ -527,7 +529,7 @@ public class GameSet {
             }
             if (blueMidTower2 != 0) {
                 blueMidTower2 -= damage;
-                if (blueMidTower2 < 0) {
+                if (blueMidTower2 <= 0) {
                     blueMidTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"블루팀 미드 내각 타워가 파괴되었습니다.;";
@@ -538,7 +540,7 @@ public class GameSet {
             }
             if (blueBottomTower2 != 0) {
                 blueBottomTower2 -= damage;
-                if (blueBottomTower2 < 0) {
+                if (blueBottomTower2 <= 0) {
                     blueBottomTower2 = 0;
                     changeAllGold(true, 200);
                     String log = makeTimeLog()+"블루팀 바텀 내각 타워가 파괴되었습니다.;";
@@ -600,4 +602,51 @@ public class GameSet {
         gameLog += log;
     }
 
+    public List<Long> getChampList(){
+        List<Long> result = new ArrayList<>();
+        result.add(blueTopChamp);
+        result.add(blueJngChamp);
+        result.add(blueMidChamp);
+        result.add(blueAdcChamp);
+        result.add(blueSupChamp);
+        result.add(redTopChamp);
+        result.add(redJngChamp);
+        result.add(redMidChamp);
+        result.add(redAdcChamp);
+        result.add(redSupChamp);
+        return result;
+    }
+
+    public List<Integer> getTowerList(){
+        List<Integer> result = new ArrayList<>();
+        result.add(blueTopTower1);
+        result.add(blueTopTower2);
+        result.add(blueMidTower1);
+        result.add(blueMidTower2);
+        result.add(blueBottomTower1);
+        result.add(blueBottomTower2);
+        result.add(redTopTower1);
+        result.add(redTopTower2);
+        result.add(redMidTower1);
+        result.add(redMidTower2);
+        result.add(redBottomTower1);
+        result.add(redBottomTower2);
+        return result;
+    }
+
+    public List<Integer> getGoldList(){
+        List<Integer> result = new ArrayList<>();
+        result.add(blueTopGold);
+        result.add(blueJngGold);
+        result.add(blueMidGold);
+        result.add(blueAdcGold);
+        result.add(blueSupGold);
+        result.add(redTopGold);
+        result.add(redJngGold);
+        result.add(redMidGold);
+        result.add(redAdcGold);
+        result.add(redSupGold);
+
+        return result;
+    }
 }

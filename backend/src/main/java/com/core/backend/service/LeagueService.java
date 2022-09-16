@@ -360,6 +360,13 @@ public class LeagueService {
         });
     }
 
+    private void addExp(MyTeam myTeam,int exp){
+        System.out.println("test");
+        myTeam.getMyPlayerList().forEach(player->{
+            player.applyExp(exp);
+        });
+    }
+
     public MessageResponse progressLeague(PersonalScheduleListRequest personalScheduleRequestList) {
         HeadCoach headCoach = headCoachRepository.findById(personalScheduleRequestList.getHeadCoachId()).orElseThrow();
         League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
@@ -407,6 +414,8 @@ public class LeagueService {
         playOtherGame(leagueScheduleList, myTeam, league);
         if (postProcess(gameMatch,league)) {
             getMoneyFromSponsors(myTeam);
+            addExp(myTeam,20);
+
         }
         getMoneyByEnterprises(myTeam);
         addDay(league);

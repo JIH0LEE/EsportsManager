@@ -18,12 +18,12 @@ public class TestController {
     private final LeagueService leagueService;
 
 
-    @GetMapping("{id}")
-    public void test(@PathVariable Long id) {
-        GameMatch gameMatch = gameSetService.play(id);
-        if(gameMatch.isFinish()){
-            leagueService.progressLeague(gameMatch);
-        }
-    }
+//    @GetMapping("{id}")
+//    public void test(@PathVariable Long id) {
+//        GameMatch gameMatch = gameSetService.play(id);
+//        if(gameMatch.isFinish()){
+//            leagueService.progressLeague(gameMatch);
+//        }
+//    }
 
 }

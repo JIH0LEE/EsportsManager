@@ -2,10 +2,13 @@ package com.core.backend.service;
 
 import com.core.backend.controller.dto.BanpickRequest;
 import com.core.backend.controller.dto.BanpickResponse;
+import com.core.backend.controller.dto.GameSetResponse;
 import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.domain.*;
 import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.*;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,19 @@ public class GameSetService {
     private final PlayerRepository playerRepository;
     private final LeagueTeamRepository leagueTeamRepository;
     private final GameMatchRepository gameMatchRepository;
+
+    public GameSetResponse getSetData(Long id){
+
+        return makeGameSetResponse(gameSetRepository.findById(id).orElseThrow());
+    }
+
+    public GameSetResponse makeGameSetResponse(GameSet gameSet){
+        List<Long> championList = gameSet.getChampList();
+        List<String> championImageList = championList.stream()
+            .map(champion->championRepository.findById(champion).orElseThrow().getImage())
+            .collect(Collectors.toList());
+        return GameSetResponse.of(gameSet,championImageList);
+    }
 
     private boolean isBigBattle(GameSet gameSet) {
         Integer currentTime = gameSet.getCurTime();
@@ -517,18 +533,18 @@ public class GameSetService {
         }
         if (blueTeamOperationPower >= redTeamOperationPower) {
             float rate = (float) blueTeamOperationPower / redTeamOperationPower;
-            if (rate >= 1 && rate < 1.5) {
+            if (rate >= 1 && rate < 1.1) {
                 detailedOperation(gameSet, true, 1);
-            } else if (rate >= 1.5 && rate < 2) {
+            } else if (rate >= 1.1 && rate < 1.4) {
                 detailedOperation(gameSet, true, 2);
             } else {
                 detailedOperation(gameSet, true, 3);
             }
         } else {
             float rate = (float) redTeamOperationPower / blueTeamOperationPower;
-            if (rate >= 1 && rate < 1.5) {
+            if (rate >= 1 && rate < 1.1) {
                 detailedOperation(gameSet, false, 1);
-            } else if (rate >= 1.5 && rate < 2) {
+            } else if (rate >= 1.1 && rate < 1.4) {
                 detailedOperation(gameSet, false, 2);
             } else {
                 detailedOperation(gameSet, false, 3);
@@ -573,7 +589,7 @@ public class GameSetService {
         for (String position : positions) {
             power += getOpDistinctPower(status, position, time, leagueTeam, gameSet);
         }
-        power = power * gameSet.getMyGold();
+        power = power * gameSet.getOpGold();
         return power;
     }
 
@@ -628,7 +644,7 @@ public class GameSetService {
         gameSet.updateTime();
     }
 
-    public GameMatch play(Long id) {
+    public GameSet play(Long id) {
         GameSet gameSet = gameSetRepository.findById(id).orElseThrow();
         MyTeam myTeam = myTeamRepository.findById(gameSet.getMyTeam()).orElseThrow();
         LeagueTeam oppositeTeam = leagueTeamRepository.findById(gameSet.getOppositeTeam()).orElseThrow();
@@ -642,13 +658,13 @@ public class GameSetService {
                 if (blueWin && redWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        String log ="블루팀이 승리하였습니다.;";
+                        String log ="블루팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
 
                     } else {
                         gameSet.getGameMatch().updateSetInfo(-1);
-                        String log ="레드팀이 승리하였습니다.;";
+                        String log ="레드팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
 
@@ -659,7 +675,7 @@ public class GameSetService {
                 if (blueWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        String log ="블루팀이 승리하였습니다.;";
+                        String log ="블루팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
                         gameSet.finishGame();
@@ -669,7 +685,7 @@ public class GameSetService {
                 if (redWin) {
                     if (!fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(-1);
-                        String log = "레드팀이 승리하였습니다.;";
+                        String log = "레드팀이 승리하였습니다.";
                         System.out.println(log);
                         gameSet.addLog(log);
                         gameSet.finishGame();
@@ -694,7 +710,7 @@ public class GameSetService {
             }
             addTime(gameSet);
         }
-        return gameSet.getGameMatch();
+        return gameSet;
     }
 
     public BanpickResponse banpick(BanpickRequest banpickRequest){
@@ -713,7 +729,8 @@ public class GameSetService {
                 .redAdcChamp(banpickRequest.getRedPick().get(3))
                 .redSupChamp(banpickRequest.getRedPick().get(4))
                 .curTime(2)
-                .isBlue(banpickRequest.isBlue())
+                .isBlue(gameMatch.isBlue())
+                .gameLog("")
                 .finished(false)
                 .gameMatch(gameMatch)
                 .build();
