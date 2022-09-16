@@ -22,6 +22,7 @@
   color: rgb(15, 4, 76);
 }
 .league-ready-container .button:disabled {
+  color: white;
   background-color: rgb(238, 238, 238, 0.8);
 }
 .league-ready-container .button:hover:enabled {

@@ -97,7 +97,7 @@ function BattlePage() {
         <>
           <div className="score-board">
             <div className="blue-board">
-              {setInfo.isBlue
+              {setInfo.blue
                 ? setInfo.gameMatch.myTeam.name
                 : setInfo.gameMatch.oppositeTeam.name}
             </div>
@@ -108,7 +108,7 @@ function BattlePage() {
               )}
             </div>
             <div className="red-board">
-              {setInfo.isBlue
+              {setInfo.blue
                 ? setInfo.gameMatch.oppositeTeam.name
                 : setInfo.gameMatch.myTeam.name}
             </div>

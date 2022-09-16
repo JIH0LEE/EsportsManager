@@ -6,6 +6,7 @@
   flex-direction: column;
 }
 .main-1 {
+  position: relative;
   margin: 20px 0px;
   display: flex;
   align-items: center;
@@ -14,6 +15,36 @@
   width: 1200px;
   height: 500px;
   border-radius: 10px;
+}
+.main-1 .left-button {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+}
+.main-1 .right-button {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+.main-1 .image-container {
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  width: 1150px;
+  height: 450px;
+  border-radius: 10px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.main-1 .image-container .image {
+  width: 1200px;
+}
+.main-1 .center-logo {
+  position: absolute;
+  width: 400px;
+  opacity: 0.8;
 }
 .main-2 {
   margin: 20px 0px;

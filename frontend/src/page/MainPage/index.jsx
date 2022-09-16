@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Auth from "../../hoc/Auth";
 import axios from "axios";
 import "./style.css";
@@ -10,6 +11,7 @@ function MainPage() {
   const { userData } = useSelector((state) => state);
   const [isMyTeam, setIsMyTeam] = useState(false);
   const [leagueRank, setLeagueRank] = useState([]);
+  const [imgIdx, setImgIdx] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     if (userData.isLogin) {
@@ -34,10 +36,39 @@ function MainPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const leftClick = () => {
+    console.log(1);
+    if (imgIdx > 0) setImgIdx(imgIdx - 1);
+    else setImgIdx(3);
+  };
+  const rightClick = () => {
+    setImgIdx((imgIdx + 1) % 4);
+  };
 
   return (
     <div className="main-container">
-      <div className="main-1 background2"></div>
+      <div className="main-1 background2">
+        <AiOutlineLeft
+          onClick={leftClick}
+          className="left-button"
+          size="50"
+          color="white"
+        ></AiOutlineLeft>
+        <div className="image-container">
+          <img
+            alt="main"
+            className="image"
+            src={`./image/main-${imgIdx}.png`}
+          ></img>
+        </div>
+        <AiOutlineRight
+          onClick={rightClick}
+          className="right-button"
+          size="50"
+          color="white"
+        ></AiOutlineRight>
+        <img alt="logo" className="center-logo" src="./image/logo.png"></img>
+      </div>
       <div className="main-2">
         <div className="info-container background2">
           <div className="label-container label">Information</div>
