@@ -10,4 +10,5 @@ public interface LeagueTeamRepository extends JpaRepository<LeagueTeam, Long> {
 
     LeagueTeam findLeagueTeamByLeagueAndBaseTeam(League league, BaseTeam baseTeam);
 
+    LeagueTeam findLeagueTeamByLeagueAndBaseTeam_Id(League league, Long baseTeamId);
 }

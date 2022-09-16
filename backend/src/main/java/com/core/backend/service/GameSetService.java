@@ -3,7 +3,6 @@ package com.core.backend.service;
 import com.core.backend.controller.dto.BanpickRequest;
 import com.core.backend.controller.dto.BanpickResponse;
 import com.core.backend.controller.dto.GameSetResponse;
-import com.core.backend.domain.BaseTeam;
 import com.core.backend.domain.GameMatch;
 import com.core.backend.domain.GameSet;
 import com.core.backend.domain.LeagueTeam;
@@ -607,7 +606,7 @@ public class GameSetService {
     private void detailedFight(GameSet gameSet, boolean isBlue, int level) {
         if (level == 1) {
             gameSet.changeAllGold(isBlue, 500);
-            gameSet.destroyTower(isBlue, 500);
+            gameSet.destroyTower(isBlue, 1000);
             gameSet.changeAllGold(!isBlue, 300);
         } else {
             gameSet.changeAllGold(isBlue, 700);
@@ -658,9 +657,8 @@ public class GameSetService {
     public GameSet play(Long id) {
         GameSet gameSet = gameSetRepository.findById(id).orElseThrow();
         MyTeam myTeam = myTeamRepository.findById(gameSet.getMyTeam()).orElseThrow();
-        LeagueTeam oppositeTeam = leagueTeamRepository.findById(gameSet.getOppositeTeam())
-            .orElseThrow();
-        BaseTeam baseTeam = oppositeTeam.getBaseTeam();
+        LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam_Id(
+            gameSet.getGameMatch().getLeague(), gameSet.getOppositeTeam());
         while (true) {
             System.out.println("_______________________________________");
             System.out.println(gameSet.getCurTime());
