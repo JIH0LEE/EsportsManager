@@ -138,6 +138,9 @@ public class GameSet {
 
     private boolean finished;
 
+    @Column(length = 10000)
+    private String gameLog;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_match_id")
     private GameMatch gameMatch;
@@ -183,13 +186,13 @@ public class GameSet {
             this.blueTopGold += gold;
             this.blueJngGold += gold;
             this.blueMidGold += gold;
-            this.blueAdcGold += gold;
+            this.blueAdcGold += gold+100;
             this.blueSupGold += gold;
         } else {
             this.redTopGold += gold;
             this.redJngGold += gold;
             this.redMidGold += gold;
-            this.redAdcGold += gold;
+            this.redAdcGold += gold+100;
             this.redSupGold += gold;
         }
     }
@@ -267,6 +270,14 @@ public class GameSet {
         }
         return 0;
     }
+    private String makeTimeLog(){
+        int min = getCurTime()*60;
+        int max = min + 120;
+        int secondSum = (int) ((Math.random() * (max - min)) + min);
+        String minute = Integer.toString(secondSum/60);
+        String second = Integer.toString(secondSum%60);
+        return minute+"분 "+second+"초/";
+    }
 
     public void destroyTower(boolean isBlue, String position, int damage) {
         if (isBlue) {
@@ -276,14 +287,18 @@ public class GameSet {
                     if (redTopTower1 < 0) {
                         redTopTower1 = 0;
                         changeAllGold(true, 100);
-                        System.out.println("레드팀 탑 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 탑 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     redTopTower2 -= damage;
                     if (redTopTower2 < 0) {
                         redTopTower2 = 0;
                         changeAllGold(true, 200);
-                        System.out.println("레드팀 탑 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 탑 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -293,14 +308,18 @@ public class GameSet {
                     if (redMidTower1 < 0) {
                         redMidTower1 = 0;
                         changeAllGold(true, 100);
-                        System.out.println("레드팀 미드 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 미드 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     redMidTower2 -= damage;
                     if (redMidTower2 < 0) {
                         redMidTower2 = 0;
                         changeAllGold(true, 200);
-                        System.out.println("레드팀 미드 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 미드 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -310,14 +329,18 @@ public class GameSet {
                     if (redBottomTower1 < 0) {
                         redBottomTower1 = 0;
                         changeAllGold(true, 100);
-                        System.out.println("레드팀 바텀 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 바텀 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     redBottomTower2 -= damage;
                     if (redBottomTower2 < 0) {
                         redBottomTower2 = 0;
                         changeAllGold(true, 200);
-                        System.out.println("레드팀 바텀 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"레드팀 바텀 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -328,14 +351,18 @@ public class GameSet {
                     if (blueTopTower1 < 0) {
                         blueTopTower1 = 0;
                         changeAllGold(false, 100);
-                        System.out.println("블루팀 탑 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 탑 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     blueTopTower2 -= damage;
                     if (blueTopTower2 < 0) {
                         blueTopTower2 = 0;
                         changeAllGold(false, 200);
-                        System.out.println("블루팀 탑 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 탑 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -345,14 +372,18 @@ public class GameSet {
                     if (blueMidTower1 < 0) {
                         blueMidTower1 = 0;
                         changeAllGold(false, 100);
-                        System.out.println("블루팀 미드 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 미드 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     blueMidTower2 -= damage;
                     if (blueMidTower2 < 0) {
                         blueMidTower2 = 0;
                         changeAllGold(false, 200);
-                        System.out.println("블루팀 미드 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 미드 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -362,14 +393,18 @@ public class GameSet {
                     if (blueBottomTower1 < 0) {
                         blueBottomTower1 = 0;
                         changeAllGold(false, 100);
-                        System.out.println("블루팀 바텀 외각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 바텀 외각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 } else {
                     blueBottomTower2 -= damage;
                     if (blueBottomTower2 < 0) {
                         blueBottomTower2 = 0;
                         changeAllGold(false, 200);
-                        System.out.println("블루팀 바텀 내각 타워가 파괴되었습니다.");
+                        String log = makeTimeLog()+"블루팀 바텀 내각 타워가 파괴되었습니다.;";
+                        System.out.println(log);
+                        addLog(log);
                     }
                 }
             }
@@ -384,7 +419,9 @@ public class GameSet {
                 if (redTopTower1 < 0) {
                     redTopTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("레드팀 탑 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 탑 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -393,7 +430,9 @@ public class GameSet {
                 if (redMidTower1 < 0) {
                     redMidTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("레드팀 미드 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 미드 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -402,7 +441,9 @@ public class GameSet {
                 if (redBottomTower1 < 0) {
                     redBottomTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("레드팀 바텀 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 바텀 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -411,7 +452,9 @@ public class GameSet {
                 if (redTopTower2 < 0) {
                     redTopTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("레드팀 탑 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 탑 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -420,7 +463,9 @@ public class GameSet {
                 if (redMidTower2 < 0) {
                     redMidTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("레드팀 미드 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 미드 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -429,7 +474,9 @@ public class GameSet {
                 if (redBottomTower2 < 0) {
                     redBottomTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("레드팀 바텀 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"레드팀 바텀 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -439,7 +486,9 @@ public class GameSet {
                 if (blueTopTower1 < 0) {
                     blueTopTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("블루팀 탑 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 탑 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -448,7 +497,9 @@ public class GameSet {
                 if (blueMidTower1 < 0) {
                     blueMidTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("블루팀 미드 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 미드 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -457,7 +508,9 @@ public class GameSet {
                 if (blueBottomTower1 < 0) {
                     blueBottomTower1 = 0;
                     changeAllGold(true, 100);
-                    System.out.println("블루팀 바텀 외각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 바텀 외각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -466,7 +519,9 @@ public class GameSet {
                 if (blueTopTower2 < 0) {
                     blueTopTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("블루팀 탑 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 탑 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -475,7 +530,9 @@ public class GameSet {
                 if (blueMidTower2 < 0) {
                     blueMidTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("블루팀 미드 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 미드 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -484,7 +541,9 @@ public class GameSet {
                 if (blueBottomTower2 < 0) {
                     blueBottomTower2 = 0;
                     changeAllGold(true, 200);
-                    System.out.println("블루팀 바텀 내각 타워가 파괴되었습니다.");
+                    String log = makeTimeLog()+"블루팀 바텀 내각 타워가 파괴되었습니다.;";
+                    System.out.println(log);
+                    addLog(log);
                 }
                 return;
             }
@@ -535,6 +594,10 @@ public class GameSet {
 
     public void finishGame(){
         finished = true;
+    }
+
+    public void addLog(String log){
+        gameLog += log;
     }
 
 }

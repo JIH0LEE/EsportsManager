@@ -34,7 +34,7 @@ public class GameMatchService {
             if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
                 return new Object[]{true, baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow()};
             } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
-                return new Object[]{true, baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()};
+                return new Object[]{false, baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()};
             }
         }
         return null;

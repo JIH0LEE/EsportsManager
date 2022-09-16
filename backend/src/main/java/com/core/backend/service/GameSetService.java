@@ -149,6 +149,110 @@ public class GameSetService {
         return (player + champion) / 2;
     }
 
+    private String makeRoamingLog(String position,boolean isBlue,int num){
+        String result="";
+        if(isBlue){
+            result+="블루팀의 ";
+        }
+        else{
+            result+="레드팀의 ";
+        }
+        if(position.equals("MIDDLE")){
+            result+="미드가 ";
+        }
+        else{
+            result+="서포터가 ";
+        }
+        if(num==0){
+            result+="탑 로밍에 성공하였습니다.";
+        }
+        else if(num==1){
+            result+="바텀 로밍에 성공하였습니다.";
+        }
+        else{
+            result+="미드 로밍에 성공하였습니다.";
+        }
+        result += ";";
+        return result;
+    }
+    private String makeGankingLog(boolean isBlue,int num){
+        String result="";
+        if(isBlue){
+            result+="블루팀이 ";
+        }
+        else{
+            result+="레드팀이 ";
+        }
+        if(num==0){
+            result+="탑 갱킹에 성공하였습니다.";
+        }
+        else if(num==1){
+            result+="바텀 갱킹에 성공하였습니다.";
+        }
+        else{
+            result+="미드 갱킹에 성공하였습니다.";
+        }
+        result += ";";
+        return result;
+    }
+    private String makeLaneLog(String position,boolean isBlue,int num){
+        String result="";
+        if(isBlue){
+            result+="블루팀의 ";
+        }
+        else{
+            result+="레드팀의 ";
+        }
+        if(position.equals("TOP")){
+            result+="탑이 ";
+        }
+        else if(position.equals("MIDDLE")){
+            result+="미드가 ";
+        }
+        else if(position.equals("JUNGLE")){
+            result+="정글이 ";
+        }
+        else{
+            result+="바텀이 ";
+        }
+        if(num==2){
+            result+="상대보다 성장이 더 우세합니다.";
+        }
+        else{
+            result+="상대를 솔로킬을 달성하였습니다.";
+        }
+
+        result += ";";
+        return result;
+    }
+    private String makeFightLog(boolean isBlue,int num){
+        String result="";
+        if(isBlue){
+            result+="블루팀이 ";
+        }
+        else{
+            result+="레드팀이 ";
+        }
+
+        if(num==1){
+            result+="한타를 승리하였습니다.";
+        }
+        else{
+            result+="한타를 압도적으로 승리하였습니다. 에이스!";
+        }
+
+        result += ";";
+        return result;
+    }
+    private String makeTimeLog(GameSet gameSet){
+        int min = gameSet.getCurTime()*60;
+        int max = min + 120;
+        int secondSum = (int) ((Math.random() * (max - min)) + min);
+        String minute = Integer.toString(secondSum/60);
+        String second = Integer.toString(secondSum%60);
+        return minute+"분 "+second+"초/";
+    }
+
     private void detailedRoaming(GameSet gameSet, boolean isBlue, String position) {
         int rand;
         if (position.equals("MIDDLE")) {
@@ -167,11 +271,10 @@ public class GameSetService {
             gameSet.changeGold(isBlue, "MIDDLE", 200);
             gameSet.changeGold(isBlue, position, 200);
         }
-        if (isBlue) {
-            System.out.println("블루팀이 로밍에 성공하였습니다");
-        } else {
-            System.out.println("레드팀이 로밍에 성공하였습니다");
-        }
+        String log = makeTimeLog(gameSet)+makeRoamingLog(position,isBlue,rand);
+        System.out.println(log);
+        gameSet.addLog(log);
+
     }
 
     private void roaming(MyTeam myTeam, LeagueTeam oppositeTeam, GameSet gameSet) {
@@ -229,11 +332,10 @@ public class GameSetService {
             gameSet.changeGold(isBlue, "MIDDLE", 200);
             gameSet.changeGold(isBlue, "JUNGLE", 200);
         }
-        if (isBlue) {
-            System.out.println("블루팀이 갱킹에 성공하였습니다");
-        } else {
-            System.out.println("레드팀이 갱킹에 성공하였습니다");
-        }
+        String log = makeTimeLog(gameSet)+makeGankingLog(isBlue,rand);
+        System.out.println(log);
+        gameSet.addLog(log);
+
     }
 
     private void ganking(MyTeam myTeam, LeagueTeam oppositeTeam, GameSet gameSet) {
@@ -284,18 +386,25 @@ public class GameSetService {
     }
 
     private void detailedLane(GameSet gameSet, boolean isBlue, int level, String position) {
+
         if (level == 1) {
             gameSet.changeGold(isBlue, position, 400);
             gameSet.changeGold(!isBlue, position, 400);
         }
-        if (level == 2) {
+        else if (level == 2) {
             gameSet.changeGold(isBlue, position, 500);
             gameSet.changeGold(!isBlue, position, 300);
             gameSet.destroyTower(isBlue, position, 100);
+            String log = makeTimeLog(gameSet)+makeLaneLog(position,isBlue,level);
+            System.out.println(log);
+            gameSet.addLog(log);
         } else {
             gameSet.changeGold(isBlue, position, 700);
             gameSet.changeGold(!isBlue, position, 300);
             gameSet.destroyTower(isBlue, position, 200);
+            String log = makeTimeLog(gameSet)+makeLaneLog(position,isBlue,level);
+            System.out.println(log);
+            gameSet.addLog(log);
         }
     }
 
@@ -315,7 +424,7 @@ public class GameSetService {
                 float rate = (float) bluePower / redPower;
                 if (rate >= 1 && rate < 1.5) {
                     detailedLane(gameSet, true, 1, position);
-                } else if (rate >= 1.5 && rate < 2) {
+                } else if (rate >= 1.5 && rate < 3) {
                     detailedLane(gameSet, true, 2, position);
                 } else {
                     detailedLane(gameSet, true, 3, position);
@@ -478,6 +587,9 @@ public class GameSetService {
             gameSet.destroyTower(isBlue, 1000);
             gameSet.changeAllGold(!isBlue, 300);
         }
+        String log = makeTimeLog(gameSet)+makeFightLog(isBlue,level);
+        System.out.println(log);
+        gameSet.addLog(log);
     }
 
     private boolean fight(MyTeam myTeam, LeagueTeam oppositeTeam, GameSet gameSet) {
@@ -493,7 +605,7 @@ public class GameSetService {
         }
         float rate = (float) blueTeamFightnPower / (blueTeamFightnPower + redTeamFightPower);
         if (Math.random() < rate) {
-            System.out.println("블루팀이 한타를 승리하였습니다.");
+
             if (blueTeamFightnPower < redTeamFightPower) {
                 detailedFight(gameSet, true, 2);
             } else {
@@ -501,7 +613,7 @@ public class GameSetService {
             }
             return true;
         } else {
-            System.out.println("레드팀이 한타를 승리하였습니다.");
+
             if (blueTeamFightnPower > redTeamFightPower) {
                 detailedFight(gameSet, false, 2);
             } else {
@@ -530,11 +642,15 @@ public class GameSetService {
                 if (blueWin && redWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        System.out.println("블루팀이 승리하였습니다");
+                        String log ="블루팀이 승리하였습니다.;";
+                        gameSet.addLog(log);
+                        System.out.println(log);
 
                     } else {
                         gameSet.getGameMatch().updateSetInfo(-1);
-                        System.out.println("레드팀이 승리하였습니다");
+                        String log ="레드팀이 승리하였습니다.;";
+                        gameSet.addLog(log);
+                        System.out.println(log);
 
                     }
                     gameSet.finishGame();
@@ -543,7 +659,9 @@ public class GameSetService {
                 if (blueWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        System.out.println("블루팀이 승리하였습니다");
+                        String log ="블루팀이 승리하였습니다.;";
+                        gameSet.addLog(log);
+                        System.out.println(log);
                         gameSet.finishGame();
                         break;
                     }
@@ -551,7 +669,9 @@ public class GameSetService {
                 if (redWin) {
                     if (!fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(-1);
-                        System.out.println("레드팀이 승리하였습니다");
+                        String log = "레드팀이 승리하였습니다.;";
+                        System.out.println(log);
+                        gameSet.addLog(log);
                         gameSet.finishGame();
                         break;
                     }

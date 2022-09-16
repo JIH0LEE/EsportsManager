@@ -35,6 +35,7 @@ public class MyTeamService {
     private final MyPlayerRepository myPlayerRepository;
     private final HeadCoachRepository headCoachRepository;
     private final EnterpriseRepository enterpriseRepository;
+
     private final PersonalScheduleRepository personalScheduleRepository;
 
     private MyTeam findMyTeamByHeadCoachId(Long id) {
