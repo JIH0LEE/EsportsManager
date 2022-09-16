@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API_SERVER } from "../../common";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../hoc/Auth";
 import "./style.css";
@@ -26,11 +26,16 @@ function GameReadyPage() {
           navigate("/make-team");
           return;
         }
+        if (res.data.day > 61) {
+          navigate("/league-end");
+          return;
+        }
         setMyGame(res.data.myGame);
         setGame(res.data.game);
         setTeams(res.data.teams);
         setDay(res.data.day);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toPersonalScehdule = () => {

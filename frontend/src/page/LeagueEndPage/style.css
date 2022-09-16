@@ -1,0 +1,40 @@
+.league-end-container {
+  width: 1200px;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px 0px;
+  border-radius: 20px;
+}
+.league-end-container .button {
+  background-color: rgb(238, 238, 238, 0.8);
+  height: 150px;
+  width: 300px;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(15, 4, 76);
+  border-radius: 20px;
+}
+.league-end-container .button:hover {
+  font-size: 35px;
+}
+.league-end-container .rank-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px white solid;
+  width: 1000px;
+  height: 550px;
+  font-weight: bold;
+  font-size: 30px;
+  border-radius: 20px;
+}
+.league-end-container .rank-container .rank-body {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

@@ -16,6 +16,9 @@ const Enterprise = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const changeMoneyFormat = (price) => {
+    return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
   const submit = (enterPriseid) => {
     axios
       .post(
@@ -45,8 +48,8 @@ const Enterprise = ({ id }) => {
               <div className="right">
                 <div className="title">{enterprise.name}</div>
                 <div className="description">
-                  {enterprise.cost}원을 소모하는 대신 매일{" "}
-                  {enterprise.earningMoney}원 만큼 얻습니다.
+                  {changeMoneyFormat(enterprise.cost)}원을 소모하는 대신 매일{" "}
+                  {changeMoneyFormat(enterprise.earningMoney)}원 만큼 얻습니다.
                 </div>
                 <div className="button-container"></div>
               </div>
@@ -68,8 +71,8 @@ const Enterprise = ({ id }) => {
               <div className="right">
                 <div className="title">{enterprise.name}</div>
                 <div className="description">
-                  {enterprise.cost}원을 소모하는 대신 매일{" "}
-                  {enterprise.earningMoney}원 만큼 얻습니다.
+                  {changeMoneyFormat(enterprise.cost)}원을 소모하는 대신 매일{" "}
+                  {changeMoneyFormat(enterprise.earningMoney)}원 만큼 얻습니다.
                 </div>
                 <div className="button-container">
                   <div

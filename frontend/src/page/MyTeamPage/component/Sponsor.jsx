@@ -9,6 +9,7 @@ const Sponsor = ({ id }) => {
   const [already, setAlready] = useState([]);
   const [disable, setDisable] = useState([]);
   const [enable, setEnable] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/sponsor/${id}`).then((res) => {
       setAlready(res.data.alreadySponsor);
@@ -18,15 +19,18 @@ const Sponsor = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const changeMoneyFormat = (price) => {
+    return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
   const submit = (sponsorId) => {
     axios
       .post(API_SERVER + `/api/my-team/sponsor?user=${id}&sponsor=${sponsorId}`)
       .then((res) => {
-        console.log(res.data);
+        alert(res.data.message);
+        navigate("/my-team");
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.data.message);
       });
   };
   return (
@@ -44,7 +48,7 @@ const Sponsor = ({ id }) => {
               <div className="right">
                 <div className="title">{sponsor.name}</div>
                 <div className="description">
-                  승리 시 {sponsor.money}원 만큼 얻습니다.
+                  승리 시 {changeMoneyFormat(sponsor.money)}원 만큼 얻습니다.
                   <br></br>
                   <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>
@@ -67,7 +71,7 @@ const Sponsor = ({ id }) => {
               <div className="right">
                 <div className="title">{sponsor.name}</div>
                 <div className="description">
-                  승리 시 {sponsor.money}원 만큼 얻습니다.
+                  승리 시 {changeMoneyFormat(sponsor.money)}원 만큼 얻습니다.
                   <br></br>
                   <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>
@@ -99,7 +103,7 @@ const Sponsor = ({ id }) => {
               <div className="right">
                 <div className="title">{sponsor.name}</div>
                 <div className="description">
-                  승리 시 {sponsor.money}원 만큼 얻습니다.
+                  승리 시 {changeMoneyFormat(sponsor.money)}원 만큼 얻습니다.
                   <br></br>
                   <br></br> 계약 조건: {sponsor.win}승 이상
                 </div>

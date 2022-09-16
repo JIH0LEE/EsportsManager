@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { API_SERVER } from "../../common";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import Player from "./component/Player";
@@ -32,6 +32,7 @@ function GameReadyPage() {
       setIds(arr2);
       setTeamId(res.data.id);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const change = (idx) => {
     const arr = [...ids];

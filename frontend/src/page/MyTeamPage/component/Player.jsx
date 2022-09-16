@@ -12,7 +12,11 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
         <div className="player-card-container">
           {top ? (
             <div className="player">
-              <PlayerCard player={top.player} logo={logo}></PlayerCard>
+              <PlayerCard
+                player={top.player}
+                logo={logo}
+                level={top.level}
+              ></PlayerCard>
             </div>
           ) : (
             <></>
@@ -20,28 +24,44 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
 
           {jng ? (
             <div className="player">
-              <PlayerCard player={jng.player} logo={logo}></PlayerCard>
+              <PlayerCard
+                player={jng.player}
+                logo={logo}
+                level={jng.level}
+              ></PlayerCard>
             </div>
           ) : (
             <></>
           )}
           {mid ? (
             <div className="player">
-              <PlayerCard player={mid.player} logo={logo}></PlayerCard>
+              <PlayerCard
+                player={mid.player}
+                logo={logo}
+                level={mid.level}
+              ></PlayerCard>
             </div>
           ) : (
             <></>
           )}
           {adc ? (
             <div className="player">
-              <PlayerCard player={adc.player} logo={logo}></PlayerCard>
+              <PlayerCard
+                player={adc.player}
+                logo={logo}
+                level={adc.level}
+              ></PlayerCard>
             </div>
           ) : (
             <></>
           )}
           {sup ? (
             <div className="player">
-              <PlayerCard player={sup.player} logo={logo}></PlayerCard>
+              <PlayerCard
+                player={sup.player}
+                logo={logo}
+                level={sup.level}
+              ></PlayerCard>
             </div>
           ) : (
             <></>
@@ -60,6 +80,7 @@ const Player = ({ id, top, jng, mid, adc, sup, sub, logo }) => {
                   key={idx}
                   player={subPlayer.player}
                   logo={logo}
+                  level={subPlayer.level}
                 ></PlayerCard>
               </div>
             ))}

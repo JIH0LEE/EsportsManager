@@ -1,8 +1,5 @@
 import React from "react";
-import PlayerCard from "../../../component/PlayerCard";
-import { useNavigate } from "react-router-dom";
 import "../style.css";
-import axios from "axios";
 
 const Player = ({ top, jng, mid, adc, sup, sub, submitData, func }) => {
   const schedule = ["운동", "명상", "방송", "연습"];

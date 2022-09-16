@@ -2,7 +2,7 @@ import React from "react";
 
 import "./style.css";
 
-function PlayerCard({ player, logo }) {
+function PlayerCard({ player, logo, level }) {
   const changePositionFormat = (value) => {
     if (value === "JUNGLE") {
       return "JNG";
@@ -41,26 +41,86 @@ function PlayerCard({ player, logo }) {
           <div className="big-container">
             <div className="status-container">
               <div className="status-name">
-                <div className="item">라인전</div>
+                <div className="item">라인</div>
                 <div className="item">전투</div>
                 <div className="item">운영</div>
               </div>
               <div className="status-value">
-                <div className="item">{player.laneStatus}</div>
-                <div className="item">{player.fightStatus}</div>
-                <div className="item">{player.operationStatus}</div>
+                <div className="item">
+                  {player.laneStatus}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="item">
+                  {player.fightStatus}{" "}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="item">
+                  {player.operationStatus}{" "}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
             <div className="status-container">
               <div className="status-name">
                 <div className="item">로밍</div>
                 <div className="item">갱킹</div>
-                <div className="item">정글링</div>
+                <div className="item">정글</div>
               </div>
               <div className="status-value">
-                <div className="item">{player.roamingStatus}</div>
-                <div className="item">{player.gankingStatus}</div>
-                <div className="item">{player.junglingStatus}</div>
+                <div className="item">
+                  {player.roamingStatus}{" "}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="item">
+                  {player.gankingStatus}{" "}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="item">
+                  {player.junglingStatus}{" "}
+                  {level ? (
+                    <>
+                      {" "}
+                      <span style={{ color: "red" }}>+{level}</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
           </div>

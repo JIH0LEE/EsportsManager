@@ -14,6 +14,7 @@ import PersonalSchedulePage from "./page/PersonalSchedulePage";
 import GameReadyPage from "./page/GameReadyPage";
 import LeagueReadyPage from "./page/LeagueReadyPage";
 import Header from "./component/Header";
+import LeagueEndPage from "./page/LeagueEndPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/my-team" element={<MyTeamPage></MyTeamPage>} />
           <Route path="/make-team" element={<MakeTeamPage></MakeTeamPage>} />
           <Route path="/entry" element={<EntryChangePage></EntryChangePage>} />
+          <Route path="/league-end" element={<LeagueEndPage></LeagueEndPage>} />
           <Route
             path="/league-ready"
             element={<LeagueReadyPage></LeagueReadyPage>}

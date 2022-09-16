@@ -7,7 +7,6 @@ import { API_SERVER } from "../../config";
 import BluePick from "./component/BluePick";
 import RedPick from "./component/RedPick";
 import Ban from "./component/Ban";
-import { click } from "@testing-library/user-event/dist/click";
 function BanpickPage() {
   const [position, setPosition] = useState("ALL");
   const [champions, setChampions] = useState([]);
@@ -91,6 +90,7 @@ function BanpickPage() {
       .catch((err) => {
         alert(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
