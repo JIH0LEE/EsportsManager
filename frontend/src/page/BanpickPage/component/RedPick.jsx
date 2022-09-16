@@ -23,6 +23,9 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(0);
             } else {
@@ -56,6 +59,9 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(1);
             } else {
@@ -89,6 +95,9 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(2);
             } else {
@@ -122,6 +131,9 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(3);
             } else {
@@ -155,6 +167,9 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(4);
             } else {

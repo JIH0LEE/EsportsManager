@@ -4,18 +4,15 @@ import "../style.css";
 const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
   const [swap, setSwap] = useState(null);
   const change = (idx) => {
-    console.log(bluePick);
     const arr = [...bluePick];
     let temp = arr[swap];
     arr[swap] = arr[idx];
     arr[idx] = temp;
-    console.log(arr);
 
     setSwap(null);
     func(arr);
   };
   const isSwappable = () => {
-    console.log();
     return isBlue && isSwapStage;
   };
   return (
@@ -25,6 +22,10 @@ const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
+            console.log(isSwapStage);
             if (swap === null) {
               setSwap(0);
             } else {
@@ -58,6 +59,9 @@ const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(1);
             } else {
@@ -92,6 +96,9 @@ const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
           className="image-container"
           onClick={() => {
             if (swap === null) {
+              if (!isSwappable()) {
+                return;
+              }
               setSwap(2);
             } else {
               change(2);
@@ -124,6 +131,9 @@ const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(3);
             } else {
@@ -157,6 +167,9 @@ const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
         <div
           className="image-container"
           onClick={() => {
+            if (!isSwappable()) {
+              return;
+            }
             if (swap === null) {
               setSwap(4);
             } else {

@@ -114,13 +114,13 @@
 }
 #tower11 {
   position: absolute;
-  top: 210px;
-  left: 990px;
+  top: 600px;
+  left: 1030px;
 }
 #tower12 {
   position: absolute;
-  top: 600px;
-  left: 1030px;
+  top: 210px;
+  left: 990px;
 }
 
 .battle-container .board {
@@ -141,6 +141,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex-direction: row;
 }
 .battle-container .board .team .team-name {
@@ -210,16 +211,37 @@
   object-fit: contain;
 }
 .battle-container .select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   bottom: 0px;
   position: absolute;
   width: 100%;
-  height: 20px;
+  height: 50px;
   background-color: rgb(0, 0, 0, 0.8);
+  padding: 10px;
   border: 2px solid black;
-  overflow: hidden;
+  overflow: auto;
 }
 .battle-container .select:hover {
-  height: 120px;
+  height: 300px;
+}
+.battle-container .select .title {
+  font-size: 30px;
+}
+.battle-container .select .log {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  font-size: 20px;
+}
+.battle-container .select .log .time {
+  display: flex;
+  width: 200px;
+}
+.battle-container .select .log .desciption {
+  display: flex;
+  width: 600px;
 }
 .battle-container .blue-bar {
   display: flex;
@@ -278,8 +300,22 @@
   justify-content: center;
   flex-direction: column;
   border: 1px black solid;
-  margin-top: 10px;
-  margin-bottom: 10px;
   height: 80px;
   width: 80px;
+}
+.champion .gold-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.battle-container .button {
+  width: 180px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.battle-container .ongoing {
+  font-size: 20px;
+  font-weight: bold;
 }

@@ -7,6 +7,7 @@ import { API_SERVER } from "../../config";
 import BluePick from "./component/BluePick";
 import RedPick from "./component/RedPick";
 import Ban from "./component/Ban";
+import { useNavigate } from "react-router-dom";
 function BanpickPage() {
   const [position, setPosition] = useState("ALL");
   const [champions, setChampions] = useState([]);
@@ -30,6 +31,7 @@ function BanpickPage() {
   const [myTeam, setMyTeam] = useState(0);
   const [oppositeTeam, setOppositeTeam] = useState(0);
   const [matchId, setMatchId] = useState(0);
+  const [score, setScore] = useState("0:0");
   const [aiUnPickedPos, setAiUnPickedPos] = useState([
     "TOP",
     "JUNGLE",
@@ -38,6 +40,7 @@ function BanpickPage() {
     "SUPPORT",
   ]);
   const { userData } = useSelector((state) => state);
+  const navigate = useNavigate();
   const stage = [
     "Blue Ban 1",
     "Red Ban 1",
@@ -63,6 +66,31 @@ function BanpickPage() {
   ];
 
   useEffect(() => {
+    const getScore = (setCount, gameScore) => {
+      if (setCount === 0) {
+        setScore("0:0");
+      } else if (setCount === 1) {
+        if (gameScore === 1) {
+          setScore("1:0");
+        } else {
+          setScore("0:1");
+        }
+      } else if (setCount === 2) {
+        if (gameScore === 2) {
+          setScore("2:0");
+        } else if (gameScore === 0) {
+          setScore("1:1");
+        } else {
+          setScore("0:2");
+        }
+      } else {
+        if (gameScore === 1) {
+          setScore("2:1");
+        } else {
+          setScore("1:2");
+        }
+      }
+    };
     axios
       .get(API_SERVER + "/api/champion")
       .then((res) => {
@@ -75,6 +103,7 @@ function BanpickPage() {
     axios
       .get(API_SERVER + `/api/match/${userData.id}`)
       .then((res) => {
+        getScore(res.data.gameSetCount, res.data.gameScore);
         if (res.data.blue) {
           setBlueTeam(res.data.myTeam);
           setRedTeam(res.data.oppositeTeam);
@@ -90,7 +119,6 @@ function BanpickPage() {
       .catch((err) => {
         alert(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -103,6 +131,8 @@ function BanpickPage() {
     setShowChapions(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
+
+  const calculateScore = (data) => {};
   const submit = () => {
     let bluePickIdList = [];
     let redPickIdList = [];
@@ -122,10 +152,20 @@ function BanpickPage() {
       oppositeTeam: oppositeTeam,
     };
 
-    axios.post(API_SERVER + "/api/set/banpick", body).then((res) => {
-      console.log(res.data);
-    });
+    axios
+      .post(API_SERVER + "/api/set/banpick", body)
+      .then((res) => {
+        navigate("/battle", {
+          state: {
+            id: res.data.gameSetId,
+          },
+        });
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
+
   const nextStage = () => {
     const parsing = stage[stageNum].split(" ");
     if (parsing[0] === "Swap") {
@@ -139,11 +179,8 @@ function BanpickPage() {
       aiAction();
     }
   };
+
   const swap = (arr) => {
-    if (!enemySwap) {
-      aiSwap();
-      setEnemySwap(true);
-    }
     if (isBlue) {
       setBluePick(arr);
     } else {
@@ -167,15 +204,24 @@ function BanpickPage() {
     const arr = ["TOP", "JUNGLE", "MIDDLE", "ADC", "SUPPORT"];
     var i = 0;
     for (i = 0; i < 5; i++) {
-      swaped.push(redPick[aiPickedPos.indexOf(arr[i])]);
+      if (isBlue) {
+        swaped.push(redPick[aiPickedPos.indexOf(arr[i])]);
+        setRedPick(swaped);
+      } else {
+        swaped.push(bluePick[aiPickedPos.indexOf(arr[i])]);
+        setBluePick(swaped);
+      }
     }
-    setRedPick(swaped);
+
     if (isBlue) {
       setRedPick(swaped);
     } else {
       setBluePick(swaped);
     }
+    setIsSwapStage(false);
+    setEnemySwap(true);
   };
+
   const aiAction = () => {
     const parsing = stage[stageNum].split(" ");
     if (parsing[0] === "Swap") {
@@ -258,6 +304,7 @@ function BanpickPage() {
     }
     setStageNum(stageNum + 1);
   };
+
   const action = () => {
     if (clickedChamp === 0) {
       alert("챔피언을 선택해주세요!");
@@ -291,7 +338,7 @@ function BanpickPage() {
     } else {
       if (cmd === "Pick") {
         const temp = [...redPick];
-        temp[parseInt(idx) - 1] = clickedChamp;
+        temp[parseInt(idx)] = clickedChamp;
         setRedPick(temp);
 
         const temp3 = [...redPickId];
@@ -300,7 +347,8 @@ function BanpickPage() {
       }
       if (cmd === "Ban") {
         const temp = [...redBan];
-        temp[parseInt(idx) - 1] = clickedChamp;
+        temp[parseInt(idx)] = clickedChamp;
+        console.log(temp);
         setRedBan(temp);
 
         const temp3 = [...redBanId];
@@ -321,29 +369,37 @@ function BanpickPage() {
         <>
           <div className="command-container">
             <div className="command background basic">{stage[stageNum]}</div>
-            {enemySwap ? (
-              <div className="submit-button button" onClick={submit}>
-                밴픽 완료
-              </div>
+            {isSwapStage ? (
+              <>
+                <div className="submit-button button" onClick={aiSwap}>
+                  스왑 확정
+                </div>
+              </>
             ) : (
               <>
-                {isMyTurn() ? (
-                  <div className="submit-button button" onClick={nextStage}>
-                    확인
+                {enemySwap ? (
+                  <div className="submit-button button" onClick={submit}>
+                    밴픽 완료
                   </div>
                 ) : (
-                  <div className="submit-button button" onClick={nextStage}>
-                    상대 진행
-                  </div>
+                  <>
+                    {isMyTurn() ? (
+                      <div className="submit-button button" onClick={nextStage}>
+                        확인
+                      </div>
+                    ) : (
+                      <div className="submit-button button" onClick={nextStage}>
+                        상대 진행
+                      </div>
+                    )}
+                  </>
                 )}
               </>
             )}
           </div>
           <div className="score-board">
             <div className="blue-board">{blueTeam.name}</div>
-            <div className="score">
-              {1}:{0}
-            </div>
+            <div className="score">{score}</div>
             <div className="red-board">{redTeam.name}</div>
           </div>
           <div className="banpick-board">
