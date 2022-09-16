@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GameMatchResponse {
+
     private Long id;
 
     private MyTeamResponseInMatch myTeam;
@@ -21,7 +22,7 @@ public class GameMatchResponse {
 
     private boolean isBlue;
 
-    public static GameMatchResponse of(GameMatch gameMatch){
+    public static GameMatchResponse of(GameMatch gameMatch) {
         return new GameMatchResponse(
             gameMatch.getId(),
             MyTeamResponseInMatch.of(gameMatch.getMyTeam()),

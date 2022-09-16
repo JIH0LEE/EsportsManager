@@ -5,7 +5,16 @@ import com.core.backend.controller.dto.MessageResponse;
 import com.core.backend.controller.dto.MyTeamRequest;
 import com.core.backend.controller.dto.PersonalScheduleListRequest;
 import com.core.backend.controller.dto.TeamRankResponse;
-import com.core.backend.domain.*;
+import com.core.backend.domain.BaseTeam;
+import com.core.backend.domain.GameMatch;
+import com.core.backend.domain.HeadCoach;
+import com.core.backend.domain.League;
+import com.core.backend.domain.LeagueSchedule;
+import com.core.backend.domain.LeagueTeam;
+import com.core.backend.domain.MyPlayer;
+import com.core.backend.domain.MyTeam;
+import com.core.backend.domain.PersonalSchedule;
+import com.core.backend.domain.Player;
 import com.core.backend.domain.enums.Condition;
 import com.core.backend.domain.enums.Position;
 import com.core.backend.domain.repository.BaseTeamRepository;
@@ -93,13 +102,15 @@ public class LeagueService {
     }
 
     private void makeLeagueTeams(League league, Long exceptId) {
-        List<Long> baseTeamIds = new ArrayList(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L));
+        List<Long> baseTeamIds = new ArrayList(
+            Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L));
         baseTeamIds.remove(exceptId);
         baseTeamIds.stream().forEach(baseTeamId -> leagueTeamRepository.save(
             LeagueTeam.builder()
                 .baseTeam(baseTeamRepository.findById(baseTeamId).orElseThrow())
                 .league(league)
                 .build()));
+
     }
 
     private void findSameTeamName(String name) {
@@ -109,11 +120,12 @@ public class LeagueService {
         }
     }
 
-    public void makeMyLeague(MyTeamRequest myTeamRequest) {
+    public MessageResponse makeMyLeague(MyTeamRequest myTeamRequest) {
         findSameTeamName(myTeamRequest.getName());
         BaseTeam baseTeam = baseTeamRepository.findById(myTeamRequest.getBaseTeamId())
             .orElseThrow();
-        HeadCoach headCoach = headCoachRepository.findById(myTeamRequest.getHeadCoachId()).orElseThrow();
+        HeadCoach headCoach = headCoachRepository.findById(myTeamRequest.getHeadCoachId())
+            .orElseThrow();
         List<Player> playerList = baseTeam.getPlayers();
         MyTeam myTeam = MyTeam.builder()
             .name(myTeamRequest.getName())
@@ -128,10 +140,24 @@ public class LeagueService {
         }
         League league = makeLeague(myTeam, headCoach);
         makeLeagueTeams(league, myTeamRequest.getBaseTeamId());
+        return new MessageResponse(true, "리그가 생성되었습니다.");
+    }
+
+    public MessageResponse makeNewLeague(Long id) {
+        HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach)
+            .orElseThrow();
+        league.finish();
+        MyTeam myTeam = findMyTeamByHeadCoachId(id);
+        League newLeague = makeLeague(myTeam, headCoach);
+        makeLeagueTeams(newLeague, myTeam.getBaseTeam().getId());
+        myTeam.startNewLeague();
+        return new MessageResponse(true, "새로운 리그가 생성되었습니다.");
     }
 
     public Optional<League> getLeagueInfo(Long id) {
-        return leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoachRepository.findById(id).orElseThrow());
+        return leagueRepository.findLeagueByHeadCoachAndFinishFalse(
+            headCoachRepository.findById(id).orElseThrow());
     }
 
 
@@ -150,13 +176,17 @@ public class LeagueService {
         for (LeagueSchedule leagueSchedule : leagueScheduleList) {
             if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
                 result.add(myTeam.getName());
-                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow().getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow()
+                    .getName());
             } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
-                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow().getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()
+                    .getName());
                 result.add(myTeam.getName());
             } else {
-                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow().getName());
-                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow().getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()
+                    .getName());
+                result.add(baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow()
+                    .getName());
             }
         }
         return result;
@@ -166,7 +196,8 @@ public class LeagueService {
         Optional<League> isLeague = getLeagueInfo(id);
         if (getLeagueInfo(id).isPresent()) {
             League league = isLeague.get();
-            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(
+                league.getDay());
             if (!leagueScheduleList.get(0).isGame()) {
                 return new LeagueDetailedInfoResponse(
                     true,
@@ -201,7 +232,8 @@ public class LeagueService {
 
     public List<TeamRankResponse> getRankingInfoByUser(Long id) {
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow(NoValidHeadCoach::new);
-        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow(NoLeague::new);
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach)
+            .orElseThrow(NoLeague::new);
         List<TeamRankResponse> teamRankResponseList = league.getLeagueTeamList().stream()
             .map(TeamRankResponse::of)
             .collect(Collectors.toList());
@@ -222,7 +254,8 @@ public class LeagueService {
 
     private int getTeamPower(LeagueTeam leagueTeam) {
         int power = 0;
-        BaseTeam baseTeam = baseTeamRepository.findById(leagueTeam.getBaseTeam().getId()).orElseThrow();
+        BaseTeam baseTeam = baseTeamRepository.findById(leagueTeam.getBaseTeam().getId())
+            .orElseThrow();
         List<Player> playerList = baseTeam.getPlayers();
         for (Player player : playerList) {
             power = power + player.getAllPower();
@@ -303,31 +336,20 @@ public class LeagueService {
         leagueTeam2.updateWinPoint(-score);
     }
 
-//    private boolean playMyGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam, League league) {
-//        boolean isWin = true;
-//        for (LeagueSchedule leagueSchedule : leagueScheduleList) {
-//            if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
-//                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
-//                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
-//                isWin = progressMyTeam(myTeam, oppositeTeam, 1);
-//            } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
-//                BaseTeam baseTeam = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
-//                LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam);
-//                isWin = progressMyTeam(myTeam, oppositeTeam, 2);
-//            }
-//        }
-//        return isWin;
-//    }
-
-    private void playOtherGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam, League league) {
+    private void playOtherGame(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam,
+        League league) {
         for (LeagueSchedule leagueSchedule : leagueScheduleList) {
             if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
             } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
             } else {
-                BaseTeam baseTeam1 = baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow();
-                BaseTeam baseTeam2 = baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow();
-                LeagueTeam leagueTeam1 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam1);
-                LeagueTeam leagueTeam2 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league, baseTeam2);
+                BaseTeam baseTeam1 = baseTeamRepository.findById(leagueSchedule.getTeam1Id())
+                    .orElseThrow();
+                BaseTeam baseTeam2 = baseTeamRepository.findById(leagueSchedule.getTeam2Id())
+                    .orElseThrow();
+                LeagueTeam leagueTeam1 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(
+                    league, baseTeam1);
+                LeagueTeam leagueTeam2 = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(
+                    league, baseTeam2);
                 progressOtherTeam(leagueTeam1, leagueTeam2);
             }
         }
@@ -337,9 +359,11 @@ public class LeagueService {
         MyTeam myTeam = findMyTeamByHeadCoachId(personalScheduleRequestList.getHeadCoachId());
         personalScheduleRequestList.getPersonalScheduleRequestList().stream().forEach(
             personalScheduleRequest -> {
-                MyPlayer myPlayer = myPlayerRepository.findById(personalScheduleRequest.getId()).orElseThrow();
+                MyPlayer myPlayer = myPlayerRepository.findById(personalScheduleRequest.getId())
+                    .orElseThrow();
                 PersonalSchedule schedule =
-                    personalScheduleRepository.findById(personalScheduleRequest.getScheduleId()).orElseThrow();
+                    personalScheduleRepository.findById(personalScheduleRequest.getScheduleId())
+                        .orElseThrow();
                 myTeam.changeMoney(schedule.getMoney());
                 myPlayer.applySchedule(schedule);
             }
@@ -356,25 +380,29 @@ public class LeagueService {
     private void getMoneyByEnterprises(MyTeam myTeam) {
         List<Long> enterprises = myTeam.getEnterprises();
         enterprises.stream().forEach(enterprise -> {
-            myTeam.changeMoney(enterpriseRepository.findById(enterprise).orElseThrow().getEarningMoney());
+            myTeam.changeMoney(
+                enterpriseRepository.findById(enterprise).orElseThrow().getEarningMoney());
         });
     }
 
-    private void addExp(MyTeam myTeam,int exp){
+    private void addExp(MyTeam myTeam, int exp) {
         System.out.println("test");
-        myTeam.getMyPlayerList().forEach(player->{
+        myTeam.getMyPlayerList().forEach(player -> {
             player.applyExp(exp);
         });
     }
 
     public MessageResponse progressLeague(PersonalScheduleListRequest personalScheduleRequestList) {
-        HeadCoach headCoach = headCoachRepository.findById(personalScheduleRequestList.getHeadCoachId()).orElseThrow();
-        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach).orElseThrow();
+        HeadCoach headCoach = headCoachRepository.findById(
+            personalScheduleRequestList.getHeadCoachId()).orElseThrow();
+        League league = leagueRepository.findLeagueByHeadCoachAndFinishFalse(headCoach)
+            .orElseThrow();
         MyTeam myTeam = myTeamRepository.findByHeadCoach(headCoach);
         applySchedule(personalScheduleRequestList);
         if (personalScheduleRequestList.isGame()) {
 
-            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+            List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(
+                league.getDay());
             playOtherGame(leagueScheduleList, myTeam, league);
         }
         getMoneyByEnterprises(myTeam);
@@ -382,22 +410,22 @@ public class LeagueService {
         return new MessageResponse(true, "일정을 성공적으로 수행하였습니다.");
     }
 
-    private boolean postProcess(GameMatch gameMatch,League league){
+    private boolean postProcess(GameMatch gameMatch, League league) {
         BaseTeam oppositeTeamBaseTeam = gameMatch.getOppositeTeam();
-        LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,oppositeTeamBaseTeam);
+        LeagueTeam oppositeTeam = leagueTeamRepository.findLeagueTeamByLeagueAndBaseTeam(league,
+            oppositeTeamBaseTeam);
         MyTeam myTeam = gameMatch.getMyTeam();
         int gameScore = gameMatch.getGameScore();
         boolean isWin = false;
-        if(gameMatch.isBlue()){
-            if(gameScore>0){
+        if (gameMatch.isBlue()) {
+            if (gameScore > 0) {
                 isWin = true;
             }
             myTeam.updateWinPoint(gameScore);
             oppositeTeam.updateWinPoint(-gameScore);
 
-        }
-        else{
-            if(gameScore<0){
+        } else {
+            if (gameScore < 0) {
                 isWin = true;
             }
             myTeam.updateWinPoint(-gameScore);
@@ -407,14 +435,15 @@ public class LeagueService {
 
     }
 
-    public MessageResponse progressLeague(  GameMatch gameMatch) {
+    public MessageResponse progressLeague(GameMatch gameMatch) {
         League league = gameMatch.getLeague();
         MyTeam myTeam = gameMatch.getMyTeam();
-        List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+        List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(
+            league.getDay());
         playOtherGame(leagueScheduleList, myTeam, league);
-        if (postProcess(gameMatch,league)) {
+        if (postProcess(gameMatch, league)) {
             getMoneyFromSponsors(myTeam);
-            addExp(myTeam,20);
+            addExp(myTeam, 20);
 
         }
         getMoneyByEnterprises(myTeam);

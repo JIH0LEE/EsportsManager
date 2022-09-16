@@ -52,13 +52,14 @@ public class GameMatch {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameMatch", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GameSet> gameSets = new ArrayList<>();
 
-    public void updateSetInfo(int win){
-        gameSetCount+=1;
-        gameScore +=win;;
-        if((gameScore==1 || gameScore==-1) &&gameSetCount==3){
+    public void updateSetInfo(int win) {
+        gameSetCount += 1;
+        gameScore += win;
+        ;
+        if ((gameScore == 1 || gameScore == -1) && gameSetCount == 3) {
             finish = true;
         }
-        if(gameScore==2 || gameScore==-2){
+        if (gameScore == 2 || gameScore == -2) {
             finish = true;
         }
     }

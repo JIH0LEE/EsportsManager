@@ -59,7 +59,8 @@ public class Player {
     private BaseTeam baseTeam;
 
     public Integer getAllPower() {
-        return laneStatus + fightStatus + operationStatus + roamingStatus + gankingStatus + junglingStatus;
+        return laneStatus + fightStatus + operationStatus + roamingStatus + gankingStatus
+            + junglingStatus;
     }
 
     public int getDistinctPower(String status) {

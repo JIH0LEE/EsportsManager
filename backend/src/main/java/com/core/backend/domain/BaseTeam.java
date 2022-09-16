@@ -32,7 +32,8 @@ public class BaseTeam {
 
     private String logo;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "baseTeam", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {
+        CascadeType.ALL}, mappedBy = "baseTeam", orphanRemoval = true)
     private List<Player> players = new ArrayList<>();
 
     public Player findPlayerByPosition(String position) {

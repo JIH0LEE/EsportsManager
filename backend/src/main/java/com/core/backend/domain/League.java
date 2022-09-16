@@ -50,4 +50,8 @@ public class League {
     public void addDay() {
         day = day + 1;
     }
+
+    public void finish() {
+        finish = true;
+    }
 }

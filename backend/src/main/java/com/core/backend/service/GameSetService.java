@@ -3,10 +3,19 @@ package com.core.backend.service;
 import com.core.backend.controller.dto.BanpickRequest;
 import com.core.backend.controller.dto.BanpickResponse;
 import com.core.backend.controller.dto.GameSetResponse;
-import com.core.backend.controller.dto.MessageResponse;
-import com.core.backend.domain.*;
+import com.core.backend.domain.BaseTeam;
+import com.core.backend.domain.GameMatch;
+import com.core.backend.domain.GameSet;
+import com.core.backend.domain.LeagueTeam;
+import com.core.backend.domain.MyTeam;
 import com.core.backend.domain.enums.Position;
-import com.core.backend.domain.repository.*;
+import com.core.backend.domain.repository.ChampionRepository;
+import com.core.backend.domain.repository.GameMatchRepository;
+import com.core.backend.domain.repository.GameSetRepository;
+import com.core.backend.domain.repository.LeagueTeamRepository;
+import com.core.backend.domain.repository.MyPlayerRepository;
+import com.core.backend.domain.repository.MyTeamRepository;
+import com.core.backend.domain.repository.PlayerRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -27,17 +36,17 @@ public class GameSetService {
     private final LeagueTeamRepository leagueTeamRepository;
     private final GameMatchRepository gameMatchRepository;
 
-    public GameSetResponse getSetData(Long id){
+    public GameSetResponse getSetData(Long id) {
 
         return makeGameSetResponse(gameSetRepository.findById(id).orElseThrow());
     }
 
-    public GameSetResponse makeGameSetResponse(GameSet gameSet){
+    public GameSetResponse makeGameSetResponse(GameSet gameSet) {
         List<Long> championList = gameSet.getChampList();
         List<String> championImageList = championList.stream()
-            .map(champion->championRepository.findById(champion).orElseThrow().getImage())
+            .map(champion -> championRepository.findById(champion).orElseThrow().getImage())
             .collect(Collectors.toList());
-        return GameSetResponse.of(gameSet,championImageList);
+        return GameSetResponse.of(gameSet, championImageList);
     }
 
     private boolean isBigBattle(GameSet gameSet) {
@@ -62,7 +71,8 @@ public class GameSetService {
         }
     }
 
-    private int getMyDistinctPower(String status, String position, String time, MyTeam myTeam, GameSet gameSet) {
+    private int getMyDistinctPower(String status, String position, String time, MyTeam myTeam,
+        GameSet gameSet) {
         int player = myPlayerRepository
             .findMyPlayerByMyTeamAndPosition(myTeam, position)
             .getDistinctPower(status);
@@ -113,7 +123,8 @@ public class GameSetService {
         return (player + champion) / 2;
     }
 
-    private int getOpDistinctPower(String status, String position, String time, LeagueTeam opTeam, GameSet gameSet) {
+    private int getOpDistinctPower(String status, String position, String time, LeagueTeam opTeam,
+        GameSet gameSet) {
         int player = playerRepository
             .findByBaseTeamAndPosition(opTeam.getBaseTeam(), Position.valueOf(position)).get(0)
             .getDistinctPower(status);
@@ -165,108 +176,98 @@ public class GameSetService {
         return (player + champion) / 2;
     }
 
-    private String makeRoamingLog(String position,boolean isBlue,int num){
-        String result="";
-        if(isBlue){
-            result+="블루팀의 ";
+    private String makeRoamingLog(String position, boolean isBlue, int num) {
+        String result = "";
+        if (isBlue) {
+            result += "블루팀의 ";
+        } else {
+            result += "레드팀의 ";
         }
-        else{
-            result+="레드팀의 ";
+        if (position.equals("MIDDLE")) {
+            result += "미드가 ";
+        } else {
+            result += "서포터가 ";
         }
-        if(position.equals("MIDDLE")){
-            result+="미드가 ";
-        }
-        else{
-            result+="서포터가 ";
-        }
-        if(num==0){
-            result+="탑 로밍에 성공하였습니다.";
-        }
-        else if(num==1){
-            result+="바텀 로밍에 성공하였습니다.";
-        }
-        else{
-            result+="미드 로밍에 성공하였습니다.";
+        if (num == 0) {
+            result += "탑 로밍에 성공하였습니다.";
+        } else if (num == 1) {
+            result += "바텀 로밍에 성공하였습니다.";
+        } else {
+            result += "미드 로밍에 성공하였습니다.";
         }
         result += ";";
         return result;
     }
-    private String makeGankingLog(boolean isBlue,int num){
-        String result="";
-        if(isBlue){
-            result+="블루팀이 ";
+
+    private String makeGankingLog(boolean isBlue, int num) {
+        String result = "";
+        if (isBlue) {
+            result += "블루팀이 ";
+        } else {
+            result += "레드팀이 ";
         }
-        else{
-            result+="레드팀이 ";
-        }
-        if(num==0){
-            result+="탑 갱킹에 성공하였습니다.";
-        }
-        else if(num==1){
-            result+="바텀 갱킹에 성공하였습니다.";
-        }
-        else{
-            result+="미드 갱킹에 성공하였습니다.";
+        if (num == 0) {
+            result += "탑 갱킹에 성공하였습니다.";
+        } else if (num == 1) {
+            result += "바텀 갱킹에 성공하였습니다.";
+        } else {
+            result += "미드 갱킹에 성공하였습니다.";
         }
         result += ";";
         return result;
     }
-    private String makeLaneLog(String position,boolean isBlue,int num){
-        String result="";
-        if(isBlue){
-            result+="블루팀의 ";
+
+    private String makeLaneLog(String position, boolean isBlue, int num) {
+        String result = "";
+        if (isBlue) {
+            result += "블루팀의 ";
+        } else {
+            result += "레드팀의 ";
         }
-        else{
-            result+="레드팀의 ";
+        if (position.equals("TOP")) {
+            result += "탑이 ";
+        } else if (position.equals("MIDDLE")) {
+            result += "미드가 ";
+        } else if (position.equals("JUNGLE")) {
+            result += "정글이 ";
+        } else {
+            result += "바텀이 ";
         }
-        if(position.equals("TOP")){
-            result+="탑이 ";
-        }
-        else if(position.equals("MIDDLE")){
-            result+="미드가 ";
-        }
-        else if(position.equals("JUNGLE")){
-            result+="정글이 ";
-        }
-        else{
-            result+="바텀이 ";
-        }
-        if(num==2){
-            result+="상대보다 성장이 더 우세합니다.";
-        }
-        else{
-            result+="상대를 솔로킬을 달성하였습니다.";
+        if (num == 2) {
+            result += "상대보다 성장이 더 우세합니다.";
+        } else {
+            result += "상대를 솔로킬을 달성하였습니다.";
         }
 
         result += ";";
         return result;
     }
-    private String makeFightLog(boolean isBlue,int num){
-        String result="";
-        if(isBlue){
-            result+="블루팀이 ";
-        }
-        else{
-            result+="레드팀이 ";
+
+    private String makeFightLog(boolean isBlue, int num) {
+        String result = "";
+        if (isBlue) {
+            result += "블루팀이 ";
+        } else {
+            result += "레드팀이 ";
         }
 
-        if(num==1){
-            result+="한타를 승리하였습니다.";
-        }
-        else{
-            result+="한타를 압도적으로 승리하였습니다. 에이스!";
+        if (num == 1) {
+            result += "한타를 승리하였습니다.";
+        } else {
+            result += "한타를 압도적으로 승리하였습니다. 에이스!";
         }
 
         result += ";";
         return result;
     }
-    private String makeTimeLog(GameSet gameSet){
-        int min = gameSet.getCurTime()*60;
+
+    private String makeTimeLog(GameSet gameSet) {
+        int min = gameSet.getCurTime() * 60;
         int max = min + 120;
         int secondSum = (int) ((Math.random() * (max - min)) + min);
-        String minute = Integer.toString(secondSum/60);
-        String second = Integer.toString(secondSum%60);
-        return minute+"분 "+second+"초/";
+        String minute = Integer.toString(secondSum / 60);
+        String second = Integer.toString(secondSum % 60);
+        return minute + "분 " + second + "초/";
     }
 
     private void detailedRoaming(GameSet gameSet, boolean isBlue, String position) {
@@ -287,7 +288,7 @@ public class GameSetService {
             gameSet.changeGold(isBlue, "MIDDLE", 200);
             gameSet.changeGold(isBlue, position, 200);
         }
-        String log = makeTimeLog(gameSet)+makeRoamingLog(position,isBlue,rand);
+        String log = makeTimeLog(gameSet) + makeRoamingLog(position, isBlue, rand);
         System.out.println(log);
         gameSet.addLog(log);
 
@@ -307,20 +308,24 @@ public class GameSetService {
             if (Math.random() * 100 <= (double) blueSupPlayerScore / 3) {
                 detailedRoaming(gameSet, true, "SUPPORT");
             }
-            redMidPlayerScore = getOpDistinctPower("ROAMING", "MIDDLE", "FIRST", oppositeTeam, gameSet);
+            redMidPlayerScore = getOpDistinctPower("ROAMING", "MIDDLE", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) redMidPlayerScore / 3) {
                 detailedRoaming(gameSet, false, "MIDDLE");
             }
-            redSupPlayerScore = getOpDistinctPower("ROAMING", "SUPPORT", "FIRST", oppositeTeam, gameSet);
+            redSupPlayerScore = getOpDistinctPower("ROAMING", "SUPPORT", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) redSupPlayerScore / 3) {
                 detailedRoaming(gameSet, false, "SUPPORT");
             }
         } else {
-            blueMidPlayerScore = getOpDistinctPower("ROAMING", "MIDDLE", "FIRST", oppositeTeam, gameSet);
+            blueMidPlayerScore = getOpDistinctPower("ROAMING", "MIDDLE", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) blueMidPlayerScore / 3) {
                 detailedRoaming(gameSet, true, "MIDDLE");
             }
-            blueSupPlayerScore = getOpDistinctPower("ROAMING", "SUPPORT", "FIRST", oppositeTeam, gameSet);
+            blueSupPlayerScore = getOpDistinctPower("ROAMING", "SUPPORT", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) blueSupPlayerScore / 3) {
                 detailedRoaming(gameSet, true, "SUPPORT");
             }
@@ -348,7 +353,7 @@ public class GameSetService {
             gameSet.changeGold(isBlue, "MIDDLE", 200);
             gameSet.changeGold(isBlue, "JUNGLE", 200);
         }
-        String log = makeTimeLog(gameSet)+makeGankingLog(isBlue,rand);
+        String log = makeTimeLog(gameSet) + makeGankingLog(isBlue, rand);
         System.out.println(log);
         gameSet.addLog(log);
 
@@ -363,13 +368,15 @@ public class GameSetService {
                 detailedGanking(gameSet, true);
             }
 
-            redJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam, gameSet);
+            redJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) redJngPlayerScore / 3) {
                 detailedGanking(gameSet, false);
             }
 
         } else {
-            blueJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam, gameSet);
+            blueJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam,
+                gameSet);
             if (Math.random() * 100 <= (double) blueJngPlayerScore / 3) {
                 detailedGanking(gameSet, true);
             }
@@ -383,9 +390,12 @@ public class GameSetService {
     private int getMyLaneStatus(String position, MyTeam myTeam, GameSet gameSet) {
         int status;
         if (position.equals("JUNGLE")) {
-            status = getMyDistinctPower("JUNGLING", position, "FIRST", myTeam, gameSet) * gameSet.getMyGold(position);
+            status = getMyDistinctPower("JUNGLING", position, "FIRST", myTeam, gameSet)
+                * gameSet.getMyGold(position);
         } else {
-            status = getMyDistinctPower("LANE", position, "FIRST", myTeam, gameSet) * gameSet.getMyGold(position);
+            status =
+                getMyDistinctPower("LANE", position, "FIRST", myTeam, gameSet) * gameSet.getMyGold(
+                    position);
         }
         return status;
     }
@@ -394,9 +404,11 @@ public class GameSetService {
         int status;
         if (position.equals("JUNGLE")) {
             status =
-                getOpDistinctPower("JUNGLING", position, "FIRST", oppositeTeam, gameSet) * gameSet.getOpGold(position);
+                getOpDistinctPower("JUNGLING", position, "FIRST", oppositeTeam, gameSet)
+                    * gameSet.getOpGold(position);
         } else {
-            status = getOpDistinctPower("LANE", position, "FIRST", oppositeTeam, gameSet) * gameSet.getOpGold(position);
+            status = getOpDistinctPower("LANE", position, "FIRST", oppositeTeam, gameSet)
+                * gameSet.getOpGold(position);
         }
         return status;
     }
@@ -406,19 +418,18 @@ public class GameSetService {
         if (level == 1) {
             gameSet.changeGold(isBlue, position, 400);
             gameSet.changeGold(!isBlue, position, 400);
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             gameSet.changeGold(isBlue, position, 500);
             gameSet.changeGold(!isBlue, position, 300);
             gameSet.destroyTower(isBlue, position, 100);
-            String log = makeTimeLog(gameSet)+makeLaneLog(position,isBlue,level);
+            String log = makeTimeLog(gameSet) + makeLaneLog(position, isBlue, level);
             System.out.println(log);
             gameSet.addLog(log);
         } else {
             gameSet.changeGold(isBlue, position, 700);
             gameSet.changeGold(!isBlue, position, 300);
             gameSet.destroyTower(isBlue, position, 200);
-            String log = makeTimeLog(gameSet)+makeLaneLog(position,isBlue,level);
+            String log = makeTimeLog(gameSet) + makeLaneLog(position, isBlue, level);
             System.out.println(log);
             gameSet.addLog(log);
         }
@@ -603,7 +614,7 @@ public class GameSetService {
             gameSet.destroyTower(isBlue, 1000);
             gameSet.changeAllGold(!isBlue, 300);
         }
-        String log = makeTimeLog(gameSet)+makeFightLog(isBlue,level);
+        String log = makeTimeLog(gameSet) + makeFightLog(isBlue, level);
         System.out.println(log);
         gameSet.addLog(log);
     }
@@ -647,7 +658,8 @@ public class GameSetService {
     public GameSet play(Long id) {
         GameSet gameSet = gameSetRepository.findById(id).orElseThrow();
         MyTeam myTeam = myTeamRepository.findById(gameSet.getMyTeam()).orElseThrow();
-        LeagueTeam oppositeTeam = leagueTeamRepository.findById(gameSet.getOppositeTeam()).orElseThrow();
+        LeagueTeam oppositeTeam = leagueTeamRepository.findById(gameSet.getOppositeTeam())
+            .orElseThrow();
         BaseTeam baseTeam = oppositeTeam.getBaseTeam();
         while (true) {
             System.out.println("_______________________________________");
@@ -658,13 +670,13 @@ public class GameSetService {
                 if (blueWin && redWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        String log ="블루팀이 승리하였습니다.";
+                        String log = "블루팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
 
                     } else {
                         gameSet.getGameMatch().updateSetInfo(-1);
-                        String log ="레드팀이 승리하였습니다.";
+                        String log = "레드팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
 
@@ -675,7 +687,7 @@ public class GameSetService {
                 if (blueWin) {
                     if (fight(myTeam, oppositeTeam, gameSet)) {
                         gameSet.getGameMatch().updateSetInfo(1);
-                        String log ="블루팀이 승리하였습니다.";
+                        String log = "블루팀이 승리하였습니다.";
                         gameSet.addLog(log);
                         System.out.println(log);
                         gameSet.finishGame();
@@ -713,27 +725,28 @@ public class GameSetService {
         return gameSet;
     }
 
-    public BanpickResponse banpick(BanpickRequest banpickRequest){
-        GameMatch gameMatch = gameMatchRepository.findById(banpickRequest.getMatchId()).orElseThrow();
-        GameSet gameSet =GameSet.builder()
-                .myTeam(banpickRequest.getMyTeam())
-                .oppositeTeam(banpickRequest.getOppositeTeam())
-                .blueTopChamp(banpickRequest.getBluePick().get(0))
-                .blueJngChamp(banpickRequest.getBluePick().get(1))
-                .blueMidChamp(banpickRequest.getBluePick().get(2))
-                .blueAdcChamp(banpickRequest.getBluePick().get(3))
-                .blueSupChamp(banpickRequest.getBluePick().get(4))
-                .redTopChamp(banpickRequest.getRedPick().get(0))
-                .redJngChamp(banpickRequest.getRedPick().get(1))
-                .redMidChamp(banpickRequest.getRedPick().get(2))
-                .redAdcChamp(banpickRequest.getRedPick().get(3))
-                .redSupChamp(banpickRequest.getRedPick().get(4))
-                .curTime(2)
-                .isBlue(gameMatch.isBlue())
-                .gameLog("")
-                .finished(false)
-                .gameMatch(gameMatch)
-                .build();
+    public BanpickResponse banpick(BanpickRequest banpickRequest) {
+        GameMatch gameMatch = gameMatchRepository.findById(banpickRequest.getMatchId())
+            .orElseThrow();
+        GameSet gameSet = GameSet.builder()
+            .myTeam(banpickRequest.getMyTeam())
+            .oppositeTeam(banpickRequest.getOppositeTeam())
+            .blueTopChamp(banpickRequest.getBluePick().get(0))
+            .blueJngChamp(banpickRequest.getBluePick().get(1))
+            .blueMidChamp(banpickRequest.getBluePick().get(2))
+            .blueAdcChamp(banpickRequest.getBluePick().get(3))
+            .blueSupChamp(banpickRequest.getBluePick().get(4))
+            .redTopChamp(banpickRequest.getRedPick().get(0))
+            .redJngChamp(banpickRequest.getRedPick().get(1))
+            .redMidChamp(banpickRequest.getRedPick().get(2))
+            .redAdcChamp(banpickRequest.getRedPick().get(3))
+            .redSupChamp(banpickRequest.getRedPick().get(4))
+            .curTime(2)
+            .isBlue(gameMatch.isBlue())
+            .gameLog("")
+            .finished(false)
+            .gameMatch(gameMatch)
+            .build();
         gameSetRepository.save(gameSet);
         return new BanpickResponse(gameSet.getId());
     }

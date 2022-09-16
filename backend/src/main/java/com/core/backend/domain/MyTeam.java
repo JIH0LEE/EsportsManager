@@ -151,6 +151,14 @@ public class MyTeam {
         }
     }
 
+    public void startNewLeague() {
+        matchWin = 0;
+        setWin = 0;
+        matchLose = 0;
+        setLose = 0;
+        winPoint = 0;
+    }
+
     public void changeMoney(Integer plus) {
         money = money + plus;
     }

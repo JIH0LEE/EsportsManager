@@ -76,8 +76,10 @@ public class MyTeamService {
             enableSponsor = sponsorRepository.findAllByWinLessThanEqual(myTeam.getMatchWin());
         } else {
             alreadySponsor = sponsorRepository.findAllById(ids);
-            disableSponsor = sponsorRepository.findAllByIdNotInAndWinGreaterThan(ids, myTeam.getMatchWin());
-            enableSponsor = sponsorRepository.findAllByIdNotInAndWinLessThanEqual(ids, myTeam.getMatchWin());
+            disableSponsor = sponsorRepository.findAllByIdNotInAndWinGreaterThan(ids,
+                myTeam.getMatchWin());
+            enableSponsor = sponsorRepository.findAllByIdNotInAndWinLessThanEqual(ids,
+                myTeam.getMatchWin());
         }
         return new TeamSponsorResponse(
             alreadySponsor.stream().map(SponsorResponse::of).collect(Collectors.toList()),

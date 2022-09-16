@@ -26,10 +26,17 @@ public class LeagueController {
 
     @PostMapping("")
     public ResponseEntity<MessageResponse> makeMyLeague(@RequestBody MyTeamRequest myTeamRequest) {
-        leagueService.makeMyLeague(myTeamRequest);
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(new MessageResponse(true, "리그가 생성되었습니다."));
+            .body(leagueService.makeMyLeague(myTeamRequest));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<MessageResponse> makeNewLeague(@PathVariable Long id) {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(leagueService.makeNewLeague(id));
     }
 
     @GetMapping("/league-info/{id}")
@@ -40,21 +47,16 @@ public class LeagueController {
     }
 
     @GetMapping("/league-rank/{id}")
-    public ResponseEntity<List<TeamRankResponse>> getLeagueRankingInfoByUser(@PathVariable Long id) {
+    public ResponseEntity<List<TeamRankResponse>> getLeagueRankingInfoByUser(
+        @PathVariable Long id) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(leagueService.getRankingInfoByUser(id));
     }
 
-//    @PostMapping("/league-process/{id}")
-//    public ResponseEntity<MessageResponse> progressLeague(@PathVariable Long id) {
-//        return ResponseEntity
-//            .status(HttpStatus.OK)
-//            .body(leagueService.progressLeague(id));
-//    }
-
     @PostMapping("/league-process")
-    public ResponseEntity<MessageResponse> progressLeague(@RequestBody PersonalScheduleListRequest request) {
+    public ResponseEntity<MessageResponse> progressLeague(
+        @RequestBody PersonalScheduleListRequest request) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(leagueService.progressLeague(request));

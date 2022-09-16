@@ -18,7 +18,7 @@ public class GameMatchController {
     private final GameMatchService gameMatchService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<GameMatchResponse> getMatchData(@PathVariable Long id){
+    public ResponseEntity<GameMatchResponse> getMatchData(@PathVariable Long id) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(gameMatchService.getMatchData(id));

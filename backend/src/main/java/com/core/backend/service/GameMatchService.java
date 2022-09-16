@@ -32,9 +32,11 @@ public class GameMatchService {
     private Object[] findOppositeTeam(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam) {
         for (LeagueSchedule leagueSchedule : leagueScheduleList) {
             if (leagueSchedule.getTeam1Id().equals(myTeam.getBaseTeam().getId())) {
-                return new Object[]{true, baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow()};
+                return new Object[]{true,
+                    baseTeamRepository.findById(leagueSchedule.getTeam2Id()).orElseThrow()};
             } else if (leagueSchedule.getTeam2Id().equals(myTeam.getBaseTeam().getId())) {
-                return new Object[]{false, baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()};
+                return new Object[]{false,
+                    baseTeamRepository.findById(leagueSchedule.getTeam1Id()).orElseThrow()};
             }
         }
         return null;
@@ -42,7 +44,8 @@ public class GameMatchService {
 
     private GameMatch makeNewMatch(League league, HeadCoach headCoach) {
         MyTeam myTeam = headCoach.getMyTeam();
-        List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(league.getDay());
+        List<LeagueSchedule> leagueScheduleList = leagueScheduleRepository.findAllByDay(
+            league.getDay());
         Object[] oppositeTeam = findOppositeTeam(leagueScheduleList, myTeam);
         GameMatch newGameMatch = GameMatch.builder().myTeam(myTeam)
             .oppositeTeam((BaseTeam) oppositeTeam[1])
@@ -58,9 +61,10 @@ public class GameMatchService {
     public GameMatchResponse getMatchData(Long id) {
         HeadCoach headCoach = headCoachRepository.findById(id).orElseThrow();
         League league = leagueRepository.findLeagueByHeadCoach_IdAndFinishFalse(id).orElseThrow();
-        GameMatch gameMatch = gameMatchRepository.findGameMatchByLeagueAndFinishFalse(league).orElse(null);
+        GameMatch gameMatch = gameMatchRepository.findGameMatchByLeagueAndFinishFalse(league)
+            .orElse(null);
         if (gameMatch == null) {
-            return GameMatchResponse.of(makeNewMatch(league,headCoach));
+            return GameMatchResponse.of(makeNewMatch(league, headCoach));
         }
         return GameMatchResponse.of(gameMatch);
     }

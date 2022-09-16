@@ -32,7 +32,8 @@ public class MyTeamController {
     }
 
     @PostMapping("/change-entry")
-    public ResponseEntity<MessageResponse> changeEntry(@RequestBody ChangeEntryRequest changeEntryRequest) {
+    public ResponseEntity<MessageResponse> changeEntry(
+        @RequestBody ChangeEntryRequest changeEntryRequest) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(myTeamService.changeEntry(changeEntryRequest));

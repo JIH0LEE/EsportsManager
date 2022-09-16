@@ -1,11 +1,11 @@
 package com.core.backend.controller.dto;
 
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class BanpickRequest {
+
     private Long headCoachId;
 
     private Long matchId;

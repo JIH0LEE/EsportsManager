@@ -22,7 +22,8 @@ public class HeadCoachController {
     private final HeadCoachService headCoachService;
 
     @PostMapping("/register")
-    public ResponseEntity<HeadCoachResponse> createHeadCoach(@RequestBody HeadCoachRequest headCoachRequest) {
+    public ResponseEntity<HeadCoachResponse> createHeadCoach(
+        @RequestBody HeadCoachRequest headCoachRequest) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(headCoachService.createHeadCoach(headCoachRequest));
