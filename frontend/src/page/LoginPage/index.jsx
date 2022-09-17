@@ -12,6 +12,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const deleteSpace = (elem) => {
     return elem.replace(" ", "");
   };
@@ -21,7 +22,6 @@ function LoginPage() {
   const passwordHandler = (e) => {
     setPassword(deleteSpace(e.target.value));
   };
-
   const submit = () => {
     const body = {
       name,

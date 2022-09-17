@@ -10,6 +10,7 @@ const Sponsor = ({ id }) => {
   const [disable, setDisable] = useState([]);
   const [enable, setEnable] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/sponsor/${id}`).then((res) => {
       setAlready(res.data.alreadySponsor);
@@ -19,6 +20,7 @@ const Sponsor = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const changeMoneyFormat = (price) => {
     return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   };

@@ -13,6 +13,7 @@ function EntryChangePage() {
   const [swap, setSwap] = useState(null);
   const positionArr = ["TOP", "JNG", "MID", "ADC", "SUB"];
   const navigate = useNavigate();
+
   const change = (idx) => {
     const arr = [...ids];
     let temp = arr[swap];

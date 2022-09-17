@@ -4,6 +4,7 @@ import "../style.css";
 const ChampionBar = ({ data }) => {
   var blueTeam = [];
   var redTeam = [];
+
   const changeGoldFormat = (gold) => {
     let q = gold / 1000;
     let r = gold % 1000;
@@ -40,7 +41,6 @@ const ChampionBar = ({ data }) => {
       data.gameMatch.oppositeTeam.sup,
     ];
   }
-  const arr = [1, 2, 3, 4, 5];
   return (
     <>
       <div className="blue-bar bar">

@@ -8,6 +8,7 @@ const Enterprise = ({ id }) => {
   const [yet, setYet] = useState([]);
   const [ing, setIng] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/enterprise/${id}`).then((res) => {
       setIng(res.data.ing);
@@ -16,6 +17,7 @@ const Enterprise = ({ id }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const changeMoneyFormat = (price) => {
     return price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   };

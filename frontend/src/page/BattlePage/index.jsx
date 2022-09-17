@@ -28,6 +28,7 @@ function BattlePage() {
       }
     });
   }, []);
+
   const submit = () => {
     setIsSimulation(true);
     axios.post(API_SERVER + `/api/set/play/${data.id}`).then((res) => {

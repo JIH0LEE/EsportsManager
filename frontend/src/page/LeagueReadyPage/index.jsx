@@ -13,6 +13,7 @@ function GameReadyPage() {
   const [day, setDay] = useState(0);
   const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!userData.isLogin) {
       alert("로그인이 필요합니다");
@@ -56,6 +57,7 @@ function GameReadyPage() {
       },
     });
   };
+
   return (
     <div className="league-ready-container background">
       <div className="label-container label">리그 정보</div>

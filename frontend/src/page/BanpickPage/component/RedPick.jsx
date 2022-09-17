@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import "../style.css";
 
 const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
   const [swap, setSwap] = useState(null);
+
   const change = (idx) => {
     const arr = [...redPick];
     let temp = arr[swap];
@@ -11,7 +13,6 @@ const RedPick = ({ redPick, redTeam, isBlue, isSwapStage, func }) => {
     setSwap(null);
     func(arr);
   };
-
   const isSwappable = () => {
     return !isBlue && isSwapStage;
   };

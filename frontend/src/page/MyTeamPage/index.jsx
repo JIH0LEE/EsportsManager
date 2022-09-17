@@ -20,9 +20,7 @@ function MyTeamPage() {
   const [logo, setLogo] = useState(null);
   const [money, setMoney] = useState(0);
   const [selected, setSelected] = useState("PLAYER");
-
   const { userData } = useSelector((state) => state);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +31,6 @@ function MyTeamPage() {
           navigate("/make-team");
         }
       });
-
     axios.get(API_SERVER + `/api/my-team/${userData.id}`).then((res) => {
       setTeamId(res.data.id);
       setTeamName(res.data.name);
@@ -45,7 +42,6 @@ function MyTeamPage() {
       setSup(res.data.sup);
       setSub(res.data.sub);
       setMoney(res.data.money);
-      console.log(res.data);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

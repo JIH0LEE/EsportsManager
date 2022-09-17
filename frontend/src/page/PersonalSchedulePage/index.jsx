@@ -21,35 +21,10 @@ function PersonalSchedulePage() {
   const teams = location.state.teams;
   const day = location.state.day;
   const navigate = useNavigate();
-  const changeSubmitData = (idx, id) => {
-    const changedArray = [...submitData];
-    changedArray[idx].scheduleId = id;
-    setSubmitData(changedArray);
-  };
-  const toLeagueReady = () => {
-    navigate("/league-ready");
-  };
 
-  const submit = () => {
-    const body = {
-      headCoachId: userData.id,
-      game: isGame,
-      submitData: submitData,
-    };
-    axios
-      .post(API_SERVER + "/api/league/league-process", body)
-      .then((res) => {
-        alert(res.data.message);
-        toLeagueReady();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   useEffect(() => {
     axios.get(API_SERVER + `/api/my-team/${userData.id}`).then((res) => {
       const obj = [];
-
       setTop(res.data.top);
       setJng(res.data.jng);
       setMid(res.data.mid);
@@ -69,6 +44,32 @@ function PersonalSchedulePage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const changeSubmitData = (idx, id) => {
+    const changedArray = [...submitData];
+    changedArray[idx].scheduleId = id;
+    setSubmitData(changedArray);
+  };
+  const toLeagueReady = () => {
+    navigate("/league-ready");
+  };
+  const submit = () => {
+    const body = {
+      headCoachId: userData.id,
+      game: isGame,
+      submitData: submitData,
+    };
+    axios
+      .post(API_SERVER + "/api/league/league-process", body)
+      .then((res) => {
+        alert(res.data.message);
+        toLeagueReady();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="schedule-page background basic">
       <div className="label-container label">리그 정보</div>

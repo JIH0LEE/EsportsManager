@@ -1,20 +1,22 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import "../style.css";
 
 const BluePick = ({ bluePick, blueTeam, isBlue, isSwapStage, func }) => {
   const [swap, setSwap] = useState(null);
+
   const change = (idx) => {
     const arr = [...bluePick];
     let temp = arr[swap];
     arr[swap] = arr[idx];
     arr[idx] = temp;
-
     setSwap(null);
     func(arr);
   };
   const isSwappable = () => {
     return isBlue && isSwapStage;
   };
+
   return (
     <div className="blue-list">
       <div className="pick-item">

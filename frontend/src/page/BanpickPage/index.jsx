@@ -132,7 +132,6 @@ function BanpickPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position]);
 
-  const calculateScore = (data) => {};
   const submit = () => {
     let bluePickIdList = [];
     let redPickIdList = [];
@@ -141,7 +140,6 @@ function BanpickPage() {
       bluePickIdList.push(bluePick[i].id);
       redPickIdList.push(redPick[i].id);
     }
-
     const body = {
       headCoachId: userData.id,
       matchId: matchId,
@@ -151,7 +149,6 @@ function BanpickPage() {
       myTeam: myTeam,
       oppositeTeam: oppositeTeam,
     };
-
     axios
       .post(API_SERVER + "/api/set/banpick", body)
       .then((res) => {
@@ -172,7 +169,6 @@ function BanpickPage() {
       setIsSwapStage(true);
       return;
     }
-
     if (isMyTurn()) {
       action();
     } else {
@@ -212,7 +208,6 @@ function BanpickPage() {
         setBluePick(swaped);
       }
     }
-
     if (isBlue) {
       setRedPick(swaped);
     } else {
@@ -247,11 +242,9 @@ function BanpickPage() {
       const temp = [...aiUnPickedPos];
       temp.splice(rand, 1);
       setAiUnPickedPos(temp);
-
       const temp1 = [...aiPickedPos];
       temp1.push(position);
       setAiPickedPos(temp1);
-
       if (isBlue) {
         const temp2 = [...redPick];
         temp2[parseInt(idx)] = pickedChamp;
@@ -304,7 +297,6 @@ function BanpickPage() {
     }
     setStageNum(stageNum + 1);
   };
-
   const action = () => {
     if (clickedChamp === 0) {
       alert("챔피언을 선택해주세요!");

@@ -13,6 +13,7 @@ function BookPage() {
   const [baseTeams, setBaseTeams] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(API_SERVER + "/api/base-team")
@@ -24,13 +25,13 @@ function BookPage() {
         alert(err);
       });
   }, []);
+
   const trim = (elem) => {
     return elem.trim();
   };
   const teamNameHandler = (e) => {
     setTeamName(e.target.value);
   };
-
   const submit = () => {
     if (trim(teamName) === "") {
       alert("팀 이름을 입력하세요");

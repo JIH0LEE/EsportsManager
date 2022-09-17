@@ -10,6 +10,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const navigate = useNavigate();
+
   const deleteSpace = (elem) => {
     return elem.replace(" ", "");
   };
@@ -22,7 +23,6 @@ function RegisterPage() {
   const passwordCheckHandler = (e) => {
     setPasswordCheck(deleteSpace(e.target.value));
   };
-
   const submit = () => {
     const body = {
       name,

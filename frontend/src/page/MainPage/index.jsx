@@ -13,6 +13,7 @@ function MainPage() {
   const [leagueRank, setLeagueRank] = useState([]);
   const [imgIdx, setImgIdx] = useState(0);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (userData.isLogin) {
       axios
@@ -36,6 +37,7 @@ function MainPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const leftClick = () => {
     console.log(1);
     if (imgIdx > 0) setImgIdx(imgIdx - 1);
