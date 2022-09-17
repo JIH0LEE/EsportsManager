@@ -55,7 +55,6 @@ public class GameMatch {
     public void updateSetInfo(int win) {
         gameSetCount += 1;
         gameScore += win;
-        ;
         if ((gameScore == 1 || gameScore == -1) && gameSetCount == 3) {
             finish = true;
         }

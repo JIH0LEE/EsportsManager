@@ -591,7 +591,6 @@ public class GameSet {
             blueMidTower2 == 0 && blueBottomTower1 == 0 && blueBottomTower2 == 0) {
             return true;
         }
-
         return false;
     }
 
@@ -647,7 +646,6 @@ public class GameSet {
         result.add(redMidGold);
         result.add(redAdcGold);
         result.add(redSupGold);
-
         return result;
     }
 }

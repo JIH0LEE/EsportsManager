@@ -68,5 +68,4 @@ public class MyTeamController {
             .status(HttpStatus.OK)
             .body(myTeamService.startEnterprise(id, enterpriseId));
     }
-
 }

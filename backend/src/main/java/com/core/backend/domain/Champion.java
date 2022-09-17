@@ -55,6 +55,7 @@ public class Champion {
     private Integer tier;
 
     private float getTimeValue(String time) {
+
         float timeValue = 1f;
 
         if (Objects.equals(time, "FIRST")) {
@@ -66,7 +67,6 @@ public class Champion {
         if (Objects.equals(time, "END")) {
             timeValue = end;
         }
-
         return timeValue;
     }
 

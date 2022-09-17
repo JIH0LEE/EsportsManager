@@ -35,18 +35,7 @@ public class GameSetService {
     private final LeagueTeamRepository leagueTeamRepository;
     private final GameMatchRepository gameMatchRepository;
 
-    public GameSetResponse getSetData(Long id) {
 
-        return makeGameSetResponse(gameSetRepository.findById(id).orElseThrow());
-    }
-
-    public GameSetResponse makeGameSetResponse(GameSet gameSet) {
-        List<Long> championList = gameSet.getChampList();
-        List<String> championImageList = championList.stream()
-            .map(champion -> championRepository.findById(champion).orElseThrow().getImage())
-            .collect(Collectors.toList());
-        return GameSetResponse.of(gameSet, championImageList);
-    }
 
     private boolean isBigBattle(GameSet gameSet) {
         Integer currentTime = gameSet.getCurTime();
@@ -366,13 +355,11 @@ public class GameSetService {
             if (Math.random() * 100 <= (double) blueJngPlayerScore / 3) {
                 detailedGanking(gameSet, true);
             }
-
             redJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam,
                 gameSet);
             if (Math.random() * 100 <= (double) redJngPlayerScore / 3) {
                 detailedGanking(gameSet, false);
             }
-
         } else {
             blueJngPlayerScore = getOpDistinctPower("JUNGLING", "JUNGLE", "FIRST", oppositeTeam,
                 gameSet);
@@ -747,6 +734,18 @@ public class GameSetService {
             .build();
         gameSetRepository.save(gameSet);
         return new BanpickResponse(gameSet.getId());
+    }
+
+    public GameSetResponse makeGameSetResponse(GameSet gameSet) {
+        List<Long> championList = gameSet.getChampList();
+        List<String> championImageList = championList.stream()
+            .map(champion -> championRepository.findById(champion).orElseThrow().getImage())
+            .collect(Collectors.toList());
+        return GameSetResponse.of(gameSet, championImageList);
+    }
+
+    public GameSetResponse getSetData(Long id) {
+        return makeGameSetResponse(gameSetRepository.findById(id).orElseThrow());
     }
 
 }

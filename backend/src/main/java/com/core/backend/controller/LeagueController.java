@@ -26,7 +26,6 @@ public class LeagueController {
 
     @PostMapping("")
     public ResponseEntity<MessageResponse> makeMyLeague(@RequestBody MyTeamRequest myTeamRequest) {
-
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(leagueService.makeMyLeague(myTeamRequest));
@@ -61,5 +60,4 @@ public class LeagueController {
             .status(HttpStatus.OK)
             .body(leagueService.progressLeague(request));
     }
-
 }

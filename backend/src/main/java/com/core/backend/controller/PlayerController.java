@@ -23,5 +23,4 @@ public class PlayerController {
             .status(HttpStatus.OK)
             .body(playerService.getAll());
     }
-
 }

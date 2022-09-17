@@ -26,7 +26,6 @@ public class GameMatchService {
     private final GameMatchRepository gameMatchRepository;
     private final LeagueScheduleRepository leagueScheduleRepository;
     private final HeadCoachRepository headCoachRepository;
-
     private final BaseTeamRepository baseTeamRepository;
 
     private Object[] findOppositeTeam(List<LeagueSchedule> leagueScheduleList, MyTeam myTeam) {
