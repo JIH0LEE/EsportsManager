@@ -72,7 +72,8 @@
 </p>
 
 ## 인프라
-![infra](https://user-images.githubusercontent.com/33647638/190865967-fdb69640-1b56-4fd8-ab2d-209aa92c2bd3.jpg)
+![infra](https://user-images.githubusercontent.com/33647638/190866046-b407e63d-e417-4f86-9d71-04154c6a232d.jpg)
+
 
 
 
