@@ -68,7 +68,7 @@
 <p>
   <img src="https://img.shields.io/badge/ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
   <img src="https://img.shields.io/badge/rds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">
-  <img src="https://img.shields.io/badge/s3-61DAFB?style=for-the-badge&logo=amazons3&logoColor=white">
+  <img src="https://img.shields.io/badge/s3-569A31?style=for-the-badge&logo=amazons3&logoColor=white">
 </p>
 
 ## 인프라
