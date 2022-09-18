@@ -10,6 +10,7 @@ function LeagueEndPage() {
   const { userData } = useSelector((state) => state);
   const [leagueRank, setLeagueRank] = useState([]);
   const navigate = useNavigate();
+  
   useEffect(() => {
     axios
       .get(API_SERVER + `/api/league/league-rank/${userData.id}`)

@@ -62,8 +62,8 @@ function GameReadyPage() {
     <div className="league-ready-container background">
       <div className="label-container label">리그 정보</div>
       <div className="league-info-container">
-        <div className="day-container basic">Day {day}</div>
-        <div className="match-container basic">
+        <div className="day-container">Day {day}</div>
+        <div className="match-container">
           {isGame ? (
             <>
               {teams.length === 4 ? (

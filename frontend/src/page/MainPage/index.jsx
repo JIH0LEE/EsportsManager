@@ -50,12 +50,6 @@ function MainPage() {
   return (
     <div className="main-container">
       <div className="main-1 background2">
-        <AiOutlineLeft
-          onClick={leftClick}
-          className="left-button"
-          size="50"
-          color="white"
-        ></AiOutlineLeft>
         <div className="image-container">
           <img
             alt="main"
@@ -63,6 +57,12 @@ function MainPage() {
             src={`./image/main-${imgIdx}.png`}
           ></img>
         </div>
+        <AiOutlineLeft
+          onClick={leftClick}
+          className="left-button"
+          size="50"
+          color="white"
+        ></AiOutlineLeft>
         <AiOutlineRight
           onClick={rightClick}
           className="right-button"

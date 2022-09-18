@@ -62,7 +62,7 @@ const Sponsor = ({ id }) => {
       )}
       <div className="label-container">계약 가능한 스폰서</div>
       {enable.length === 0 ? (
-        <div className="none-container">계약된 스폰서가 없습니다</div>
+        <div className="none-container">계약 가능한 스폰서가 없습니다</div>
       ) : (
         <>
           {enable.map((sponsor, idx) => (
