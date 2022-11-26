@@ -17,9 +17,11 @@ public class BaseTeamService {
     private final BaseTeamRepository baseTeamRepository;
 
     public List<BaseTeamResponse> getAll() {
-        List<BaseTeam> championList = baseTeamRepository.findAll();
+        List<BaseTeam> championList = baseTeamRepository.findAllFetchJoin();
+//        List<BaseTeam> championList = baseTeamRepository.findAll();
         return championList.stream()
             .map(BaseTeamResponse::of)
             .collect(Collectors.toList());
+
     }
 }
